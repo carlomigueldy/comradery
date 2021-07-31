@@ -23,7 +23,7 @@ import 'ui/views/on_boarding/views/individual/views/upload_photo/upload_photo_vi
 import 'ui/views/startup/startup_view.dart';
 
 class Routes {
-  static const String startupView = 'startup';
+  static const String startupView = '/';
   static const String homeView = 'home';
   static const String signInView = 'auth/sign-in';
   static const String signUpView = 'auth/sign-up';

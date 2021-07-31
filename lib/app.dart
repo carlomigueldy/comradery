@@ -23,7 +23,7 @@ import 'ui/views/on_boarding/on_boarding_routes.dart' as on_boarding;
     CupertinoRoute(
       page: StartupView,
       initial: true,
-      path: 'startup',
+      path: '/',
     ),
     CupertinoRoute(
       page: HomeView,
