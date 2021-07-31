@@ -1,4 +1,6 @@
+import 'package:comradery/user/services/user_service.dart';
 import 'package:stacked/stacked_annotations.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 // services
 import 'auth/services/auth_service.dart';
@@ -19,9 +21,19 @@ import 'ui/views/auth/auth_routes.dart' as auth;
     ...auth.routes,
   ],
   dependencies: [
+    // core services
     LazySingleton(classType: AuthService),
     LazySingleton(classType: LocalStorageService),
     LazySingleton(classType: ThemeService),
+
+    // feature services
+    LazySingleton(classType: UserService),
+
+    // stacked services
+    LazySingleton(classType: NavigationService),
+    LazySingleton(classType: DialogService),
+    LazySingleton(classType: BottomSheetService),
+    LazySingleton(classType: SnackbarService),
   ],
 )
 class AppSetup {}

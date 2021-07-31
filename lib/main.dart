@@ -1,5 +1,5 @@
-import 'package:comradery/stacked_app.locator.dart';
-import 'package:comradery/stacked_app.router.dart';
+import 'package:comradery/app.locator.dart';
+import 'package:comradery/app.router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:stacked/stacked.dart';

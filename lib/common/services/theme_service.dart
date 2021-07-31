@@ -1,5 +1,5 @@
 import 'package:comradery/common/utils/ui_util.dart';
-import 'package:comradery/stacked_app.locator.dart';
+import 'package:comradery/app.locator.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:observable_ish/observable_ish.dart';
