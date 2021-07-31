@@ -3,7 +3,7 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "assets/AssetManifest.json": "ea63fc6ff37ec48a751d970cf856bbac",
+  "assets/AssetManifest.json": "3df9e4705e0f1fdb4b078139ba6c74c9",
 "assets/assets/fonts/Sora/OFL.txt": "6ed93967ff0dc6dd9c8d31c17f817a06",
 "assets/assets/fonts/Sora/Sora-Bold.ttf": "8b24edfb87ce7942c970dbaeaa73a511",
 "assets/assets/fonts/Sora/Sora-ExtraBold.ttf": "23b29030a22fc02a05c8ca5d2cda8bc5",
@@ -13,16 +13,17 @@ const RESOURCES = {
 "assets/assets/fonts/Sora/Sora-Regular.ttf": "aa64200d21f88f287becbe3f3cebaf0e",
 "assets/assets/fonts/Sora/Sora-SemiBold.ttf": "fb54a7a5fdc54d9385f3f42421083ca4",
 "assets/assets/fonts/Sora/Sora-Thin.ttf": "c41ed373cfbf85cd6deb945dbd4996c0",
+"assets/dist/assets/dotenv": "9afc40884076b132de2a821f49079c61",
 "assets/dotenv": "9afc40884076b132de2a821f49079c61",
 "assets/FontManifest.json": "2cc6cc75f2d817db8687e279fc3b4950",
 "assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
-"assets/NOTICES": "faaa78f9ad0cd7bf00e4fc755b9e2019",
+"assets/NOTICES": "6c33e3c67b9623b58469ade82c6cf39b",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
-"index.html": "b9523dc7b44022198cd708f1d9a8a0f7",
-"/": "b9523dc7b44022198cd708f1d9a8a0f7",
-"main.dart.js": "1088b293516f961a976779ce410d9bbb",
+"index.html": "ee9b3ceb31491e5a5de7130516eec563",
+"/": "ee9b3ceb31491e5a5de7130516eec563",
+"main.dart.js": "143494e1f94bf63d6e1f896d37803b82",
 "manifest.json": "55076722cfa659413d1df2011cc3ff43",
 "version.json": "dd97e380589dc2a1be5d14b75d362396"
 };
