@@ -16,12 +16,21 @@ import 'ui/views/startup/startup_view.dart';
 
 // routes
 import 'ui/views/auth/auth_routes.dart' as auth;
+import 'ui/views/on_boarding/on_boarding_routes.dart' as on_boarding;
 
 @StackedApp(
   routes: [
-    CupertinoRoute(page: StartupView, initial: true),
-    CupertinoRoute(page: HomeView),
+    CupertinoRoute(
+      page: StartupView,
+      initial: true,
+      path: 'startup',
+    ),
+    CupertinoRoute(
+      page: HomeView,
+      path: 'home',
+    ),
     ...auth.routes,
+    ...on_boarding.routes,
   ],
   dependencies: [
     // core services
