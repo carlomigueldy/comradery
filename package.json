@@ -1,0 +1,30 @@
+{
+  "name": "comradery",
+  "version": "1.0.0",
+  "description": "Comradery is an online platform that connects a lone wolf to its pack that shares the same vision to work for a business idea. A lone wolf is often viewed as a solitary person that represents spiritual independence, breaking from the status quo, and not controlled by the sentimental need for companionship.  In reality, every lone wolf is always searching, and what it seeks is another wolf that will communicate, collaborate, and share knowledge across the generations.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:web": "flutter build web && rm -rf dist && cp -r build/web dist/",
+    "generate": "flutter pub run build_runner build --delete-conflicting-outputs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlomigueldy/comradery.git"
+  },
+  "keywords": [
+    "comradery",
+    "camaraderie",
+    "comrade"
+  ],
+  "author": "Carlo Miguel Dy, Hannah Lagcao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carlomigueldy/comradery/issues"
+  },
+  "homepage": "https://github.com/carlomigueldy/comradery#readme"
+}
