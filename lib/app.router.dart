@@ -7,6 +7,7 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import 'ui/views/auth/views/forgot_password/forgot_password_view.dart';
@@ -138,10 +139,23 @@ class StackedRouter extends RouterBase {
       );
     },
     SetupUserProfileView: (data) {
+      var args = data.getArgs<SetupUserProfileViewArguments>(
+        orElse: () => SetupUserProfileViewArguments(),
+      );
       return CupertinoPageRoute<dynamic>(
-        builder: (context) => const SetupUserProfileView(),
+        builder: (context) => SetupUserProfileView(key: args.key),
         settings: data,
       );
     },
   };
+}
+
+/// ************************************************************************
+/// Arguments holder classes
+/// *************************************************************************
+
+/// SetupUserProfileView arguments holder class
+class SetupUserProfileViewArguments {
+  final Key? key;
+  SetupUserProfileViewArguments({this.key});
 }

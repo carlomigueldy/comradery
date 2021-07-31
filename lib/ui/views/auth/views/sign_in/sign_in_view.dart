@@ -144,7 +144,7 @@ class _Form extends HookViewModelWidget<SignInViewModel> with UiUtilMixin {
                 AppButton.text(
                   label: 'Create Account',
                   onPressed: () => model.createAccount(),
-                )
+                ),
               ],
             ),
           ],

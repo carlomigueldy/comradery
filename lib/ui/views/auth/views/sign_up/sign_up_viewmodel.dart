@@ -25,7 +25,7 @@ class SignUpViewModel extends BaseViewModel {
         return;
       }
 
-      return await _router.replaceWith(Routes.homeView);
+      return await _router.replaceWith(Routes.selectGoalView);
     } catch (e) {
       log.e('error "$e"');
     } finally {

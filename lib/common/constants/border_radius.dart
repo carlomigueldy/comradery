@@ -14,6 +14,8 @@ const _veryLarge = BASE_BORDER_RADIUS * 3;
 
 const _huge = BASE_BORDER_RADIUS * 4;
 
+const _circle = BASE_BORDER_RADIUS * 8;
+
 class AppBorderRadiusValue {
   double get none => _none;
 
@@ -26,6 +28,8 @@ class AppBorderRadiusValue {
   double get veryLarge => _veryLarge;
 
   double get huge => _huge;
+
+  double get circle => _circle;
 }
 
 class AppBorderRadius {
@@ -40,4 +44,6 @@ class AppBorderRadius {
   BorderRadius get veryLarge => BorderRadius.circular(_veryLarge);
 
   BorderRadius get huge => BorderRadius.circular(_huge);
+
+  BorderRadius get circle => BorderRadius.circular(_circle);
 }
