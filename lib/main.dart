@@ -8,7 +8,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'common/services/theme_service.dart';
 
 void main() async {
-  await dotenv.load(fileName: '.env');
+  await dotenv.load(fileName: 'dotenv');
   setupLocator();
   locator<ThemeService>().init();
   runApp(ComraderyAppView());

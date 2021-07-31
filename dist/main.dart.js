@@ -12771,7 +12771,7 @@ _.c6$=d},Mr:function Mr(){},Ms:function Ms(){},
 a9H:function(){var s=0,r=P.S(t.z),q
 var $async$a9H=P.O(function(a,b){if(a===1)return P.P(b,r)
 while(true)switch(s){case 0:s=2
-return P.K($.aaf().ur(0,".env"),$async$a9H)
+return P.K($.aaf().ur(0,"dotenv"),$async$a9H)
 case 2:S.awK()
 $.jC().$1$0(t.qN).hF()
 if($.A==null)N.ahJ()
