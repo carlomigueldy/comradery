@@ -344,7 +344,7 @@ packages:
     source: hosted
     version: "2.1.0"
   gotrue:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: gotrue
       url: "https://pub.dartlang.org"
@@ -610,7 +610,7 @@ packages:
     source: hosted
     version: "1.0.0"
   realtime_client:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: realtime_client
       url: "https://pub.dartlang.org"
@@ -750,10 +750,10 @@ packages:
   stacked_services:
     dependency: "direct main"
     description:
-      name: stacked_services
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.8.12"
+      path: "packages/stacked_services"
+      relative: true
+    source: path
+    version: "0.8.13"
   stacked_themes:
     dependency: "direct main"
     description:
@@ -762,7 +762,7 @@ packages:
     source: hosted
     version: "0.3.6"
   storage_client:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: storage_client
       url: "https://pub.dartlang.org"
