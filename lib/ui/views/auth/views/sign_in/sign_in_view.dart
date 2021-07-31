@@ -107,6 +107,10 @@ class _Form extends HookViewModelWidget<SignInViewModel> with UiUtilMixin {
               label: 'Email',
               focusNode: emailFocusNode,
               onEditingComplete: () => passwordFocusNode.nextFocus(),
+              validator: FormBuilderValidators.compose([
+                FormBuilderValidators.required(context),
+                FormBuilderValidators.email(context),
+              ]),
             ),
             uiUtil.verticalSpacing.large,
             AppTextField(
@@ -115,6 +119,9 @@ class _Form extends HookViewModelWidget<SignInViewModel> with UiUtilMixin {
               obscureText: true,
               onEditingComplete: onSubmit,
               focusNode: passwordFocusNode,
+              validator: FormBuilderValidators.compose([
+                FormBuilderValidators.required(context),
+              ]),
             ),
             uiUtil.verticalSpacing.large,
             Row(
@@ -127,6 +134,17 @@ class _Form extends HookViewModelWidget<SignInViewModel> with UiUtilMixin {
                   onPressed: onSubmit,
                   busy: model.isBusy,
                 ),
+              ],
+            ),
+            uiUtil.verticalSpacing.large,
+            Row(
+              children: [
+                AppText.body("Don't have an account?"),
+                uiUtil.horizontalSpacing.large,
+                AppButton.text(
+                  label: 'Create Account',
+                  onPressed: () => model.createAccount(),
+                )
               ],
             ),
           ],

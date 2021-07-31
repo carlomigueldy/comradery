@@ -1,11 +1,14 @@
-import 'package:comradery/user/services/user_service.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
+
+export 'app.locator.dart';
+export 'app.router.dart';
 
 // services
 import 'auth/services/auth_service.dart';
 import 'common/services/local_storage_service.dart';
 import 'common/services/theme_service.dart';
+import 'user/services/user_service.dart';
 
 // views
 import 'ui/views/home/home_view.dart';

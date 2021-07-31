@@ -31,4 +31,8 @@ class SignInViewModel extends BaseViewModel {
 
     log.v('value "$value"');
   }
+
+  void createAccount() {
+    _router.replaceWith(Routes.signUpView);
+  }
 }
