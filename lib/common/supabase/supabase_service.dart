@@ -3,7 +3,7 @@ import 'package:postgrest/postgrest.dart';
 
 import 'supabase_client.dart';
 
-abstract class SupabaseService<T> {
+abstract class SupabaseService {
   Logger get log => Logger();
 
   String get table;
@@ -12,7 +12,6 @@ abstract class SupabaseService<T> {
     log.i('table "$table"');
     final response =
         await supabase.from(table).select().is_('deleted_at', null).execute();
-    log.i(response.toJson());
     return response;
   }
 

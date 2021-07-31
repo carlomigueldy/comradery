@@ -1,33 +1,42 @@
+import 'package:comradery/team/models/team.dart';
+import 'package:comradery/user/models/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 
-part 'user.freezed.dart';
-part 'user.g.dart';
+part 'team_request.freezed.dart';
+part 'team_request.g.dart';
+
+enum TeamRequestType {
+  @JsonValue('invite')
+  invite,
+  @JsonValue('join_request')
+  joinRequest,
+}
 
 @freezed
-class User with _$User {
-  const User._();
+class TeamRequest with _$TeamRequest {
+  const TeamRequest._();
 
-  factory User({
-    String? id,
-    required String email,
+  factory TeamRequest({
     @JsonKey(
-      name: 'photo_url',
+      name: 'user_id',
     )
-        String? photoUrl,
+        required String userId,
+    User? user,
     @JsonKey(
-      name: 'first_name',
+      name: 'team_id',
     )
-        String? firstName,
+        required String teamId,
+    Team? team,
+    required TeamRequestType type,
     @JsonKey(
-      name: 'last_name',
+      name: 'created_by',
     )
-        String? lastName,
-    String? bio,
+        required String createdBy,
     @JsonKey(
-      name: 'external_links_json',
+      name: 'created_by_user',
     )
-        Map<String, dynamic>? externalLinksJson,
+        User? createdByUser,
     @JsonKey(
       name: 'created_at',
     )
@@ -40,9 +49,10 @@ class User with _$User {
       name: 'deleted_at',
     )
         DateTime? deletedAt,
-  }) = _User;
+  }) = _TeamRequest;
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory TeamRequest.fromJson(Map<String, dynamic> json) =>
+      _$TeamRequestFromJson(json);
 
   String get formattedCreatedAt {
     return DateFormat('EEEE M/d/y').format(createdAt!);
@@ -56,16 +66,15 @@ class User with _$User {
     return DateFormat('EEEE M/d/y').format(deletedAt!);
   }
 
-  String get fullName => '$firstName $lastName'.trim();
-
-  bool get hasPhoto => photoUrl != null && photoUrl!.isNotEmpty;
-
   Map<String, dynamic> toPayload() {
     final json = toJson();
     json.remove('id');
     json.remove('created_at');
     json.remove('updated_at');
     json.remove('deleted_at');
+    json.remove('user');
+    json.remove('team');
+    json.remove('created_by_user');
     return json;
   }
 }

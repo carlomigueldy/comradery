@@ -1,20 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user.dart';
+part of 'team_member.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_User _$_$_UserFromJson(Map<String, dynamic> json) {
-  return _$_User(
-    id: json['id'] as String?,
-    email: json['email'] as String,
-    photoUrl: json['photo_url'] as String?,
-    firstName: json['first_name'] as String?,
-    lastName: json['last_name'] as String?,
-    bio: json['bio'] as String?,
-    externalLinksJson: json['external_links_json'] as Map<String, dynamic>?,
+_$_TeamMember _$_$_TeamMemberFromJson(Map<String, dynamic> json) {
+  return _$_TeamMember(
+    userId: json['user_id'] as String,
+    user: json['user'] == null
+        ? null
+        : User.fromJson(json['user'] as Map<String, dynamic>),
+    teamId: json['team_id'] as String,
+    team: json['team'] == null
+        ? null
+        : Team.fromJson(json['team'] as Map<String, dynamic>),
     createdAt: json['created_at'] == null
         ? null
         : DateTime.parse(json['created_at'] as String),
@@ -27,14 +28,12 @@ _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$_$_UserToJson(_$_User instance) => <String, dynamic>{
-      'id': instance.id,
-      'email': instance.email,
-      'photo_url': instance.photoUrl,
-      'first_name': instance.firstName,
-      'last_name': instance.lastName,
-      'bio': instance.bio,
-      'external_links_json': instance.externalLinksJson,
+Map<String, dynamic> _$_$_TeamMemberToJson(_$_TeamMember instance) =>
+    <String, dynamic>{
+      'user_id': instance.userId,
+      'user': instance.user,
+      'team_id': instance.teamId,
+      'team': instance.team,
       'created_at': instance.createdAt?.toIso8601String(),
       'updated_at': instance.updatedAt?.toIso8601String(),
       'deleted_at': instance.deletedAt?.toIso8601String(),

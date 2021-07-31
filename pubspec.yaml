@@ -47,6 +47,7 @@ dependencies:
   intl: ^0.17.0
   flutter_svg: ^0.22.0
   url_strategy: ^0.2.0
+  swipe_cards: ^0.1.0
 
 
   # The following adds the Cupertino Icons font to your application.

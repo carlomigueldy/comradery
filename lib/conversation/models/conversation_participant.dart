@@ -1,33 +1,27 @@
+import 'package:comradery/user/models/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 
-part 'user.freezed.dart';
-part 'user.g.dart';
+import 'conversation.dart';
+
+part 'conversation_participant.freezed.dart';
+part 'conversation_participant.g.dart';
 
 @freezed
-class User with _$User {
-  const User._();
+class ConversationParticipant with _$ConversationParticipant {
+  const ConversationParticipant._();
 
-  factory User({
-    String? id,
-    required String email,
+  factory ConversationParticipant({
     @JsonKey(
-      name: 'photo_url',
+      name: 'user_id',
     )
-        String? photoUrl,
+        required String userId,
+    User? user,
     @JsonKey(
-      name: 'first_name',
+      name: 'conversation_id',
     )
-        String? firstName,
-    @JsonKey(
-      name: 'last_name',
-    )
-        String? lastName,
-    String? bio,
-    @JsonKey(
-      name: 'external_links_json',
-    )
-        Map<String, dynamic>? externalLinksJson,
+        required String conversationId,
+    Conversation? conversation,
     @JsonKey(
       name: 'created_at',
     )
@@ -40,9 +34,10 @@ class User with _$User {
       name: 'deleted_at',
     )
         DateTime? deletedAt,
-  }) = _User;
+  }) = _ConversationParticipant;
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory ConversationParticipant.fromJson(Map<String, dynamic> json) =>
+      _$ConversationParticipantFromJson(json);
 
   String get formattedCreatedAt {
     return DateFormat('EEEE M/d/y').format(createdAt!);
@@ -56,16 +51,14 @@ class User with _$User {
     return DateFormat('EEEE M/d/y').format(deletedAt!);
   }
 
-  String get fullName => '$firstName $lastName'.trim();
-
-  bool get hasPhoto => photoUrl != null && photoUrl!.isNotEmpty;
-
   Map<String, dynamic> toPayload() {
     final json = toJson();
     json.remove('id');
     json.remove('created_at');
     json.remove('updated_at');
     json.remove('deleted_at');
+    json.remove('conversation');
+    json.remove('user');
     return json;
   }
 }

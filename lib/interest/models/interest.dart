@@ -1,33 +1,16 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 
-part 'user.freezed.dart';
-part 'user.g.dart';
+part 'interest.freezed.dart';
+part 'interest.g.dart';
 
 @freezed
-class User with _$User {
-  const User._();
+class Interest with _$Interest {
+  const Interest._();
 
-  factory User({
+  factory Interest({
     String? id,
-    required String email,
-    @JsonKey(
-      name: 'photo_url',
-    )
-        String? photoUrl,
-    @JsonKey(
-      name: 'first_name',
-    )
-        String? firstName,
-    @JsonKey(
-      name: 'last_name',
-    )
-        String? lastName,
-    String? bio,
-    @JsonKey(
-      name: 'external_links_json',
-    )
-        Map<String, dynamic>? externalLinksJson,
+    required String name,
     @JsonKey(
       name: 'created_at',
     )
@@ -40,9 +23,10 @@ class User with _$User {
       name: 'deleted_at',
     )
         DateTime? deletedAt,
-  }) = _User;
+  }) = _Interest;
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory Interest.fromJson(Map<String, dynamic> json) =>
+      _$InterestFromJson(json);
 
   String get formattedCreatedAt {
     return DateFormat('EEEE M/d/y').format(createdAt!);
@@ -55,10 +39,6 @@ class User with _$User {
   String get formattedDeletedAt {
     return DateFormat('EEEE M/d/y').format(deletedAt!);
   }
-
-  String get fullName => '$firstName $lastName'.trim();
-
-  bool get hasPhoto => photoUrl != null && photoUrl!.isNotEmpty;
 
   Map<String, dynamic> toPayload() {
     final json = toJson();

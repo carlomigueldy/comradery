@@ -1,33 +1,38 @@
+import 'package:comradery/user/models/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 
-part 'user.freezed.dart';
-part 'user.g.dart';
+part 'matching.freezed.dart';
+part 'matching.g.dart';
 
 @freezed
-class User with _$User {
-  const User._();
+class Matching with _$Matching {
+  const Matching._();
 
-  factory User({
+  factory Matching({
     String? id,
-    required String email,
     @JsonKey(
-      name: 'photo_url',
+      name: 'user_id',
     )
-        String? photoUrl,
+        required String userId,
     @JsonKey(
-      name: 'first_name',
+      name: 'target_user',
     )
-        String? firstName,
+        User? targetUser,
+    @Default(false)
+        bool liked,
     @JsonKey(
-      name: 'last_name',
+      name: 'created_by',
     )
-        String? lastName,
-    String? bio,
+        required String createdBy,
     @JsonKey(
-      name: 'external_links_json',
+      name: 'created_by_user',
     )
-        Map<String, dynamic>? externalLinksJson,
+        User? createdByUser,
+    @JsonKey(
+      name: 'read_at',
+    )
+        DateTime? readAt,
     @JsonKey(
       name: 'created_at',
     )
@@ -40,9 +45,10 @@ class User with _$User {
       name: 'deleted_at',
     )
         DateTime? deletedAt,
-  }) = _User;
+  }) = _Matching;
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory Matching.fromJson(Map<String, dynamic> json) =>
+      _$MatchingFromJson(json);
 
   String get formattedCreatedAt {
     return DateFormat('EEEE M/d/y').format(createdAt!);
@@ -56,16 +62,14 @@ class User with _$User {
     return DateFormat('EEEE M/d/y').format(deletedAt!);
   }
 
-  String get fullName => '$firstName $lastName'.trim();
-
-  bool get hasPhoto => photoUrl != null && photoUrl!.isNotEmpty;
-
   Map<String, dynamic> toPayload() {
     final json = toJson();
     json.remove('id');
     json.remove('created_at');
     json.remove('updated_at');
     json.remove('deleted_at');
+    json.remove('target_user');
+    json.remove('created_by_user');
     return json;
   }
 }

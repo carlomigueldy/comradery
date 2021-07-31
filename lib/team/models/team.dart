@@ -1,33 +1,38 @@
+import 'package:comradery/user/models/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 
-part 'user.freezed.dart';
-part 'user.g.dart';
+part 'team.freezed.dart';
+part 'team.g.dart';
 
 @freezed
-class User with _$User {
-  const User._();
+class Team with _$Team {
+  const Team._();
 
-  factory User({
+  factory Team({
     String? id,
-    required String email,
+    required String name,
     @JsonKey(
       name: 'photo_url',
     )
         String? photoUrl,
-    @JsonKey(
-      name: 'first_name',
-    )
-        String? firstName,
-    @JsonKey(
-      name: 'last_name',
-    )
-        String? lastName,
-    String? bio,
+    String? description,
     @JsonKey(
       name: 'external_links_json',
     )
         Map<String, dynamic>? externalLinksJson,
+    @JsonKey(
+      name: 'welcome_to_team_json',
+    )
+        Map<String, dynamic>? welcomeToTeamJson,
+    @JsonKey(
+      name: 'created_by',
+    )
+        required String createdBy,
+    @JsonKey(
+      name: 'created_by_user',
+    )
+        User? createdByUser,
     @JsonKey(
       name: 'created_at',
     )
@@ -40,9 +45,9 @@ class User with _$User {
       name: 'deleted_at',
     )
         DateTime? deletedAt,
-  }) = _User;
+  }) = _Team;
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory Team.fromJson(Map<String, dynamic> json) => _$TeamFromJson(json);
 
   String get formattedCreatedAt {
     return DateFormat('EEEE M/d/y').format(createdAt!);
@@ -56,8 +61,6 @@ class User with _$User {
     return DateFormat('EEEE M/d/y').format(deletedAt!);
   }
 
-  String get fullName => '$firstName $lastName'.trim();
-
   bool get hasPhoto => photoUrl != null && photoUrl!.isNotEmpty;
 
   Map<String, dynamic> toPayload() {
@@ -66,6 +69,7 @@ class User with _$User {
     json.remove('created_at');
     json.remove('updated_at');
     json.remove('deleted_at');
+    json.remove('created_by_user');
     return json;
   }
 }

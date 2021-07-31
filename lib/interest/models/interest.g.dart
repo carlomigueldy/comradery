@@ -1,20 +1,15 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user.dart';
+part of 'interest.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_User _$_$_UserFromJson(Map<String, dynamic> json) {
-  return _$_User(
+_$_Interest _$_$_InterestFromJson(Map<String, dynamic> json) {
+  return _$_Interest(
     id: json['id'] as String?,
-    email: json['email'] as String,
-    photoUrl: json['photo_url'] as String?,
-    firstName: json['first_name'] as String?,
-    lastName: json['last_name'] as String?,
-    bio: json['bio'] as String?,
-    externalLinksJson: json['external_links_json'] as Map<String, dynamic>?,
+    name: json['name'] as String,
     createdAt: json['created_at'] == null
         ? null
         : DateTime.parse(json['created_at'] as String),
@@ -27,14 +22,10 @@ _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$_$_UserToJson(_$_User instance) => <String, dynamic>{
+Map<String, dynamic> _$_$_InterestToJson(_$_Interest instance) =>
+    <String, dynamic>{
       'id': instance.id,
-      'email': instance.email,
-      'photo_url': instance.photoUrl,
-      'first_name': instance.firstName,
-      'last_name': instance.lastName,
-      'bio': instance.bio,
-      'external_links_json': instance.externalLinksJson,
+      'name': instance.name,
       'created_at': instance.createdAt?.toIso8601String(),
       'updated_at': instance.updatedAt?.toIso8601String(),
       'deleted_at': instance.deletedAt?.toIso8601String(),
