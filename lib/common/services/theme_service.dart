@@ -1,3 +1,4 @@
+import 'package:comradery/common/constants/colors.dart';
 import 'package:comradery/common/utils/ui_util.dart';
 import 'package:comradery/app.locator.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class ThemeService with ReactiveServiceMixin, UiUtilMixin {
 
   ThemeData light() => ThemeData(
         brightness: Brightness.light,
-        primaryColor: Colors.blue,
+        primaryColor: kcPrimary,
         scaffoldBackgroundColor: uiUtil.colors.white,
         fontFamily: fontFamily,
         cardTheme: _cardTheme.copyWith(
@@ -47,7 +48,7 @@ class ThemeService with ReactiveServiceMixin, UiUtilMixin {
 
   ThemeData dark() => ThemeData(
         brightness: Brightness.dark,
-        primaryColor: Colors.red,
+        primaryColor: kcPrimary,
         fontFamily: fontFamily,
         cardTheme: _cardTheme.copyWith(
           color: Colors.grey[900],
