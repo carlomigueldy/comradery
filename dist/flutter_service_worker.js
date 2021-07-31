@@ -3,7 +3,7 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "assets/AssetManifest.json": "310bfa1b254e611061eeda931ca6d1a9",
+  "assets/AssetManifest.json": "ab456b49b94272eea89b7dfe3d3a7f32",
 "assets/assets/fonts/Sora/OFL.txt": "6ed93967ff0dc6dd9c8d31c17f817a06",
 "assets/assets/fonts/Sora/Sora-Bold.ttf": "8b24edfb87ce7942c970dbaeaa73a511",
 "assets/assets/fonts/Sora/Sora-ExtraBold.ttf": "23b29030a22fc02a05c8ca5d2cda8bc5",
@@ -19,8 +19,8 @@ const RESOURCES = {
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
-"index.html": "e599a5f9f2d59bee4dd9e368c42d006e",
-"/": "e599a5f9f2d59bee4dd9e368c42d006e",
+"index.html": "862e15d96d54fa757f5f910d5299294d",
+"/": "862e15d96d54fa757f5f910d5299294d",
 "main.dart.js": "3e49dc9071e419884c3718dfee36526c",
 "manifest.json": "55076722cfa659413d1df2011cc3ff43",
 "version.json": "dd97e380589dc2a1be5d14b75d362396"
