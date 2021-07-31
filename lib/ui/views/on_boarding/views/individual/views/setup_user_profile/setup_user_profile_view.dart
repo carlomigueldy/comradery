@@ -26,23 +26,30 @@ class SetupUserProfileView extends StatelessWidget with UiUtilMixin {
         Widget? child,
       ) {
         return Scaffold(
-          body: Container(
-            width: double.infinity,
-            child: SingleChildScrollView(
-              padding: uiUtil.edgeInsets.horizontalSymmetric25,
-              child: _Form(
-                formKey: _formKey,
-                onSubmit: () {
-                  _formKey.currentState?.save();
+          body: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 450,
+                child: Center(
+                  child: SingleChildScrollView(
+                    padding: uiUtil.edgeInsets.horizontalSymmetric25,
+                    child: _Form(
+                      formKey: _formKey,
+                      onSubmit: () {
+                        _formKey.currentState?.save();
 
-                  if (_formKey.currentState?.validate() == false) {
-                    return;
-                  }
+                        if (_formKey.currentState?.validate() == false) {
+                          return;
+                        }
 
-                  model.setupUserProfile(_formKey.currentState!.value);
-                },
+                        model.setupUserProfile(_formKey.currentState!.value);
+                      },
+                    ),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         );
       },
@@ -72,64 +79,60 @@ class _Form extends HookViewModelWidget<SetupUserProfileViewModel>
 
     return FormBuilder(
       key: formKey,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 450,
-        ),
-        child: Column(
-          children: [
-            uiUtil.verticalSpacing.large,
-            Row(
-              children: [
-                AppText(
-                  'Create your profile',
-                  style: uiUtil.textStyles.body.copyWith(
-                    fontSize: 32,
-                  ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            children: [
+              AppText(
+                'Create your profile',
+                style: uiUtil.textStyles.body.copyWith(
+                  fontSize: 32,
                 ),
-              ],
-            ),
-            uiUtil.verticalSpacing.veryLarge,
-            AppTextField(
-              name: 'first_name',
-              label: 'First Name',
-              focusNode: firstNameFocusNode,
-              onEditingComplete: () => lastNameFocusNode.nextFocus(),
-              validator: FormBuilderValidators.compose([
-                FormBuilderValidators.required(context),
-              ]),
-            ),
-            uiUtil.verticalSpacing.large,
-            AppTextField(
-              name: 'last_name',
-              label: 'Last Name',
-              focusNode: lastNameFocusNode,
-              onEditingComplete: () => bioFocusNode.nextFocus(),
-              validator: FormBuilderValidators.compose([
-                FormBuilderValidators.required(context),
-              ]),
-            ),
-            uiUtil.verticalSpacing.large,
-            AppTextField(
-              name: 'bio',
-              label: 'Bio',
-              height: 140,
-              maxLines: 6,
-              focusNode: bioFocusNode,
-              onEditingComplete: onSubmit,
-            ),
-            uiUtil.verticalSpacing.large,
-            Row(
-              children: [
-                AppButton(
-                  label: 'Continue',
-                  onPressed: onSubmit,
-                ),
-              ],
-            ),
-            uiUtil.verticalSpacing.large,
-          ],
-        ),
+              ),
+            ],
+          ),
+          uiUtil.verticalSpacing.veryLarge,
+          AppTextField(
+            name: 'first_name',
+            label: 'First Name',
+            focusNode: firstNameFocusNode,
+            onEditingComplete: () => lastNameFocusNode.nextFocus(),
+            validator: FormBuilderValidators.compose([
+              FormBuilderValidators.required(context),
+            ]),
+          ),
+          uiUtil.verticalSpacing.large,
+          AppTextField(
+            name: 'last_name',
+            label: 'Last Name',
+            focusNode: lastNameFocusNode,
+            onEditingComplete: () => bioFocusNode.nextFocus(),
+            validator: FormBuilderValidators.compose([
+              FormBuilderValidators.required(context),
+            ]),
+          ),
+          uiUtil.verticalSpacing.large,
+          AppTextField(
+            name: 'bio',
+            label: 'Bio',
+            height: 140,
+            maxLines: 6,
+            focusNode: bioFocusNode,
+            onEditingComplete: onSubmit,
+          ),
+          uiUtil.verticalSpacing.large,
+          Row(
+            children: [
+              AppButton(
+                label: 'Continue',
+                onPressed: onSubmit,
+              ),
+            ],
+          ),
+          uiUtil.verticalSpacing.large,
+        ],
       ),
     );
   }

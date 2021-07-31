@@ -90,67 +90,75 @@ class _Form extends HookViewModelWidget<ResetPasswordViewModel>
 
     return FormBuilder(
       key: formKey,
-      child: SingleChildScrollView(
-        padding: uiUtil.edgeInsets.horizontalSymmetric25,
-        child: Column(
-          children: [
-            uiUtil.verticalSpacing.large,
-            Row(children: [
-              AppText.body(
-                'Login',
-                style: uiUtil.textStyles.body.copyWith(
-                  fontSize: 32,
-                ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 450,
+            child: SingleChildScrollView(
+              padding: uiUtil.edgeInsets.horizontalSymmetric25,
+              child: Column(
+                children: [
+                  uiUtil.verticalSpacing.large,
+                  Row(children: [
+                    AppText.body(
+                      'Login',
+                      style: uiUtil.textStyles.body.copyWith(
+                        fontSize: 32,
+                      ),
+                    ),
+                  ]),
+                  uiUtil.verticalSpacing.large,
+                  AppTextField(
+                    name: 'email',
+                    label: 'Email',
+                    focusNode: emailFocusNode,
+                    onEditingComplete: () => passwordFocusNode.nextFocus(),
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(context),
+                      FormBuilderValidators.email(context),
+                    ]),
+                  ),
+                  uiUtil.verticalSpacing.large,
+                  AppTextField(
+                    name: 'password',
+                    label: 'Password',
+                    obscureText: true,
+                    onEditingComplete: onSubmit,
+                    focusNode: passwordFocusNode,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(context),
+                    ]),
+                  ),
+                  uiUtil.verticalSpacing.large,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      AppText('Forgot password?'),
+                      uiUtil.horizontalSpacing.large,
+                      AppButton(
+                        label: 'Login',
+                        onPressed: onSubmit,
+                        busy: model.isBusy,
+                      ),
+                    ],
+                  ),
+                  uiUtil.verticalSpacing.large,
+                  Row(
+                    children: [
+                      AppText.body("Don't have an account?"),
+                      uiUtil.horizontalSpacing.large,
+                      AppButton.text(
+                        label: 'Create Account',
+                        onPressed: () => model.createAccount(),
+                      )
+                    ],
+                  ),
+                ],
               ),
-            ]),
-            uiUtil.verticalSpacing.large,
-            AppTextField(
-              name: 'email',
-              label: 'Email',
-              focusNode: emailFocusNode,
-              onEditingComplete: () => passwordFocusNode.nextFocus(),
-              validator: FormBuilderValidators.compose([
-                FormBuilderValidators.required(context),
-                FormBuilderValidators.email(context),
-              ]),
             ),
-            uiUtil.verticalSpacing.large,
-            AppTextField(
-              name: 'password',
-              label: 'Password',
-              obscureText: true,
-              onEditingComplete: onSubmit,
-              focusNode: passwordFocusNode,
-              validator: FormBuilderValidators.compose([
-                FormBuilderValidators.required(context),
-              ]),
-            ),
-            uiUtil.verticalSpacing.large,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                AppText('Forgot password?'),
-                uiUtil.horizontalSpacing.large,
-                AppButton(
-                  label: 'Login',
-                  onPressed: onSubmit,
-                  busy: model.isBusy,
-                ),
-              ],
-            ),
-            uiUtil.verticalSpacing.large,
-            Row(
-              children: [
-                AppText.body("Don't have an account?"),
-                uiUtil.horizontalSpacing.large,
-                AppButton.text(
-                  label: 'Create Account',
-                  onPressed: () => model.createAccount(),
-                )
-              ],
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

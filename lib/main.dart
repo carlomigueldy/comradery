@@ -1,5 +1,6 @@
 import 'package:comradery/app.locator.dart';
 import 'package:comradery/app.router.dart';
+import 'package:comradery/ui/views/on_boarding/views/individual/views/setup_user_profile/setup_user_profile_view.dart';
 // import 'package:comradery/ui/views/on_boarding/views/individual/views/select_goal/select_goal_view.dart';
 // import 'package:comradery/ui/views/on_boarding/views/individual/views/select_interests/select_interests_view.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class ComraderyAppView extends StatelessWidget {
         Widget? child,
       ) {
         return MaterialApp(
-          title: 'Comradery App',
+          title: 'Comradery',
           debugShowCheckedModeBanner: false,
           themeMode: model.themeService.themeMode,
           theme: model.themeService.light(),
@@ -41,7 +42,7 @@ class ComraderyAppView extends StatelessWidget {
           ),
           navigatorKey: StackedService.navigatorKey,
           onGenerateRoute: StackedRouter().onGenerateRoute,
-          // home: SelectInterestsView(),
+          // home: SetupUserProfileView(),
         );
       },
     );
