@@ -24,6 +24,26 @@ dependencies:
   flutter:
     sdk: flutter
 
+  sigma_ui:
+  stacked: ^2.2.2
+  stacked_services: ^0.8.10
+  stacked_hooks: ^0.2.1
+  stacked_themes:
+  observable_ish: ^3.0.0
+  google_fonts: ^2.0.0
+  freezed_annotation:
+  json_annotation:
+  logger: ^1.0.0
+  supabase: ^0.0.1-dev.27
+  postgrest: ^0.1.2
+  flutter_dotenv: ^5.0.0
+  easy_debounce: ^2.0.0
+  flutter_form_builder: ^6.0.1
+  flutter_hooks: ^0.17.0
+  cached_network_image: ^3.0.0
+  intl: ^0.17.0
+  flutter_svg: ^0.22.0
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -32,6 +52,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  build_runner:
+  freezed:
+  json_serializable: 
+  stacked_generator:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
