@@ -24,7 +24,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  sigma_ui:
   stacked: ^2.2.2
   stacked_services: ^0.8.10
   stacked_hooks: ^0.2.1

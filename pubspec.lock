@@ -686,13 +686,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-  sigma_ui:
-    dependency: "direct main"
-    description:
-      name: sigma_ui
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1"
   sky_engine:
     dependency: transitive
     description: flutter
