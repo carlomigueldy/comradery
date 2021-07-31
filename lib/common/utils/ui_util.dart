@@ -1,4 +1,5 @@
 import 'package:comradery/common/constants/constants.dart';
+import 'package:flutter/material.dart';
 
 class UiUtil {
   AppBorderRadius get borderRadius => AppBorderRadius();
@@ -16,6 +17,18 @@ class UiUtil {
   AppHorizontalSpacing get horizontalSpacing => AppHorizontalSpacing();
 
   AppTextStyle get textStyles => AppTextStyle();
+
+  static isDark(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark;
+  }
+
+  static isLight(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.light;
+  }
+
+  void dismissKeyboard(BuildContext context) {
+    return FocusScope.of(context).requestFocus(FocusNode());
+  }
 }
 
 mixin UiUtilMixin {
