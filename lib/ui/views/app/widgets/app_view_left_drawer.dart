@@ -128,8 +128,9 @@ class _AppViewLeftDrawerState extends State<AppViewLeftDrawer>
               controller: tabController,
               children: [
                 MatchesTabView(
+                  matchings: widget.model.matchings,
                   onTap: (value) {
-                    widget.model.toUserDetailView(value);
+                    widget.model.toUserDetailView(value.targetUser!.id!);
                   },
                 ),
                 MessagesTabView(

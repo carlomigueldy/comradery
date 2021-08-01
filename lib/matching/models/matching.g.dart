@@ -15,9 +15,6 @@ _$_Matching _$_$_MatchingFromJson(Map<String, dynamic> json) {
         : User.fromJson(json['target_user'] as Map<String, dynamic>),
     liked: json['liked'] as bool? ?? false,
     createdBy: json['created_by'] as String,
-    createdByUser: json['created_by_user'] == null
-        ? null
-        : User.fromJson(json['created_by_user'] as Map<String, dynamic>),
     readAt: json['read_at'] == null
         ? null
         : DateTime.parse(json['read_at'] as String),
@@ -40,7 +37,6 @@ Map<String, dynamic> _$_$_MatchingToJson(_$_Matching instance) =>
       'target_user': instance.targetUser,
       'liked': instance.liked,
       'created_by': instance.createdBy,
-      'created_by_user': instance.createdByUser,
       'read_at': instance.readAt?.toIso8601String(),
       'created_at': instance.createdAt?.toIso8601String(),
       'updated_at': instance.updatedAt?.toIso8601String(),

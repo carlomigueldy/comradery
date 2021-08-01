@@ -1,4 +1,5 @@
 import 'package:comradery/common/utils/ui_util.dart';
+import 'package:comradery/matching/models/matching.dart';
 import 'package:comradery/ui/placeholders/placeholder_images.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +7,12 @@ import 'package:flutter/material.dart';
 class MatchesTabView extends StatelessWidget with UiUtilMixin {
   const MatchesTabView({
     Key? key,
+    required this.matchings,
     this.onTap,
   }) : super(key: key);
 
-  final Function(int)? onTap;
+  final List<Matching> matchings;
+  final Function(Matching)? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +35,11 @@ class MatchesTabView extends StatelessWidget with UiUtilMixin {
             crossAxisCount: 3,
             mainAxisSpacing: 10.0,
             crossAxisSpacing: 10.0,
-            children: List.generate(25, (index) {
+            children: List.generate(matchings.length, (index) {
+              final matching = matchings[index];
+
               return InkWell(
-                onTap: () => onTap?.call(index),
+                onTap: () => onTap?.call(matching),
                 child: GridTile(
                   child: Container(
                     decoration: BoxDecoration(
@@ -54,7 +59,7 @@ class MatchesTabView extends StatelessWidget with UiUtilMixin {
                             children: [
                               Flexible(
                                 child: AppText(
-                                  'Name $index',
+                                  '${matching.targetUser?.fullName}',
                                   style:
                                       uiUtil.textStyles.bodySmallBold.copyWith(
                                     color: Colors.white,

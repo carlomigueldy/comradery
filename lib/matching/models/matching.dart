@@ -26,10 +26,6 @@ class Matching with _$Matching {
     )
         required String createdBy,
     @JsonKey(
-      name: 'created_by_user',
-    )
-        User? createdByUser,
-    @JsonKey(
       name: 'read_at',
     )
         DateTime? readAt,

@@ -13,6 +13,7 @@ class AppView extends StatelessWidget with UiUtilMixin {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<AppViewModel>.reactive(
+      onModelReady: (model) => model.init(),
       viewModelBuilder: () => AppViewModel(),
       builder: (
         BuildContext context,
