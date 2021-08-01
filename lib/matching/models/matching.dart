@@ -12,9 +12,9 @@ class Matching with _$Matching {
   factory Matching({
     String? id,
     @JsonKey(
-      name: 'user_id',
+      name: 'target_user_id',
     )
-        required String userId,
+        required String targetUserId,
     @JsonKey(
       name: 'target_user',
     )

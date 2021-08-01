@@ -1,3 +1,4 @@
+import 'package:comradery/common/services/app_snackbar_service.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -61,6 +62,7 @@ class AppRouterId {
     LazySingleton(classType: AuthService),
     LazySingleton(classType: LocalStorageService),
     LazySingleton(classType: ThemeService),
+    LazySingleton(classType: AppSnackbarService),
 
     // feature services
     LazySingleton(classType: UserService),

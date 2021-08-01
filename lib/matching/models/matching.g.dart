@@ -9,7 +9,7 @@ part of 'matching.dart';
 _$_Matching _$_$_MatchingFromJson(Map<String, dynamic> json) {
   return _$_Matching(
     id: json['id'] as String?,
-    userId: json['user_id'] as String,
+    targetUserId: json['target_user_id'] as String,
     targetUser: json['target_user'] == null
         ? null
         : User.fromJson(json['target_user'] as Map<String, dynamic>),
@@ -36,7 +36,7 @@ _$_Matching _$_$_MatchingFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$_$_MatchingToJson(_$_Matching instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'user_id': instance.userId,
+      'target_user_id': instance.targetUserId,
       'target_user': instance.targetUser,
       'liked': instance.liked,
       'created_by': instance.createdBy,

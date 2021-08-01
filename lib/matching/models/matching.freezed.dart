@@ -22,7 +22,7 @@ class _$MatchingTearOff {
 
   _Matching call(
       {String? id,
-      @JsonKey(name: 'user_id') required String userId,
+      @JsonKey(name: 'target_user_id') required String targetUserId,
       @JsonKey(name: 'target_user') User? targetUser,
       bool liked = false,
       @JsonKey(name: 'created_by') required String createdBy,
@@ -33,7 +33,7 @@ class _$MatchingTearOff {
       @JsonKey(name: 'deleted_at') DateTime? deletedAt}) {
     return _Matching(
       id: id,
-      userId: userId,
+      targetUserId: targetUserId,
       targetUser: targetUser,
       liked: liked,
       createdBy: createdBy,
@@ -56,8 +56,8 @@ const $Matching = _$MatchingTearOff();
 /// @nodoc
 mixin _$Matching {
   String? get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_id')
-  String get userId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'target_user_id')
+  String get targetUserId => throw _privateConstructorUsedError;
   @JsonKey(name: 'target_user')
   User? get targetUser => throw _privateConstructorUsedError;
   bool get liked => throw _privateConstructorUsedError;
@@ -86,7 +86,7 @@ abstract class $MatchingCopyWith<$Res> {
       _$MatchingCopyWithImpl<$Res>;
   $Res call(
       {String? id,
-      @JsonKey(name: 'user_id') String userId,
+      @JsonKey(name: 'target_user_id') String targetUserId,
       @JsonKey(name: 'target_user') User? targetUser,
       bool liked,
       @JsonKey(name: 'created_by') String createdBy,
@@ -111,7 +111,7 @@ class _$MatchingCopyWithImpl<$Res> implements $MatchingCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
-    Object? userId = freezed,
+    Object? targetUserId = freezed,
     Object? targetUser = freezed,
     Object? liked = freezed,
     Object? createdBy = freezed,
@@ -126,9 +126,9 @@ class _$MatchingCopyWithImpl<$Res> implements $MatchingCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      userId: userId == freezed
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      targetUserId: targetUserId == freezed
+          ? _value.targetUserId
+          : targetUserId // ignore: cast_nullable_to_non_nullable
               as String,
       targetUser: targetUser == freezed
           ? _value.targetUser
@@ -195,7 +195,7 @@ abstract class _$MatchingCopyWith<$Res> implements $MatchingCopyWith<$Res> {
   @override
   $Res call(
       {String? id,
-      @JsonKey(name: 'user_id') String userId,
+      @JsonKey(name: 'target_user_id') String targetUserId,
       @JsonKey(name: 'target_user') User? targetUser,
       bool liked,
       @JsonKey(name: 'created_by') String createdBy,
@@ -223,7 +223,7 @@ class __$MatchingCopyWithImpl<$Res> extends _$MatchingCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? userId = freezed,
+    Object? targetUserId = freezed,
     Object? targetUser = freezed,
     Object? liked = freezed,
     Object? createdBy = freezed,
@@ -238,9 +238,9 @@ class __$MatchingCopyWithImpl<$Res> extends _$MatchingCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      userId: userId == freezed
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      targetUserId: targetUserId == freezed
+          ? _value.targetUserId
+          : targetUserId // ignore: cast_nullable_to_non_nullable
               as String,
       targetUser: targetUser == freezed
           ? _value.targetUser
@@ -283,7 +283,7 @@ class __$MatchingCopyWithImpl<$Res> extends _$MatchingCopyWithImpl<$Res>
 class _$_Matching extends _Matching {
   _$_Matching(
       {this.id,
-      @JsonKey(name: 'user_id') required this.userId,
+      @JsonKey(name: 'target_user_id') required this.targetUserId,
       @JsonKey(name: 'target_user') this.targetUser,
       this.liked = false,
       @JsonKey(name: 'created_by') required this.createdBy,
@@ -300,8 +300,8 @@ class _$_Matching extends _Matching {
   @override
   final String? id;
   @override
-  @JsonKey(name: 'user_id')
-  final String userId;
+  @JsonKey(name: 'target_user_id')
+  final String targetUserId;
   @override
   @JsonKey(name: 'target_user')
   final User? targetUser;
@@ -329,7 +329,7 @@ class _$_Matching extends _Matching {
 
   @override
   String toString() {
-    return 'Matching(id: $id, userId: $userId, targetUser: $targetUser, liked: $liked, createdBy: $createdBy, createdByUser: $createdByUser, readAt: $readAt, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'Matching(id: $id, targetUserId: $targetUserId, targetUser: $targetUser, liked: $liked, createdBy: $createdBy, createdByUser: $createdByUser, readAt: $readAt, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -338,8 +338,9 @@ class _$_Matching extends _Matching {
         (other is _Matching &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.userId, userId) ||
-                const DeepCollectionEquality().equals(other.userId, userId)) &&
+            (identical(other.targetUserId, targetUserId) ||
+                const DeepCollectionEquality()
+                    .equals(other.targetUserId, targetUserId)) &&
             (identical(other.targetUser, targetUser) ||
                 const DeepCollectionEquality()
                     .equals(other.targetUser, targetUser)) &&
@@ -368,7 +369,7 @@ class _$_Matching extends _Matching {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(userId) ^
+      const DeepCollectionEquality().hash(targetUserId) ^
       const DeepCollectionEquality().hash(targetUser) ^
       const DeepCollectionEquality().hash(liked) ^
       const DeepCollectionEquality().hash(createdBy) ^
@@ -392,7 +393,7 @@ class _$_Matching extends _Matching {
 abstract class _Matching extends Matching {
   factory _Matching(
       {String? id,
-      @JsonKey(name: 'user_id') required String userId,
+      @JsonKey(name: 'target_user_id') required String targetUserId,
       @JsonKey(name: 'target_user') User? targetUser,
       bool liked,
       @JsonKey(name: 'created_by') required String createdBy,
@@ -408,8 +409,8 @@ abstract class _Matching extends Matching {
   @override
   String? get id => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: 'user_id')
-  String get userId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'target_user_id')
+  String get targetUserId => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'target_user')
   User? get targetUser => throw _privateConstructorUsedError;
