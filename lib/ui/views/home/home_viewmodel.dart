@@ -8,9 +8,6 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:supabase/supabase.dart' as sb;
 import 'package:swipe_cards/swipe_cards.dart';
 
-const PLACEHOLDER_IMG =
-    'https://images.pexels.com/photos/7175548/pexels-photo-7175548.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940';
-
 class HomeViewModel extends BaseViewModel {
   final log = Logger();
   final _authService = locator<AuthService>();
