@@ -40,7 +40,14 @@ class HomeView extends StatelessWidget with UiUtilMixin {
                     SwipeCards(
                       matchEngine: model.matchEngine,
                       itemBuilder: (context, index) {
-                        return AppMatchingCard();
+                        return AppMatchingCard(
+                          onTapNope: () {
+                            model.matchEngine.currentItem?.nope();
+                          },
+                          onTapLike: () {
+                            model.matchEngine.currentItem?.like();
+                          },
+                        );
                       },
                       onStackFinished: () {},
                     ),

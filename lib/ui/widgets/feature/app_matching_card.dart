@@ -95,7 +95,7 @@ class AppMatchingCard extends StatelessWidget with UiUtilMixin {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  GestureDetector(
+                  InkWell(
                     onTap: onTapNope,
                     child: CircleAvatar(
                       child: Icon(
@@ -106,7 +106,7 @@ class AppMatchingCard extends StatelessWidget with UiUtilMixin {
                       backgroundColor: theme.primaryColor,
                     ),
                   ),
-                  GestureDetector(
+                  InkWell(
                     onTap: onTapLike,
                     child: CircleAvatar(
                       child: Icon(

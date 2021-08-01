@@ -127,9 +127,21 @@ class _AppViewLeftDrawerState extends State<AppViewLeftDrawer>
             child: TabBarView(
               controller: tabController,
               children: [
-                MatchesTabView(),
-                MessagesTabView(),
-                MyTeamsTabView(),
+                MatchesTabView(
+                  onTap: (value) {
+                    widget.model.toUserDetailView(value);
+                  },
+                ),
+                MessagesTabView(
+                  onTap: (value) {
+                    widget.model.toConversationDetailView(value);
+                  },
+                ),
+                MyTeamsTabView(
+                  onTap: (value) {
+                    widget.model.toTeamDetailView(value);
+                  },
+                ),
               ],
             ),
           ),

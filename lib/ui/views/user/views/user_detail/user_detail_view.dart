@@ -1,3 +1,4 @@
+import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -22,6 +23,9 @@ class UserDetailView extends StatelessWidget {
         Widget? child,
       ) {
         return Scaffold(
+          appBar: AppBar(
+            title: AppText.body('$userId'),
+          ),
           body: Center(
             child: Text(
               'UserDetailView $userId',

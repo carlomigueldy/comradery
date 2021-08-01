@@ -202,8 +202,14 @@ class AppViewRouter extends RouterBase {
       );
     },
     TeamDetailView: (data) {
+      var args = data.getArgs<TeamDetailViewArguments>(
+        orElse: () => TeamDetailViewArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const TeamDetailView(),
+        builder: (context) => TeamDetailView(
+          key: args.key,
+          teamId: data.pathParams['teamId'].getString(),
+        ),
         settings: data,
       );
     },
@@ -248,6 +254,12 @@ class AppViewRouter extends RouterBase {
 class SetupUserProfileViewArguments {
   final Key? key;
   SetupUserProfileViewArguments({this.key});
+}
+
+/// TeamDetailView arguments holder class
+class TeamDetailViewArguments {
+  final Key? key;
+  TeamDetailViewArguments({this.key});
 }
 
 /// ConversationDetailView arguments holder class

@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 class MatchesTabView extends StatelessWidget with UiUtilMixin {
   const MatchesTabView({
     Key? key,
+    this.onTap,
   }) : super(key: key);
+
+  final Function(int)? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -30,36 +33,40 @@ class MatchesTabView extends StatelessWidget with UiUtilMixin {
             mainAxisSpacing: 10.0,
             crossAxisSpacing: 10.0,
             children: List.generate(25, (index) {
-              return GridTile(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: theme.canvasColor,
-                    borderRadius: uiUtil.borderRadius.large,
-                    image: DecorationImage(
-                      image: NetworkImage(PLACEHOLDER_IMG),
-                      fit: BoxFit.cover,
+              return InkWell(
+                onTap: () => onTap?.call(index),
+                child: GridTile(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: theme.canvasColor,
+                      borderRadius: uiUtil.borderRadius.large,
+                      image: DecorationImage(
+                        image: NetworkImage(PLACEHOLDER_IMG),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  child: Padding(
-                    padding: uiUtil.edgeInsets.horizontalSymmetric10,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Row(
-                          children: [
-                            Flexible(
-                              child: AppText(
-                                'Name $index',
-                                style: uiUtil.textStyles.bodySmallBold.copyWith(
-                                  color: Colors.white,
+                    child: Padding(
+                      padding: uiUtil.edgeInsets.horizontalSymmetric10,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Row(
+                            children: [
+                              Flexible(
+                                child: AppText(
+                                  'Name $index',
+                                  style:
+                                      uiUtil.textStyles.bodySmallBold.copyWith(
+                                    color: Colors.white,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                overflow: TextOverflow.ellipsis,
                               ),
-                            ),
-                          ],
-                        ),
-                        uiUtil.verticalSpacing.normal,
-                      ],
+                            ],
+                          ),
+                          uiUtil.verticalSpacing.normal,
+                        ],
+                      ),
                     ),
                   ),
                 ),

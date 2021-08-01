@@ -15,4 +15,25 @@ class AppViewModel extends BaseViewModel {
     _authService.signOut();
     _router.replaceWith(Routes.signInView);
   }
+
+  void toConversationDetailView(int value) {
+    _router.navigateTo(
+      AppViewRoutes.conversationDetailView(conversationId: 'value$value'),
+      id: AppRouterId.appView,
+    );
+  }
+
+  void toUserDetailView(int value) {
+    _router.navigateTo(
+      AppViewRoutes.userDetailView(userId: 'value$value'),
+      id: AppRouterId.appView,
+    );
+  }
+
+  void toTeamDetailView(int value) {
+    _router.navigateTo(
+      AppViewRoutes.teamDetailView(teamId: 'value$value'),
+      id: AppRouterId.appView,
+    );
+  }
 }

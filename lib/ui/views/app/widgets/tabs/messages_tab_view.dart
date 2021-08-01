@@ -6,7 +6,12 @@ import 'package:flutter/material.dart';
 class MessagesTabView extends StatelessWidget with UiUtilMixin {
   const MessagesTabView({
     Key? key,
+    this.onTap,
+    this.onLongPress,
   }) : super(key: key);
+
+  final Function(int)? onTap;
+  final Function(int)? onLongPress;
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +26,9 @@ class MessagesTabView extends StatelessWidget with UiUtilMixin {
             itemCount: 25,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              return _MessageListTile(
-                onTap: () {},
-                onLongPress: () {},
+              return _ConversationListTile(
+                onTap: () => onTap?.call(index),
+                onLongPress: () => onLongPress?.call(index),
               );
             },
             separatorBuilder: (context, index) {
@@ -37,8 +42,8 @@ class MessagesTabView extends StatelessWidget with UiUtilMixin {
   }
 }
 
-class _MessageListTile extends StatefulWidget {
-  const _MessageListTile({
+class _ConversationListTile extends StatefulWidget {
+  const _ConversationListTile({
     Key? key,
     this.onTap,
     this.onLongPress,
@@ -48,10 +53,11 @@ class _MessageListTile extends StatefulWidget {
   final Function()? onLongPress;
 
   @override
-  __MessageListTileState createState() => __MessageListTileState();
+  _ConversationListTileState createState() => _ConversationListTileState();
 }
 
-class __MessageListTileState extends State<_MessageListTile> with UiUtilMixin {
+class _ConversationListTileState extends State<_ConversationListTile>
+    with UiUtilMixin {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
