@@ -43,9 +43,17 @@ class HomeViewMainContainer extends ViewModelWidget<HomeViewModel>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  AppButton.text(label: 'Nope', onPressed: () {}),
+                  AppButton.text(
+                      label: 'Nope',
+                      onPressed: () {
+                        model.matchEngine.currentItem?.nope();
+                      }),
                   AppButton.text(label: 'Open Profile', onPressed: () {}),
-                  AppButton.text(label: 'Like', onPressed: () {}),
+                  AppButton.text(
+                      label: 'Like',
+                      onPressed: () {
+                        model.matchEngine.currentItem?.like();
+                      }),
                 ],
               ),
             ),
