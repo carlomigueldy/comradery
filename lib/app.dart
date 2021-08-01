@@ -32,7 +32,7 @@ import 'ui/views/conversation/conversation_routes.dart' as conversation;
 import 'ui/views/user/user_routes.dart' as user;
 import 'ui/views/app/app_routes.dart' as app;
 
-class RouterId {
+class AppRouterId {
   static const appView = 1;
 }
 

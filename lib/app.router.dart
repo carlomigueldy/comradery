@@ -160,7 +160,7 @@ class StackedRouter extends RouterBase {
 }
 
 class AppViewRoutes {
-  static const String homeView = 'home';
+  static const String homeView = '';
   static const String _teamDetailView = 'teams/:teamId';
   static String teamDetailView({@required dynamic teamId}) => 'teams/$teamId';
   static const String _welcomeToTeamView = 'teams/:teamId/welcome';

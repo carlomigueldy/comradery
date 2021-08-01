@@ -64,7 +64,7 @@ class HomeViewModel extends BaseViewModel {
     // );
     _router.navigateTo(
       AppViewRoutes.conversationDetailView(conversationId: 'conversationId'),
-      id: RouterId.appView,
+      id: AppRouterId.appView,
     );
   }
 }

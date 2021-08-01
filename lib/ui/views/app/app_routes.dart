@@ -5,7 +5,7 @@ import 'views/home/home_view.dart';
 const routes = [
   MaterialRoute(
     page: HomeView,
-    path: 'home',
+    path: '',
     initial: true,
   ),
 ];
