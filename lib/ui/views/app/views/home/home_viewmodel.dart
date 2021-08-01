@@ -30,6 +30,7 @@ class HomeViewModel extends BaseViewModel {
   List<User> get users => _users.where((element) {
         return !matchingsTargetUserIds.contains(element.id);
       }).toList();
+  List<String> get userIds => users.map((e) => e.id!).toList();
 
   String get _fetchUsersKey => '_fetchUsersKey';
   bool get fetchUsersBusy => busy(_fetchUsersKey);
@@ -71,7 +72,9 @@ class HomeViewModel extends BaseViewModel {
 
       notifyListeners();
     }).subscribe();
-    log.v('matchingsTargetUserIds "$matchingsTargetUserIds"');
+    log.v(
+      'matchingsTargetUserIds "$matchingsTargetUserIds", userIds "$userIds"',
+    );
     log.i(
       'users.length "${users.length}"',
     );
@@ -119,7 +122,7 @@ class HomeViewModel extends BaseViewModel {
     final response = await runBusyFuture<sb.PostgrestResponse>(
       supabase
           .from(_matchingService.table)
-          .select('*, target_user: users (*)')
+          .select('*, target_user: users (id, first_name, email)')
           .eq('created_by', _authService.user!.id!)
           .is_('deleted_at', null)
           .execute(),
