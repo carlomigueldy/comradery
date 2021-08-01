@@ -21,12 +21,20 @@ import 'common/services/theme_service.dart';
 import 'user/services/user_service.dart';
 
 // views
-import 'ui/views/home/home_view.dart';
+import 'ui/views/app/app_view.dart';
 import 'ui/views/startup/startup_view.dart';
 
 // routes
 import 'ui/views/auth/auth_routes.dart' as auth;
 import 'ui/views/on_boarding/on_boarding_routes.dart' as on_boarding;
+import 'ui/views/team/team_routes.dart' as team;
+import 'ui/views/conversation/conversation_routes.dart' as conversation;
+import 'ui/views/user/user_routes.dart' as user;
+import 'ui/views/app/app_routes.dart' as app;
+
+class RouterId {
+  static const appView = 1;
+}
 
 @StackedApp(
   routes: [
@@ -36,8 +44,14 @@ import 'ui/views/on_boarding/on_boarding_routes.dart' as on_boarding;
       path: '/',
     ),
     CupertinoRoute(
-      page: HomeView,
-      path: 'home',
+      page: AppView,
+      path: 'app',
+      children: [
+        ...app.routes,
+        ...team.routes,
+        ...conversation.routes,
+        ...user.routes,
+      ],
     ),
     ...auth.routes,
     ...on_boarding.routes,

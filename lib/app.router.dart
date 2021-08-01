@@ -10,11 +10,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+import 'ui/views/app/app_view.dart';
+import 'ui/views/app/views/home/home_view.dart';
 import 'ui/views/auth/views/forgot_password/forgot_password_view.dart';
 import 'ui/views/auth/views/reset_password/reset_password_view.dart';
 import 'ui/views/auth/views/sign_in/sign_in_view.dart';
 import 'ui/views/auth/views/sign_up/sign_up_view.dart';
-import 'ui/views/home/home_view.dart';
+import 'ui/views/conversation/views/conversation_detail/conversation_detail_view.dart';
 import 'ui/views/on_boarding/views/create_team/views/setup_team_profile/setup_team_profile_view.dart';
 import 'ui/views/on_boarding/views/create_team/views/upload_team_photo/upload_team_photo_view.dart';
 import 'ui/views/on_boarding/views/individual/views/select_goal/select_goal_view.dart';
@@ -22,14 +24,17 @@ import 'ui/views/on_boarding/views/individual/views/select_interests/select_inte
 import 'ui/views/on_boarding/views/individual/views/setup_user_profile/setup_user_profile_view.dart';
 import 'ui/views/on_boarding/views/individual/views/upload_photo/upload_photo_view.dart';
 import 'ui/views/startup/startup_view.dart';
+import 'ui/views/team/views/team_detail/team_detail_view.dart';
+import 'ui/views/team/views/welcome_to_team/welcome_to_team_view.dart';
+import 'ui/views/user/views/user_detail/user_detail_view.dart';
 
 class Routes {
   static const String startupView = '/';
-  static const String homeView = 'home';
-  static const String signInView = 'auth/sign-in';
-  static const String signUpView = 'auth/sign-up';
-  static const String resetPasswordView = 'auth/reset-password';
-  static const String forgotPasswordView = 'auth/forgot-password';
+  static const String appView = 'app';
+  static const String signInView = '/auth/sign-in';
+  static const String signUpView = '/auth/sign-up';
+  static const String resetPasswordView = '/auth/reset-password';
+  static const String forgotPasswordView = '/auth/forgot-password';
   static const String setupTeamProfileView = 'on-boarding/setup-team-profile';
   static const String uploadTeamPhotoView = 'on-boarding/upload-team-photo';
   static const String selectGoalView = 'on-boarding/select-goal';
@@ -38,7 +43,7 @@ class Routes {
   static const String setupUserProfileView = 'on-boarding/setup-profile';
   static const all = <String>{
     startupView,
-    homeView,
+    appView,
     signInView,
     signUpView,
     resetPasswordView,
@@ -57,7 +62,11 @@ class StackedRouter extends RouterBase {
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
     RouteDef(Routes.startupView, page: StartupView),
-    RouteDef(Routes.homeView, page: HomeView),
+    RouteDef(
+      Routes.appView,
+      page: AppView,
+      generator: AppViewRouter(),
+    ),
     RouteDef(Routes.signInView, page: SignInView),
     RouteDef(Routes.signUpView, page: SignUpView),
     RouteDef(Routes.resetPasswordView, page: ResetPasswordView),
@@ -78,9 +87,9 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    HomeView: (data) {
+    AppView: (data) {
       return CupertinoPageRoute<dynamic>(
-        builder: (context) => const HomeView(),
+        builder: (context) => const AppView(),
         settings: data,
       );
     },
@@ -150,6 +159,87 @@ class StackedRouter extends RouterBase {
   };
 }
 
+class AppViewRoutes {
+  static const String homeView = 'home';
+  static const String _teamDetailView = 'teams/:teamId';
+  static String teamDetailView({@required dynamic teamId}) => 'teams/$teamId';
+  static const String _welcomeToTeamView = 'teams/:teamId/welcome';
+  static String welcomeToTeamView({@required dynamic teamId}) =>
+      'teams/$teamId/welcome';
+  static const String _conversationDetailView =
+      '/conversations/:conversationId';
+  static String conversationDetailView({@required dynamic conversationId}) =>
+      '/conversations/$conversationId';
+  static const String _userDetailView = 'users/:userId';
+  static String userDetailView({@required dynamic userId}) => 'users/$userId';
+  static const all = <String>{
+    homeView,
+    _teamDetailView,
+    _welcomeToTeamView,
+    _conversationDetailView,
+    _userDetailView,
+  };
+}
+
+class AppViewRouter extends RouterBase {
+  @override
+  List<RouteDef> get routes => _routes;
+  final _routes = <RouteDef>[
+    RouteDef(AppViewRoutes.homeView, page: HomeView),
+    RouteDef(AppViewRoutes._teamDetailView, page: TeamDetailView),
+    RouteDef(AppViewRoutes._welcomeToTeamView, page: WelcomeToTeamView),
+    RouteDef(AppViewRoutes._conversationDetailView,
+        page: ConversationDetailView),
+    RouteDef(AppViewRoutes._userDetailView, page: UserDetailView),
+  ];
+  @override
+  Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
+  final _pagesMap = <Type, StackedRouteFactory>{
+    HomeView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const HomeView(),
+        settings: data,
+      );
+    },
+    TeamDetailView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const TeamDetailView(),
+        settings: data,
+      );
+    },
+    WelcomeToTeamView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const WelcomeToTeamView(),
+        settings: data,
+      );
+    },
+    ConversationDetailView: (data) {
+      var args = data.getArgs<ConversationDetailViewArguments>(
+        orElse: () => ConversationDetailViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ConversationDetailView(
+          key: args.key,
+          conversationId: data.pathParams['conversationId'].getString(),
+        ),
+        settings: data,
+      );
+    },
+    UserDetailView: (data) {
+      var args = data.getArgs<UserDetailViewArguments>(
+        orElse: () => UserDetailViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => UserDetailView(
+          key: args.key,
+          userId: data.pathParams['userId'].optString(),
+        ),
+        settings: data,
+      );
+    },
+  };
+}
+
 /// ************************************************************************
 /// Arguments holder classes
 /// *************************************************************************
@@ -158,4 +248,16 @@ class StackedRouter extends RouterBase {
 class SetupUserProfileViewArguments {
   final Key? key;
   SetupUserProfileViewArguments({this.key});
+}
+
+/// ConversationDetailView arguments holder class
+class ConversationDetailViewArguments {
+  final Key? key;
+  ConversationDetailViewArguments({this.key});
+}
+
+/// UserDetailView arguments holder class
+class UserDetailViewArguments {
+  final Key? key;
+  UserDetailViewArguments({this.key});
 }

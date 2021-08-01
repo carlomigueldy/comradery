@@ -22,6 +22,7 @@ import 'notification/services/notification_service.dart';
 import 'team/services/team_member_service.dart';
 import 'team/services/team_request_service.dart';
 import 'team/services/team_service.dart';
+import 'user/services/user_interest_service.dart';
 import 'user/services/user_service.dart';
 
 final locator = StackedLocator.instance;
@@ -36,6 +37,7 @@ void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
   locator.registerLazySingleton(() => LocalStorageService());
   locator.registerLazySingleton(() => ThemeService());
   locator.registerLazySingleton(() => UserService());
+  locator.registerLazySingleton(() => UserInterestService());
   locator.registerLazySingleton(() => ConversationService());
   locator.registerLazySingleton(() => ConversationMessageService());
   locator.registerLazySingleton(() => ConversationParticipantService());

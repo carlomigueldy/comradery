@@ -1,26 +1,26 @@
 import 'package:comradery/common/utils/ui_util.dart';
 import 'package:comradery/ui/placeholders/placeholder_images.dart';
-import 'package:comradery/ui/views/home/home_viewmodel.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:flutter/material.dart';
 
+import '../app_viewmodel.dart';
 import 'tabs/matches_tab_view.dart';
 import 'tabs/messages_tab_view.dart';
 import 'tabs/my_teams_tab_view.dart';
 
-class HomeViewLeftDrawer extends StatefulWidget {
-  const HomeViewLeftDrawer({
+class AppViewLeftDrawer extends StatefulWidget {
+  const AppViewLeftDrawer({
     Key? key,
     required this.model,
   }) : super(key: key);
 
-  final HomeViewModel model;
+  final AppViewModel model;
 
   @override
-  _HomeViewLeftDrawerState createState() => _HomeViewLeftDrawerState();
+  _AppViewLeftDrawerState createState() => _AppViewLeftDrawerState();
 }
 
-class _HomeViewLeftDrawerState extends State<HomeViewLeftDrawer>
+class _AppViewLeftDrawerState extends State<AppViewLeftDrawer>
     with UiUtilMixin, SingleTickerProviderStateMixin {
   late TabController tabController;
 

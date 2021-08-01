@@ -6,6 +6,6 @@ class SelectInterestsViewModel extends BaseViewModel {
   final _router = locator<NavigationService>();
 
   void toHomeView() {
-    _router.navigateTo(Routes.homeView);
+    _router.navigateTo(Routes.appView);
   }
 }

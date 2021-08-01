@@ -30,11 +30,6 @@ class HomeViewModel extends BaseViewModel {
     fetchUsers();
   }
 
-  void logout() {
-    _authService.signOut();
-    _router.replaceWith(Routes.signInView);
-  }
-
   Future<void> fetchUsers() async {
     final response = await runBusyFuture<sb.PostgrestResponse>(
       _userService.all(),
@@ -61,5 +56,15 @@ class HomeViewModel extends BaseViewModel {
       }).toList(),
     );
     notifyListeners();
+  }
+
+  void viewUserProfile(String userId) {
+    // _router.navigateTo(
+    //   HomeViewRoutes.userDetailView(userId: userId),
+    // );
+    _router.navigateTo(
+      AppViewRoutes.conversationDetailView(conversationId: 'conversationId'),
+      id: RouterId.appView,
+    );
   }
 }

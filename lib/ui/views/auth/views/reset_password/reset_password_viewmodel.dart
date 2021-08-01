@@ -22,7 +22,7 @@ class ResetPasswordViewModel extends BaseViewModel {
         return;
       }
 
-      await _router.replaceWith(Routes.homeView);
+      await _router.replaceWith(Routes.appView);
     } catch (e) {
       log.e('error "$e"');
     } finally {
