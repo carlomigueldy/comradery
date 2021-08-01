@@ -35,7 +35,7 @@ class AppView extends StatelessWidget with UiUtilMixin {
               ),
               Expanded(
                 flex: 3,
-                child: ExtendedNavigator(
+                child: ExtendedNavigator<AppViewRouter>(
                   router: AppViewRouter(),
                   navigatorKey: StackedService.nestedNavigationKey(
                     AppRouterId.appView,

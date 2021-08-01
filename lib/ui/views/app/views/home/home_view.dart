@@ -46,7 +46,7 @@ class HomeView extends StatelessWidget with UiUtilMixin {
                     ),
                   uiUtil.verticalSpacing.large,
                   Container(
-                    width: mediaQuery.size.width * 0.3,
+                    // width: mediaQuery.size.width * 0.3,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -54,6 +54,12 @@ class HomeView extends StatelessWidget with UiUtilMixin {
                             label: 'Nope',
                             onPressed: () {
                               model.matchEngine.currentItem?.nope();
+                            }),
+                        // TODO: To remove
+                        AppButton.text(
+                            label: 'Chat',
+                            onPressed: () {
+                              model.toConversationView();
                             }),
                         AppButton.text(
                           label: 'Open Profile',

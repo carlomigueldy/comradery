@@ -44,7 +44,7 @@ class _AppViewLeftDrawerState extends State<AppViewLeftDrawer>
       height: double.infinity,
       width: 375,
       decoration: BoxDecoration(
-        color: Colors.grey[100],
+        color: uiUtil.colors.veryLightGrey,
       ),
       child: Column(
         children: [

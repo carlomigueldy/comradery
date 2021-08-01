@@ -1,5 +1,6 @@
 import 'package:comradery/app.dart';
 import 'package:comradery/auth/services/auth_service.dart';
+import 'package:comradery/ui/views/conversation/views/conversation_detail/conversation_detail_view.dart';
 import 'package:comradery/user/models/user.dart';
 import 'package:comradery/user/services/user_service.dart';
 import 'package:logger/logger.dart';
@@ -59,12 +60,22 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void viewUserProfile(String userId) {
-    // _router.navigateTo(
-    //   HomeViewRoutes.userDetailView(userId: userId),
-    // );
     _router.navigateTo(
-      AppViewRoutes.conversationDetailView(conversationId: 'conversationId'),
+      AppViewRoutes.userDetailView(userId: userId),
       id: AppRouterId.appView,
     );
+  }
+
+  void toConversationView() {
+    _router.navigateWithTransition(
+      ConversationDetailView(conversationId: '1231233'),
+      transition: 'none',
+      id: AppRouterId.appView,
+    );
+
+    // _router.navigateTo(
+    //   AppViewRoutes.conversationDetailView(conversationId: '123dddd'),
+    //   id: AppRouterId.appView,
+    // );
   }
 }
