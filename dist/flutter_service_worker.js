@@ -3,28 +3,29 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "version.json": "dd97e380589dc2a1be5d14b75d362396",
-"index.html": "ea8c138d34aeee075ddb9c6750e2f344",
-"/": "ea8c138d34aeee075ddb9c6750e2f344",
-"main.dart.js": "ed1bea2be814228962c1377a161b6ddf",
+  "assets/AssetManifest.json": "3df9e4705e0f1fdb4b078139ba6c74c9",
+"assets/assets/fonts/Sora/OFL.txt": "6ed93967ff0dc6dd9c8d31c17f817a06",
+"assets/assets/fonts/Sora/Sora-Bold.ttf": "8b24edfb87ce7942c970dbaeaa73a511",
+"assets/assets/fonts/Sora/Sora-ExtraBold.ttf": "23b29030a22fc02a05c8ca5d2cda8bc5",
+"assets/assets/fonts/Sora/Sora-ExtraLight.ttf": "1c34f38a4a8927db7cb4d3f1a83513bc",
+"assets/assets/fonts/Sora/Sora-Light.ttf": "7f06929d385c8e70bea8a38323131f95",
+"assets/assets/fonts/Sora/Sora-Medium.ttf": "9c1ba7104b2436c8727769f61996981d",
+"assets/assets/fonts/Sora/Sora-Regular.ttf": "aa64200d21f88f287becbe3f3cebaf0e",
+"assets/assets/fonts/Sora/Sora-SemiBold.ttf": "fb54a7a5fdc54d9385f3f42421083ca4",
+"assets/assets/fonts/Sora/Sora-Thin.ttf": "c41ed373cfbf85cd6deb945dbd4996c0",
+"assets/dist/assets/dotenv": "9afc40884076b132de2a821f49079c61",
+"assets/dotenv": "9afc40884076b132de2a821f49079c61",
+"assets/FontManifest.json": "2cc6cc75f2d817db8687e279fc3b4950",
+"assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
+"assets/NOTICES": "5cb87dcd732706b19a6dba10af456aa5",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
-"manifest.json": "25395fce6946a75140a9c11c16eedcca",
-"assets/dotenv": "5d3a69bd257b3caa48731bde5950b41b",
-"assets/AssetManifest.json": "ea63fc6ff37ec48a751d970cf856bbac",
-"assets/NOTICES": "21ede38977142e142c310102cc29e065",
-"assets/FontManifest.json": "2cc6cc75f2d817db8687e279fc3b4950",
-"assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
-"assets/assets/fonts/Sora/Sora-Thin.ttf": "c41ed373cfbf85cd6deb945dbd4996c0",
-"assets/assets/fonts/Sora/Sora-ExtraBold.ttf": "23b29030a22fc02a05c8ca5d2cda8bc5",
-"assets/assets/fonts/Sora/Sora-Bold.ttf": "8b24edfb87ce7942c970dbaeaa73a511",
-"assets/assets/fonts/Sora/Sora-Light.ttf": "7f06929d385c8e70bea8a38323131f95",
-"assets/assets/fonts/Sora/Sora-Regular.ttf": "aa64200d21f88f287becbe3f3cebaf0e",
-"assets/assets/fonts/Sora/OFL.txt": "969851e3a70122069a4d9ee61dd5a2ed",
-"assets/assets/fonts/Sora/Sora-Medium.ttf": "9c1ba7104b2436c8727769f61996981d",
-"assets/assets/fonts/Sora/Sora-SemiBold.ttf": "fb54a7a5fdc54d9385f3f42421083ca4",
-"assets/assets/fonts/Sora/Sora-ExtraLight.ttf": "1c34f38a4a8927db7cb4d3f1a83513bc"
+"index.html": "ef5ce3e82e7c52c8590cb171ca9c55f0",
+"/": "ef5ce3e82e7c52c8590cb171ca9c55f0",
+"main.dart.js": "50ff480e474a2521a96ad9f1aa4bca71",
+"manifest.json": "55076722cfa659413d1df2011cc3ff43",
+"version.json": "dd97e380589dc2a1be5d14b75d362396"
 };
 
 // The application shell files that are downloaded before a service worker can
