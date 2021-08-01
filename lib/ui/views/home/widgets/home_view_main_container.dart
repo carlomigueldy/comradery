@@ -23,6 +23,8 @@ class HomeViewMainContainer extends ViewModelWidget<HomeViewModel>
     return SingleChildScrollView(
       child: Container(
         width: mediaQuery.size.width,
+        height: mediaQuery.size.height,
+        // color: theme.primaryColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -54,6 +54,7 @@ class _HomeViewLeftDrawerState extends State<HomeViewLeftDrawer>
                   ListTile(
                     leading: CircleAvatar(
                       backgroundColor: theme.primaryColor,
+                      backgroundImage: NetworkImage(COMRADE_DOGE_IMG),
                     ),
                     title: AppText.body('John Doe'),
                     subtitle: AppText.bodySmall(
@@ -129,7 +130,7 @@ class _HomeViewLeftDrawerState extends State<HomeViewLeftDrawer>
   }
 }
 
-class _MyTeamsTabView extends StatelessWidget {
+class _MyTeamsTabView extends StatelessWidget with UiUtilMixin {
   const _MyTeamsTabView({
     Key? key,
   }) : super(key: key);
@@ -138,7 +139,36 @@ class _MyTeamsTabView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Container();
+    return Padding(
+      padding: uiUtil.edgeInsets.horizontalSymmetric25,
+      child: ListView.separated(
+        shrinkWrap: true,
+        itemCount: 25,
+        itemBuilder: (context, index) {
+          return Container(
+            height: 175,
+            decoration: BoxDecoration(
+              color: theme.primaryColor,
+              borderRadius: uiUtil.borderRadius.large,
+              image: DecorationImage(
+                image: NetworkImage(PLACEHOLDER_IMG),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Center(
+                child: AppText.bodyBold(
+              'Team $index',
+              style: uiUtil.textStyles.bodyBold.copyWith(
+                color: Colors.white,
+              ),
+            )),
+          );
+        },
+        separatorBuilder: (context, index) {
+          return uiUtil.verticalSpacing.large;
+        },
+      ),
+    );
   }
 }
 
@@ -200,6 +230,7 @@ class __MessageListTileState extends State<_MessageListTile> with UiUtilMixin {
             uiUtil.horizontalSpacing.normal,
             CircleAvatar(
               backgroundColor: theme.primaryColor,
+              backgroundImage: NetworkImage(COMRADE_DOGE_IMG),
               radius: 24,
             ),
             uiUtil.horizontalSpacing.large,
@@ -258,7 +289,7 @@ class _MatchesTabView extends StatelessWidget with UiUtilMixin {
           return GridTile(
             child: Container(
               decoration: BoxDecoration(
-                color: theme.primaryColor,
+                color: theme.canvasColor,
                 borderRadius: uiUtil.borderRadius.large,
                 image: DecorationImage(
                   image: NetworkImage(PLACEHOLDER_IMG),
