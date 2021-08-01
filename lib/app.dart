@@ -5,6 +5,16 @@ export 'app.locator.dart';
 export 'app.router.dart';
 
 // services
+import 'conversation/services/conversation_message_service.dart';
+import 'conversation/services/conversation_participant_service.dart';
+import 'conversation/services/conversation_service.dart';
+import 'interest/services/interest_service.dart';
+import 'matching/services/matching_service.dart';
+import 'notification/services/notification_service.dart';
+import 'team/services/team_member_service.dart';
+import 'team/services/team_request_service.dart';
+import 'team/services/team_service.dart';
+import 'user/services/user_interest_service.dart';
 import 'auth/services/auth_service.dart';
 import 'common/services/local_storage_service.dart';
 import 'common/services/theme_service.dart';
@@ -40,6 +50,16 @@ import 'ui/views/on_boarding/on_boarding_routes.dart' as on_boarding;
 
     // feature services
     LazySingleton(classType: UserService),
+    LazySingleton(classType: UserInterestService),
+    LazySingleton(classType: ConversationService),
+    LazySingleton(classType: ConversationMessageService),
+    LazySingleton(classType: ConversationParticipantService),
+    LazySingleton(classType: TeamService),
+    LazySingleton(classType: TeamMemberService),
+    LazySingleton(classType: TeamRequestService),
+    LazySingleton(classType: NotificationService),
+    LazySingleton(classType: MatchingService),
+    LazySingleton(classType: InterestService),
 
     // stacked services
     LazySingleton(classType: NavigationService),

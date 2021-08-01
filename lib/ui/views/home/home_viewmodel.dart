@@ -1,16 +1,26 @@
 import 'package:comradery/app.dart';
 import 'package:comradery/auth/services/auth_service.dart';
+import 'package:comradery/user/models/user.dart';
 import 'package:comradery/user/services/user_service.dart';
 import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:supabase/supabase.dart';
+import 'package:supabase/supabase.dart' as sb;
+import 'package:swipe_cards/swipe_cards.dart';
+
+const PLACEHOLDER_IMG =
+    'https://images.pexels.com/photos/7175548/pexels-photo-7175548.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940';
 
 class HomeViewModel extends BaseViewModel {
   final log = Logger();
   final _authService = locator<AuthService>();
   final _userService = locator<UserService>();
   final _router = locator<NavigationService>();
+
+  MatchEngine _matchEngine = MatchEngine(
+    swipeItems: [],
+  );
+  MatchEngine get matchEngine => _matchEngine;
 
   List<User> _users = [];
   List<User> get users => _users;
@@ -27,7 +37,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> fetchUsers() async {
-    final response = await runBusyFuture<PostgrestResponse>(
+    final response = await runBusyFuture<sb.PostgrestResponse>(
       _userService.all(),
       busyObject: _fetchUsersKey,
       throwException: true,
@@ -39,6 +49,18 @@ class HomeViewModel extends BaseViewModel {
     }
 
     _users = (response.data as List).map((e) => User.fromJson(e)).toList();
+    _matchEngine = MatchEngine(
+      swipeItems: _users.map((user) {
+        return SwipeItem(
+          likeAction: () {
+            log.v('like "${user.id}"');
+          },
+          nopeAction: () {
+            log.v('nope "${user.id}"');
+          },
+        );
+      }).toList(),
+    );
     notifyListeners();
   }
 }
