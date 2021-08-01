@@ -18,7 +18,9 @@ class AppViewModel extends BaseViewModel {
   String get userEmail => _authService.user?.email ?? '-';
 
   List<Matching> _matchings = [];
-  List<Matching> get matchings => _matchings;
+  List<Matching> get matchings => _matchings.where((element) {
+        return !targettedMatchings.contains(element);
+      }).toList();
   String get _fetchMatchedIndividualsKey => '_fetchMatchedIndividualsKey';
   bool get fetchMatchedIndividualsBusy => busy(_fetchMatchedIndividualsKey);
 
