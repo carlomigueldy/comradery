@@ -18,23 +18,27 @@ class AppViewModel extends BaseViewModel {
   String get userEmail => _authService.user?.email ?? '-';
 
   List<Matching> _matchings = [];
-  List<Matching> get matchings => _matchings.where((element) {
-        return !targettedMatchings.contains(element);
+  List<Matching> get matchings => _matchings;
+  List<String> get matchingsIds => _matchings.map((e) => e.id!).toList();
+  List<Matching> get filteredMatchings => _matchings.where((element) {
+        return targettedMatchingTargetUserIds.contains(element.createdBy);
       }).toList();
-  String get _fetchMatchedIndividualsKey => '_fetchMatchedIndividualsKey';
-  bool get fetchMatchedIndividualsBusy => busy(_fetchMatchedIndividualsKey);
+  List<String> get filteredMatchingsIds =>
+      filteredMatchings.map((e) => e.id!).toList();
+  String get _fetchMyMatchingsKey => '_fetchMyMatchingsKey';
+  bool get fetchMyMatchingsBusy => busy(_fetchMyMatchingsKey);
 
   List<Matching> _targettedMatchings = [];
   List<Matching> get targettedMatchings => _targettedMatchings;
-  String get _fetchMatchedTargetIndividualsKey =>
-      '_fetchMatchedTargetIndividualsKey';
-  bool get fetchMatchedTargetIndividualsBusy =>
-      busy(_fetchMatchedTargetIndividualsKey);
+  List<String> get targettedMatchingTargetUserIds =>
+      targettedMatchings.map((e) => e.targetUserId).toList();
+  String get _fetchWhoLikedMeKey => '_fetchWhoLikedMeKey';
+  bool get fetchWhoLikedMeBusy => busy(_fetchWhoLikedMeKey);
 
   Future<void> init() async {
     await Future.wait([
-      fetchMatchedIndividuals(),
-      fetchMatchedTargetIndividuals(),
+      fetchWhoLikedMe(),
+      fetchMyMatchings(),
     ]);
 
     // INSERT
@@ -44,12 +48,12 @@ class AppViewModel extends BaseViewModel {
     )
         .on(SupabaseEventTypes.insert, (payload) {
       log.v('payload?.newRecord "${payload.newRecord}"');
-      final matching = Matching.fromJson(payload.newRecord);
+      // final matching = Matching.fromJson(payload.newRecord);
 
-      // TODO: Like back logic need to implement
-      if (matching.targetUserId == _authService.user!.id! && matching.liked) {
-        _matchings.add(matching);
-      }
+      // // TODO: Like back logic need to implement
+      // if (matching.targetUserId == _authService.user!.id! && matching.liked) {
+      //   _matchings.add(matching);
+      // }
 
       notifyListeners();
     }).subscribe();
@@ -68,22 +72,30 @@ class AppViewModel extends BaseViewModel {
           .removeWhere((element) => element.id == payload.oldRecord['id']);
       notifyListeners();
     }).subscribe();
+
+    log.i(
+      'filteredMatchingsIds "$filteredMatchingsIds"\n'
+      'targettedMatchingTargetUserIds "$targettedMatchingTargetUserIds"\n'
+      'matchingsIds "$matchingsIds"\n',
+    );
   }
 
-  Future<void> fetchMatchedIndividuals() async {
+  Future<void> fetchMyMatchings() async {
     final response = await runBusyFuture<PostgrestResponse>(
       supabase
           .from(_matchingService.table)
-          .select('*, created_by_user: users (*)')
+          .select(
+            '*, created_by_user: users (id, first_name, last_name, email)',
+          )
           .eq('target_user_id', _authService.user!.id!)
           .neq('created_by', _authService.user!.id!)
           .is_('liked', true)
           .is_('deleted_at', null)
           .execute(),
-      busyObject: _fetchMatchedIndividualsKey,
+      busyObject: _fetchMyMatchingsKey,
       throwException: true,
     );
-    log.v('response "${response.toJson()}"');
+    log.v('fetchMyMatchings-response "${response.toJson()}"');
 
     if (response.error != null) {
       log.e(response.error?.message);
@@ -95,20 +107,22 @@ class AppViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> fetchMatchedTargetIndividuals() async {
+  Future<void> fetchWhoLikedMe() async {
     final response = await runBusyFuture<PostgrestResponse>(
       supabase
           .from(_matchingService.table)
-          .select('*, created_by_user: users (*)')
+          .select(
+            '*, created_by_user: users (id, first_name, last_name, email)',
+          )
           .neq('target_user_id', _authService.user!.id!)
           .eq('created_by', _authService.user!.id!)
           .is_('liked', true)
           .is_('deleted_at', null)
           .execute(),
-      busyObject: _fetchMatchedTargetIndividualsKey,
+      busyObject: _fetchWhoLikedMeKey,
       throwException: true,
     );
-    log.v('response "${response.toJson()}"');
+    log.v('fetchWhoLikedMe-response "${response.toJson()}"');
 
     if (response.error != null) {
       log.e(response.error?.message);

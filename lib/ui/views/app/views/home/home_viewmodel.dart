@@ -38,8 +38,8 @@ class HomeViewModel extends BaseViewModel {
   List<Matching> get matchings => _matchings;
   List<String> get matchingsTargetUserIds =>
       _matchings.map((e) => e.targetUserId).toList();
-  String get _fetchAuthUserMatchingsKey => '_fetchAuthUserMatchingsKey';
-  bool get fetchAuthUserMatchingsBusy => busy(_fetchAuthUserMatchingsKey);
+  String get _fetchMyMatchingsKey => '_fetchMyMatchingsKey';
+  bool get fetchMyMatchingsBusy => busy(_fetchMyMatchingsKey);
 
   String get _likeUserKey => '_likeUserKey';
   bool get likeUserBusy => busy(_likeUserKey);
@@ -52,7 +52,7 @@ class HomeViewModel extends BaseViewModel {
   Future<void> init() async {
     setBusy(true);
     await Future.wait([
-      fetchAuthUserMatchings(),
+      fetchMyMatchings(),
       fetchUsers(),
     ]);
     // INSERT
@@ -115,7 +115,7 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> fetchAuthUserMatchings() async {
+  Future<void> fetchMyMatchings() async {
     final response = await runBusyFuture<sb.PostgrestResponse>(
       supabase
           .from(_matchingService.table)
@@ -123,7 +123,7 @@ class HomeViewModel extends BaseViewModel {
           .eq('created_by', _authService.user!.id!)
           .is_('deleted_at', null)
           .execute(),
-      busyObject: _fetchAuthUserMatchingsKey,
+      busyObject: _fetchMyMatchingsKey,
       throwException: true,
     );
     log.v('response "${response.toJson()}"');
