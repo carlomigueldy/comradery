@@ -57,7 +57,7 @@ class _HomeViewLeftDrawerState extends State<HomeViewLeftDrawer>
                     ),
                     title: AppText.body('John Doe'),
                     subtitle: AppText.bodySmall(
-                      'john.doe@gmail.com',
+                      '${widget.model.userEmail}',
                       style: uiUtil.textStyles.bodySmall.copyWith(
                         fontSize: 12,
                       ),
@@ -155,47 +155,79 @@ class _MessagesTabView extends StatelessWidget with UiUtilMixin {
       shrinkWrap: true,
       itemCount: 25,
       itemBuilder: (context, index) {
-        return ListTile(
-          leading: CircleAvatar(
-            backgroundColor: theme.primaryColor,
-            radius: 24,
-          ),
-          title: AppText.body('User $index'),
-          subtitle: AppText.bodySmall('text'),
-          contentPadding: uiUtil.edgeInsets.horizontalSymmetric25,
+        return _MessageListTile(
+          onTap: () {},
+          onLongPress: () {},
         );
       },
       separatorBuilder: (context, index) {
         return uiUtil.verticalSpacing.large;
       },
     );
+  }
+}
 
-    // return SingleChildScrollView(
-    //   physics: NeverScrollableScrollPhysics(),
-    //   child: Column(
-    //     children: [
-    //       ListView.separated(
-    //         shrinkWrap: true,
-    //         itemCount: 25,
-    //         itemBuilder: (context, index) {
-    //           return ListTile(
-    //             leading: CircleAvatar(
-    //               backgroundColor: theme.primaryColor,
-    //               radius: 24,
-    //             ),
-    //             title: AppText.body('User $index'),
-    //             subtitle: AppText.bodySmall('text'),
-    //             contentPadding: uiUtil.edgeInsets.horizontalSymmetric25,
-    //           );
-    //         },
-    //         separatorBuilder: (context, index) {
-    //           return uiUtil.verticalSpacing.large;
-    //         },
-    //       ),
-    //       uiUtil.verticalSpacing.huge,
-    //     ],
-    //   ),
-    // );
+class _MessageListTile extends StatefulWidget {
+  const _MessageListTile({
+    Key? key,
+    this.onTap,
+    this.onLongPress,
+  }) : super(key: key);
+
+  final Function()? onTap;
+  final Function()? onLongPress;
+
+  @override
+  __MessageListTileState createState() => __MessageListTileState();
+}
+
+class __MessageListTileState extends State<_MessageListTile> with UiUtilMixin {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return InkWell(
+      onTap: widget.onTap,
+      onLongPress: widget.onLongPress,
+      child: Container(
+        padding: uiUtil.edgeInsets.horizontalSymmetric25,
+        decoration: BoxDecoration(
+          // color: Colors.white,
+          borderRadius: uiUtil.borderRadius.large,
+        ),
+        child: Row(
+          children: [
+            uiUtil.horizontalSpacing.normal,
+            CircleAvatar(
+              backgroundColor: theme.primaryColor,
+              radius: 24,
+            ),
+            uiUtil.horizontalSpacing.large,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppText.body('User'),
+                  Row(
+                    children: [
+                      Flexible(
+                        child: AppText.bodySmall(
+                          'textdasdaseqwnjenqwlkeqwnlekqwnlewq',
+                          style: uiUtil.textStyles.bodySmall.copyWith(
+                            color: uiUtil.colors.mediumGray,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

@@ -24,6 +24,8 @@ class HomeViewModel extends BaseViewModel {
   String get _fetchUsersKey => '_fetchUsersKey';
   bool get fetchUsersBusy => busy(_fetchUsersKey);
 
+  String get userEmail => _authService.user?.email ?? '-';
+
   void init() {
     fetchUsers();
   }
