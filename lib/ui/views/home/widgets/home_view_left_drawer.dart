@@ -118,14 +118,84 @@ class _HomeViewLeftDrawerState extends State<HomeViewLeftDrawer>
               controller: tabController,
               children: [
                 _MatchesTabView(),
-                _MatchesTabView(),
-                _MatchesTabView(),
+                _MessagesTabView(),
+                _MyTeamsTabView(),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+}
+
+class _MyTeamsTabView extends StatelessWidget {
+  const _MyTeamsTabView({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Container();
+  }
+}
+
+class _MessagesTabView extends StatelessWidget with UiUtilMixin {
+  const _MessagesTabView({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return ListView.separated(
+      shrinkWrap: true,
+      itemCount: 25,
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: CircleAvatar(
+            backgroundColor: theme.primaryColor,
+            radius: 24,
+          ),
+          title: AppText.body('User $index'),
+          subtitle: AppText.bodySmall('text'),
+          contentPadding: uiUtil.edgeInsets.horizontalSymmetric25,
+        );
+      },
+      separatorBuilder: (context, index) {
+        return uiUtil.verticalSpacing.large;
+      },
+    );
+
+    // return SingleChildScrollView(
+    //   physics: NeverScrollableScrollPhysics(),
+    //   child: Column(
+    //     children: [
+    //       ListView.separated(
+    //         shrinkWrap: true,
+    //         itemCount: 25,
+    //         itemBuilder: (context, index) {
+    //           return ListTile(
+    //             leading: CircleAvatar(
+    //               backgroundColor: theme.primaryColor,
+    //               radius: 24,
+    //             ),
+    //             title: AppText.body('User $index'),
+    //             subtitle: AppText.bodySmall('text'),
+    //             contentPadding: uiUtil.edgeInsets.horizontalSymmetric25,
+    //           );
+    //         },
+    //         separatorBuilder: (context, index) {
+    //           return uiUtil.verticalSpacing.large;
+    //         },
+    //       ),
+    //       uiUtil.verticalSpacing.huge,
+    //     ],
+    //   ),
+    // );
   }
 }
 
