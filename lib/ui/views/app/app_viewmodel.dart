@@ -22,9 +22,17 @@ class AppViewModel extends BaseViewModel {
   String get _fetchMatchedIndividualsKey => '_fetchMatchedIndividualsKey';
   bool get fetchMatchedIndividualsBusy => busy(_fetchMatchedIndividualsKey);
 
+  List<Matching> _targettedMatchings = [];
+  List<Matching> get targettedMatchings => _targettedMatchings;
+  String get _fetchMatchedTargetIndividualsKey =>
+      '_fetchMatchedTargetIndividualsKey';
+  bool get fetchMatchedTargetIndividualsBusy =>
+      busy(_fetchMatchedTargetIndividualsKey);
+
   Future<void> init() async {
     await Future.wait([
       fetchMatchedIndividuals(),
+      fetchMatchedTargetIndividuals(),
     ]);
 
     // INSERT
@@ -45,8 +53,11 @@ class AppViewModel extends BaseViewModel {
     }).subscribe();
 
     // DELETE
-    supabase.from(_matchingService.table).on(SupabaseEventTypes.delete,
-        (payload) {
+    supabase
+        .from(
+      '${_matchingService.table}:created_by=eq.${_authService.user?.id}',
+    )
+        .on(SupabaseEventTypes.delete, (payload) {
       log.v(
         'payload?.newRecord "${payload.newRecord}", payload?.oldRecord "${payload.oldRecord}"',
       );
@@ -78,6 +89,31 @@ class AppViewModel extends BaseViewModel {
     }
 
     _matchings =
+        (response.data as List).map((e) => Matching.fromJson(e)).toList();
+    notifyListeners();
+  }
+
+  Future<void> fetchMatchedTargetIndividuals() async {
+    final response = await runBusyFuture<PostgrestResponse>(
+      supabase
+          .from(_matchingService.table)
+          .select('*, created_by_user: users (*)')
+          .neq('target_user_id', _authService.user!.id!)
+          .eq('created_by', _authService.user!.id!)
+          .is_('liked', true)
+          .is_('deleted_at', null)
+          .execute(),
+      busyObject: _fetchMatchedTargetIndividualsKey,
+      throwException: true,
+    );
+    log.v('response "${response.toJson()}"');
+
+    if (response.error != null) {
+      log.e(response.error?.message);
+      return;
+    }
+
+    _targettedMatchings =
         (response.data as List).map((e) => Matching.fromJson(e)).toList();
     notifyListeners();
   }
