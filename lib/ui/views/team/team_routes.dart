@@ -4,11 +4,11 @@ import 'views/team_detail/team_detail_view.dart';
 import 'views/welcome_to_team/welcome_to_team_view.dart';
 
 const routes = [
-  MaterialRoute(
+  CustomRoute(
     page: TeamDetailView,
     path: 'teams/:teamId',
   ),
-  MaterialRoute(
+  CustomRoute(
     page: WelcomeToTeamView,
     path: 'teams/:teamId/welcome',
   ),

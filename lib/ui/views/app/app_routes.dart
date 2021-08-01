@@ -3,7 +3,7 @@ import 'package:stacked/stacked_annotations.dart';
 import 'views/home/home_view.dart';
 
 const routes = [
-  MaterialRoute(
+  CustomRoute(
     page: HomeView,
     path: '',
     initial: true,

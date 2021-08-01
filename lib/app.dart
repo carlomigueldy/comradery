@@ -39,12 +39,12 @@ class AppRouterId {
 
 @StackedApp(
   routes: [
-    CupertinoRoute(
+    CustomRoute(
       page: StartupView,
       initial: true,
       path: '/',
     ),
-    CupertinoRoute(
+    CustomRoute(
       page: AppView,
       path: 'app',
       children: [

@@ -6,19 +6,19 @@ import 'views/setup_user_profile/setup_user_profile_view.dart';
 import 'views/upload_photo/upload_photo_view.dart';
 
 const routes = [
-  CupertinoRoute(
+  CustomRoute(
     page: SelectGoalView,
     path: 'on-boarding/select-goal',
   ),
-  CupertinoRoute(
+  CustomRoute(
     page: UploadPhotoView,
     path: 'on-boarding/upload-photo',
   ),
-  CupertinoRoute(
+  CustomRoute(
     page: SelectInterestsView,
     path: 'on-boarding/select-interests',
   ),
-  CupertinoRoute(
+  CustomRoute(
     page: SetupUserProfileView,
     path: 'on-boarding/setup-profile',
   ),
