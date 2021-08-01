@@ -1,5 +1,6 @@
 packages
 .env
+dotenv
 
 # Miscellaneous
 *.class
