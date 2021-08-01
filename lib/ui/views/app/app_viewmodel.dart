@@ -14,6 +14,7 @@ class AppViewModel extends BaseViewModel {
   final _matchingService = locator<MatchingService>();
   final _router = locator<NavigationService>();
 
+  String? get userFullName => _authService.user?.fullName;
   String get userEmail => _authService.user?.email ?? '-';
 
   List<Matching> _matchings = [];
@@ -27,8 +28,11 @@ class AppViewModel extends BaseViewModel {
     ]);
 
     // INSERT
-    supabase.from(_matchingService.table).on(SupabaseEventTypes.insert,
-        (payload) {
+    supabase
+        .from(
+      '${_matchingService.table}:created_by=eq.${_authService.user?.id}',
+    )
+        .on(SupabaseEventTypes.insert, (payload) {
       log.v('payload?.newRecord "${payload.newRecord}"');
       final matching = Matching.fromJson(payload.newRecord);
 
@@ -57,8 +61,9 @@ class AppViewModel extends BaseViewModel {
     final response = await runBusyFuture<PostgrestResponse>(
       supabase
           .from(_matchingService.table)
-          .select('*, target_user: users (*)')
+          .select('*, created_by_user: users (*)')
           .eq('target_user_id', _authService.user!.id!)
+          .neq('created_by', _authService.user!.id!)
           .is_('liked', true)
           .is_('deleted_at', null)
           .execute(),

@@ -38,8 +38,8 @@ class HomeViewModel extends BaseViewModel {
   List<Matching> get matchings => _matchings;
   List<String> get matchingsTargetUserIds =>
       _matchings.map((e) => e.targetUserId).toList();
-  String get _fetchMatchingsKey => '_fetchMatchingsKey';
-  bool get fetchMatchingsBusy => busy(_fetchMatchingsKey);
+  String get _fetchAuthUserMatchingsKey => '_fetchAuthUserMatchingsKey';
+  bool get fetchAuthUserMatchingsBusy => busy(_fetchAuthUserMatchingsKey);
 
   String get _likeUserKey => '_likeUserKey';
   bool get likeUserBusy => busy(_likeUserKey);
@@ -52,22 +52,47 @@ class HomeViewModel extends BaseViewModel {
   Future<void> init() async {
     setBusy(true);
     await Future.wait([
-      fetchMatchings(),
+      fetchAuthUserMatchings(),
       fetchUsers(),
     ]);
+    // INSERT
+    supabase
+        .from(
+      '${_matchingService.table}:created_by=eq.${_authService.user?.id}',
+    )
+        .on(sb.SupabaseEventTypes.insert, (payload) {
+      log.v('payload?.newRecord "${payload.newRecord}"');
+      final matching = Matching.fromJson(payload.newRecord);
+
+      // TODO: Like back logic need to implement
+      if (matching.targetUserId == _authService.user!.id! && matching.liked) {
+        _matchings.add(matching);
+      }
+
+      notifyListeners();
+    }).subscribe();
     log.v('matchingsTargetUserIds "$matchingsTargetUserIds"');
+    log.i(
+      'users.length "${users.length}"',
+    );
     setBusy(false);
   }
 
   Future<void> fetchUsers() async {
     final response = await runBusyFuture<sb.PostgrestResponse>(
-      _userService.all(),
+      supabase
+          .from(_userService.table)
+          .select('*')
+          .neq('id', _authService.user!.id!)
+          .is_('deleted_at', null)
+          .execute(),
       busyObject: _fetchUsersKey,
       throwException: true,
     );
     log.v('response "${response.toJson()}"');
 
     if (response.error != null) {
+      log.e(response.error?.message);
       return;
     }
 
@@ -78,9 +103,11 @@ class HomeViewModel extends BaseViewModel {
           content: user.id,
           likeAction: () {
             log.v('like "${user.id}"');
+            likeUser();
           },
           nopeAction: () {
             log.v('nope "${user.id}"');
+            nopeUser();
           },
         );
       }).toList(),
@@ -88,15 +115,21 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> fetchMatchings() async {
+  Future<void> fetchAuthUserMatchings() async {
     final response = await runBusyFuture<sb.PostgrestResponse>(
-      _matchingService.all(),
-      busyObject: _fetchMatchingsKey,
+      supabase
+          .from(_matchingService.table)
+          .select('*, target_user: users (*)')
+          .eq('created_by', _authService.user!.id!)
+          .is_('deleted_at', null)
+          .execute(),
+      busyObject: _fetchAuthUserMatchingsKey,
       throwException: true,
     );
     log.v('response "${response.toJson()}"');
 
     if (response.error != null) {
+      log.e(response.error?.message);
       return;
     }
 
@@ -120,10 +153,12 @@ class HomeViewModel extends BaseViewModel {
     log.v('response "${response.toJson()}"');
 
     if (response.error != null) {
+      log.e(response.error?.message);
       return _snackbarService.showError();
     }
 
     _matchEngine.currentItem?.like();
+    notifyListeners();
   }
 
   Future<void> nopeUser() async {
@@ -141,10 +176,12 @@ class HomeViewModel extends BaseViewModel {
     log.v('response "${response.toJson()}"');
 
     if (response.error != null) {
+      log.e(response.error?.message);
       return _snackbarService.showError();
     }
 
     _matchEngine.currentItem?.nope();
+    notifyListeners();
   }
 
   void viewUserProfile() {

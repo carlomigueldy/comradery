@@ -65,7 +65,7 @@ class _AppViewLeftDrawerState extends State<AppViewLeftDrawer>
                       backgroundColor: theme.primaryColor,
                       backgroundImage: NetworkImage(COMRADE_DOGE_IMG),
                     ),
-                    title: AppText.body('John Doe'),
+                    title: AppText.body('${widget.model.userFullName}'),
                     subtitle: AppText.bodySmall(
                       '${widget.model.userEmail}',
                       style: uiUtil.textStyles.bodySmall.copyWith(
@@ -130,7 +130,7 @@ class _AppViewLeftDrawerState extends State<AppViewLeftDrawer>
                 MatchesTabView(
                   matchings: widget.model.matchings,
                   onTap: (value) {
-                    widget.model.toUserDetailView(value.targetUser!.id!);
+                    widget.model.toUserDetailView(value.createdBy);
                   },
                 ),
                 MessagesTabView(

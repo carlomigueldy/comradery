@@ -59,7 +59,7 @@ class MatchesTabView extends StatelessWidget with UiUtilMixin {
                             children: [
                               Flexible(
                                 child: AppText(
-                                  '${matching.targetUser?.fullName}',
+                                  '${matching.createdByUser?.fullName}',
                                   style:
                                       uiUtil.textStyles.bodySmallBold.copyWith(
                                     color: Colors.white,

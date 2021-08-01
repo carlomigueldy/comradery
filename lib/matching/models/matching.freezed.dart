@@ -26,6 +26,7 @@ class _$MatchingTearOff {
       @JsonKey(name: 'target_user') User? targetUser,
       bool liked = false,
       @JsonKey(name: 'created_by') required String createdBy,
+      @JsonKey(name: 'created_by_user') User? createdByUser,
       @JsonKey(name: 'read_at') DateTime? readAt,
       @JsonKey(name: 'created_at') DateTime? createdAt,
       @JsonKey(name: 'updated_at') DateTime? updatedAt,
@@ -36,6 +37,7 @@ class _$MatchingTearOff {
       targetUser: targetUser,
       liked: liked,
       createdBy: createdBy,
+      createdByUser: createdByUser,
       readAt: readAt,
       createdAt: createdAt,
       updatedAt: updatedAt,
@@ -61,6 +63,8 @@ mixin _$Matching {
   bool get liked => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_by')
   String get createdBy => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_by_user')
+  User? get createdByUser => throw _privateConstructorUsedError;
   @JsonKey(name: 'read_at')
   DateTime? get readAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
@@ -86,12 +90,14 @@ abstract class $MatchingCopyWith<$Res> {
       @JsonKey(name: 'target_user') User? targetUser,
       bool liked,
       @JsonKey(name: 'created_by') String createdBy,
+      @JsonKey(name: 'created_by_user') User? createdByUser,
       @JsonKey(name: 'read_at') DateTime? readAt,
       @JsonKey(name: 'created_at') DateTime? createdAt,
       @JsonKey(name: 'updated_at') DateTime? updatedAt,
       @JsonKey(name: 'deleted_at') DateTime? deletedAt});
 
   $UserCopyWith<$Res>? get targetUser;
+  $UserCopyWith<$Res>? get createdByUser;
 }
 
 /// @nodoc
@@ -109,6 +115,7 @@ class _$MatchingCopyWithImpl<$Res> implements $MatchingCopyWith<$Res> {
     Object? targetUser = freezed,
     Object? liked = freezed,
     Object? createdBy = freezed,
+    Object? createdByUser = freezed,
     Object? readAt = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -135,6 +142,10 @@ class _$MatchingCopyWithImpl<$Res> implements $MatchingCopyWith<$Res> {
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
               as String,
+      createdByUser: createdByUser == freezed
+          ? _value.createdByUser
+          : createdByUser // ignore: cast_nullable_to_non_nullable
+              as User?,
       readAt: readAt == freezed
           ? _value.readAt
           : readAt // ignore: cast_nullable_to_non_nullable
@@ -164,6 +175,17 @@ class _$MatchingCopyWithImpl<$Res> implements $MatchingCopyWith<$Res> {
       return _then(_value.copyWith(targetUser: value));
     });
   }
+
+  @override
+  $UserCopyWith<$Res>? get createdByUser {
+    if (_value.createdByUser == null) {
+      return null;
+    }
+
+    return $UserCopyWith<$Res>(_value.createdByUser!, (value) {
+      return _then(_value.copyWith(createdByUser: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -177,6 +199,7 @@ abstract class _$MatchingCopyWith<$Res> implements $MatchingCopyWith<$Res> {
       @JsonKey(name: 'target_user') User? targetUser,
       bool liked,
       @JsonKey(name: 'created_by') String createdBy,
+      @JsonKey(name: 'created_by_user') User? createdByUser,
       @JsonKey(name: 'read_at') DateTime? readAt,
       @JsonKey(name: 'created_at') DateTime? createdAt,
       @JsonKey(name: 'updated_at') DateTime? updatedAt,
@@ -184,6 +207,8 @@ abstract class _$MatchingCopyWith<$Res> implements $MatchingCopyWith<$Res> {
 
   @override
   $UserCopyWith<$Res>? get targetUser;
+  @override
+  $UserCopyWith<$Res>? get createdByUser;
 }
 
 /// @nodoc
@@ -202,6 +227,7 @@ class __$MatchingCopyWithImpl<$Res> extends _$MatchingCopyWithImpl<$Res>
     Object? targetUser = freezed,
     Object? liked = freezed,
     Object? createdBy = freezed,
+    Object? createdByUser = freezed,
     Object? readAt = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -228,6 +254,10 @@ class __$MatchingCopyWithImpl<$Res> extends _$MatchingCopyWithImpl<$Res>
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
               as String,
+      createdByUser: createdByUser == freezed
+          ? _value.createdByUser
+          : createdByUser // ignore: cast_nullable_to_non_nullable
+              as User?,
       readAt: readAt == freezed
           ? _value.readAt
           : readAt // ignore: cast_nullable_to_non_nullable
@@ -257,6 +287,7 @@ class _$_Matching extends _Matching {
       @JsonKey(name: 'target_user') this.targetUser,
       this.liked = false,
       @JsonKey(name: 'created_by') required this.createdBy,
+      @JsonKey(name: 'created_by_user') this.createdByUser,
       @JsonKey(name: 'read_at') this.readAt,
       @JsonKey(name: 'created_at') this.createdAt,
       @JsonKey(name: 'updated_at') this.updatedAt,
@@ -281,6 +312,9 @@ class _$_Matching extends _Matching {
   @JsonKey(name: 'created_by')
   final String createdBy;
   @override
+  @JsonKey(name: 'created_by_user')
+  final User? createdByUser;
+  @override
   @JsonKey(name: 'read_at')
   final DateTime? readAt;
   @override
@@ -295,7 +329,7 @@ class _$_Matching extends _Matching {
 
   @override
   String toString() {
-    return 'Matching(id: $id, targetUserId: $targetUserId, targetUser: $targetUser, liked: $liked, createdBy: $createdBy, readAt: $readAt, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'Matching(id: $id, targetUserId: $targetUserId, targetUser: $targetUser, liked: $liked, createdBy: $createdBy, createdByUser: $createdByUser, readAt: $readAt, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -315,6 +349,9 @@ class _$_Matching extends _Matching {
             (identical(other.createdBy, createdBy) ||
                 const DeepCollectionEquality()
                     .equals(other.createdBy, createdBy)) &&
+            (identical(other.createdByUser, createdByUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdByUser, createdByUser)) &&
             (identical(other.readAt, readAt) ||
                 const DeepCollectionEquality().equals(other.readAt, readAt)) &&
             (identical(other.createdAt, createdAt) ||
@@ -336,6 +373,7 @@ class _$_Matching extends _Matching {
       const DeepCollectionEquality().hash(targetUser) ^
       const DeepCollectionEquality().hash(liked) ^
       const DeepCollectionEquality().hash(createdBy) ^
+      const DeepCollectionEquality().hash(createdByUser) ^
       const DeepCollectionEquality().hash(readAt) ^
       const DeepCollectionEquality().hash(createdAt) ^
       const DeepCollectionEquality().hash(updatedAt) ^
@@ -359,6 +397,7 @@ abstract class _Matching extends Matching {
       @JsonKey(name: 'target_user') User? targetUser,
       bool liked,
       @JsonKey(name: 'created_by') required String createdBy,
+      @JsonKey(name: 'created_by_user') User? createdByUser,
       @JsonKey(name: 'read_at') DateTime? readAt,
       @JsonKey(name: 'created_at') DateTime? createdAt,
       @JsonKey(name: 'updated_at') DateTime? updatedAt,
@@ -380,6 +419,9 @@ abstract class _Matching extends Matching {
   @override
   @JsonKey(name: 'created_by')
   String get createdBy => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: 'created_by_user')
+  User? get createdByUser => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'read_at')
   DateTime? get readAt => throw _privateConstructorUsedError;

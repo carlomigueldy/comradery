@@ -42,12 +42,15 @@ class HomeView extends StatelessWidget with UiUtilMixin {
                               SwipeCards(
                                 matchEngine: model.matchEngine,
                                 itemBuilder: (context, index) {
+                                  final user = model.users[index];
+
                                   return AppMatchingCard(
+                                    user: user,
                                     onTapNope: () {
-                                      model.nopeUser();
+                                      model.matchEngine.currentItem?.nope();
                                     },
                                     onTapLike: () {
-                                      model.likeUser();
+                                      model.matchEngine.currentItem?.like();
                                     },
                                   );
                                 },
@@ -63,7 +66,7 @@ class HomeView extends StatelessWidget with UiUtilMixin {
                                     AppButton.text(
                                         label: 'Nope',
                                         onPressed: () {
-                                          model.nopeUser();
+                                          model.matchEngine.currentItem?.nope();
                                         }),
                                     // TODO: To remove
                                     AppButton.text(
@@ -78,7 +81,7 @@ class HomeView extends StatelessWidget with UiUtilMixin {
                                     AppButton.text(
                                         label: 'Like',
                                         onPressed: () {
-                                          model.likeUser();
+                                          model.matchEngine.currentItem?.like();
                                         }),
                                   ],
                                 ),

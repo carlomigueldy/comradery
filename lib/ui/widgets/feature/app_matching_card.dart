@@ -1,6 +1,7 @@
 import 'package:comradery/common/utils/ui_util.dart';
 import 'package:comradery/ui/placeholders/placeholder_images.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
+import 'package:comradery/user/models/user.dart';
 import 'package:flutter/material.dart';
 
 import 'app_tag.dart';
@@ -8,12 +9,14 @@ import 'app_tag.dart';
 class AppMatchingCard extends StatelessWidget with UiUtilMixin {
   const AppMatchingCard({
     Key? key,
+    required this.user,
     this.onTapNope,
     this.onTapLike,
     this.onTap,
     this.onLongPress,
   }) : super(key: key);
 
+  final User user;
   final Function()? onTapNope;
   final Function()? onTapLike;
   final Function()? onTap;
@@ -48,7 +51,7 @@ class AppMatchingCard extends StatelessWidget with UiUtilMixin {
               Row(
                 children: [
                   AppText(
-                    'Mary Doe',
+                    '${user.firstName}',
                     style: uiUtil.textStyles.body.copyWith(
                       color: Colors.white,
                       fontSize: 32,
@@ -84,7 +87,7 @@ class AppMatchingCard extends StatelessWidget with UiUtilMixin {
               Row(
                 children: [
                   AppText(
-                    'Bio bio bio',
+                    '${user.bio}',
                     style: uiUtil.textStyles.body.copyWith(
                       color: Colors.white,
                     ),
