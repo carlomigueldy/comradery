@@ -1,3 +1,4 @@
+import 'package:comradery/common/constants/box_shadows.dart';
 import 'package:comradery/common/constants/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,8 @@ class UiUtil {
   AppHorizontalSpacing get horizontalSpacing => AppHorizontalSpacing();
 
   AppTextStyle get textStyles => AppTextStyle();
+
+  AppBoxShadows get boxShadows => AppBoxShadows();
 
   static isDark(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark;

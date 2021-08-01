@@ -20,33 +20,35 @@ class HomeViewMainContainer extends ViewModelWidget<HomeViewModel>
     final theme = Theme.of(context);
     final mediaQuery = MediaQuery.of(context);
 
-    return Container(
-      width: mediaQuery.size.width,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          if (model.users.isNotEmpty)
-            SwipeCards(
-              matchEngine: model.matchEngine,
-              itemBuilder: (context, index) {
-                return AppMatchingCard();
-              },
-              onStackFinished: () {},
+    return SingleChildScrollView(
+      child: Container(
+        width: mediaQuery.size.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (model.users.isNotEmpty)
+              SwipeCards(
+                matchEngine: model.matchEngine,
+                itemBuilder: (context, index) {
+                  return AppMatchingCard();
+                },
+                onStackFinished: () {},
+              ),
+            uiUtil.verticalSpacing.large,
+            Container(
+              width: mediaQuery.size.width * 0.3,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  AppButton.text(label: 'Nope', onPressed: () {}),
+                  AppButton.text(label: 'Open Profile', onPressed: () {}),
+                  AppButton.text(label: 'Like', onPressed: () {}),
+                ],
+              ),
             ),
-          uiUtil.verticalSpacing.large,
-          Container(
-            width: mediaQuery.size.width * 0.5,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                AppButton(label: 'Nope', onPressed: () {}),
-                AppButton(label: 'Open Profile', onPressed: () {}),
-                AppButton(label: 'Like', onPressed: () {}),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

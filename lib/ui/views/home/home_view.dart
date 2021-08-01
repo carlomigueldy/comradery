@@ -25,7 +25,14 @@ class HomeView extends StatelessWidget with UiUtilMixin {
         return Scaffold(
           body: Row(
             children: [
-              HomeViewLeftDrawer(),
+              Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    uiUtil.boxShadows.small,
+                  ],
+                ),
+                child: HomeViewLeftDrawer(model: model),
+              ),
               Expanded(
                 flex: 3,
                 child: HomeViewMainContainer(),
