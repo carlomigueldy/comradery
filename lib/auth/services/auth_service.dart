@@ -105,6 +105,7 @@ class AuthService {
     }
     log.i(response.rawData);
     await _localStorageService.removeItem('token');
+    _user = null;
     return;
   }
 
