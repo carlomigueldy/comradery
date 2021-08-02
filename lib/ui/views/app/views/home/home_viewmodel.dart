@@ -75,12 +75,12 @@ class HomeViewModel extends BaseViewModel {
 
       notifyListeners();
     }).subscribe();
-    log.v(
-      'matchingsTargetUserIds "$matchingsTargetUserIds", userIds "$userIds"',
-    );
-    log.i(
-      'users.length "${users.length}"',
-    );
+    // log.v(
+    //   'matchingsTargetUserIds "$matchingsTargetUserIds", userIds "$userIds"',
+    // );
+    // log.i(
+    //   'users.length "${users.length}"',
+    // );
     setBusy(false);
   }
 

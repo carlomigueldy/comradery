@@ -80,11 +80,11 @@ class AppViewModel extends BaseViewModel {
       notifyListeners();
     }).subscribe();
 
-    log.i(
-      'filteredMatchingsIds "$filteredMatchingsIds"\n'
-      'targettedMatchingTargetUserIds "$targettedMatchingTargetUserIds"\n'
-      'matchingsIds "$matchingsIds"\n',
-    );
+    // log.i(
+    //   'filteredMatchingsIds "$filteredMatchingsIds"\n'
+    //   'targettedMatchingTargetUserIds "$targettedMatchingTargetUserIds"\n'
+    //   'matchingsIds "$matchingsIds"\n',
+    // );
   }
 
   Future<void> fetchMyMatchings() async {
@@ -123,25 +123,44 @@ class AppViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // TODO: WIP WIP WIP
   Future<void> fetchMyConversations() async {
+    final cpResponse = await supabase
+        .from('conversation_participants')
+        .select('conversation_id')
+        .eq('user_id', _authService.user!.id!)
+        .is_('deleted_at', null)
+        .execute();
+    log.v('cpResponse "${cpResponse.toJson()}"');
+    if (cpResponse.error != null) {
+      return log.e('cpResponse.error?.message "${cpResponse.error?.message}"');
+    }
+    final conversationIds = (cpResponse.data as List<dynamic>)
+        .map((e) => e['conversation_id'])
+        .toList();
+    log.v('cpResponse.conversationIds "$conversationIds"');
+
+    if (conversationIds.isEmpty) {
+      return;
+    }
+
     final response = await runBusyFuture<PostgrestResponse>(
       supabase
           .from('conversations')
           .select(
             '*, '
-            'conversation_participant: conversation_participants ('
+            'conversation_participants: conversation_participants ('
             '*, user: users (id, first_name, last_name, email, photo_url)'
             ')',
           )
-          .eq('conversation_participant.user_id', _authService.user!.id!)
-          // .is_('deleted_at', null)
+          .in_('id', conversationIds)
+          // .in_('conversation_participants.user_id', [_authService.user!.id!])
+          .is_('deleted_at', null)
           .execute(),
       busyObject: _fetchMyConversationsKey,
       throwException: true,
     );
     log.v('fetchMyConversations-response "${response.toJson()}"');
-    log.i(response.toJson());
+    // log.i(response.toJson());
 
     if (response.error != null) {
       log.e(response.error?.message);
