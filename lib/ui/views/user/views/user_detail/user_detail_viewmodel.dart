@@ -81,6 +81,10 @@ class UserDetailViewModel extends BaseViewModel {
       throwException: true,
     );
     log.v('response "${response.toJson()}"');
+    if (response.error != null) {
+      return log.e(response.error?.message);
+    }
+
     final conversation = Conversation.fromJson(response.data.first);
 
     // navigate to conversation view

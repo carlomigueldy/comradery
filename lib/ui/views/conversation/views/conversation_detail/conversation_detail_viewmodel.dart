@@ -33,6 +33,7 @@ class ConversationDetailViewModel extends BaseViewModel {
           .select(
             '*, conversation_participants: conversation_participants (*, user: users (*))',
           )
+          .eq('id', conversationId)
           .single()
           .execute(),
       busyObject: _fetchConversationKey,

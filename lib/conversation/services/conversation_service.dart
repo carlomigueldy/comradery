@@ -46,10 +46,10 @@ class ConversationService extends SupabaseService {
     return supabase
         .from('conversations')
         .select(
-          'id, conversation_participant: conversation_participants (user_id, user: users (first_name, last_name, email) )',
+          'id, conversation_participants: conversation_participants (user_id)',
         )
-        .eq('conversation_participant.user_id', targetUser.id!)
-        .eq('conversation_participant.user_id', _authService.user!.id!)
+        .eq('conversation_participants.user_id', targetUser.id!)
+        .eq('conversation_participants.user_id', _authService.user!.id!)
         // .or(
         //   'created_by.eq.${targetUser!.id!},created_by.eq.${_authService.user!.id}',
         // )
