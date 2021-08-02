@@ -26,6 +26,9 @@ class HomeViewModel extends BaseViewModel {
   );
   MatchEngine get matchEngine => _matchEngine;
 
+  List<SwipeItem> _swipeItems = [];
+  List<SwipeItem> get swipeItems => _swipeItems;
+
   List<User> _users = [];
   List<User> get users => _users.where((element) {
         return !matchingsTargetUserIds.contains(element.id);
@@ -100,21 +103,22 @@ class HomeViewModel extends BaseViewModel {
     }
 
     _users = (response.data as List).map((e) => User.fromJson(e)).toList();
-    _matchEngine = MatchEngine(
-      swipeItems: _users.map((user) {
-        return SwipeItem(
-          content: user.id,
-          likeAction: () {
-            log.v('like "${user.id}"');
-            likeUser();
-          },
-          nopeAction: () {
-            log.v('nope "${user.id}"');
-            nopeUser();
-          },
-        );
-      }).toList(),
-    );
+
+    _swipeItems = users.map((user) {
+      return SwipeItem(
+        content: user.id,
+        likeAction: () {
+          log.v('like "${user.id}"');
+          likeUser();
+        },
+        nopeAction: () {
+          log.v('nope "${user.id}"');
+          nopeUser();
+        },
+      );
+    }).toList();
+    _matchEngine = MatchEngine(swipeItems: swipeItems);
+
     notifyListeners();
   }
 
