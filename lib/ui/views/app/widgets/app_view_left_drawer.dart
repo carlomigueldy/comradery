@@ -1,3 +1,4 @@
+import 'package:comradery/common/constants/constants.dart';
 import 'package:comradery/common/utils/ui_util.dart';
 import 'package:comradery/ui/placeholders/placeholder_images.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
@@ -44,7 +45,8 @@ class _AppViewLeftDrawerState extends State<AppViewLeftDrawer>
       height: double.infinity,
       width: 375,
       decoration: BoxDecoration(
-        color: uiUtil.colors.veryLightGrey,
+        // color: uiUtil.colors.veryLightGrey,
+        color: kcBackgroundColor,
       ),
       child: Column(
         children: [

@@ -127,26 +127,29 @@ class AppViewModel extends BaseViewModel {
   Future<void> fetchMyConversations() async {
     final response = await runBusyFuture<PostgrestResponse>(
       supabase
-          .from('conversation_participants')
+          .from('conversations')
           .select(
-            'conversation_id, conversation: conversations (*)',
+            '*, '
+            'conversation_participants ('
+            '*, user: users (id, first_name, last_name, email, photo_url)'
+            ')',
           )
-          .eq('user_id', _authService.user!.id!)
+          .eq('conversation_participant.user_id', _authService.user!.id!)
           .is_('deleted_at', null)
           .execute(),
       busyObject: _fetchMyConversationsKey,
       throwException: true,
     );
     log.v('fetchMyConversations-response "${response.toJson()}"');
+    log.i(response.toJson());
 
     if (response.error != null) {
       log.e(response.error?.message);
       return;
     }
 
-    _conversations = (response.data as List)
-        .map((e) => Conversation.fromJson(e['conversation']))
-        .toList();
+    _conversations =
+        (response.data as List).map((e) => Conversation.fromJson(e)).toList();
     notifyListeners();
   }
 

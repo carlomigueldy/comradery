@@ -14,6 +14,8 @@ const Color kcLightBackgroundColor = kcWhite;
 const Color kcDarkBackgroundColor = Color(0xff1D2D50);
 const Color kcDarkContainerColor = Color(0xff133B5C);
 
+const Color kcBackgroundColor = const Color(0xffFFF8F8);
+
 class AppColor {
   Color get lightBackgroundColor => kcLightBackgroundColor;
 

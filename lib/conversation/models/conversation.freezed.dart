@@ -23,14 +23,22 @@ class _$ConversationTearOff {
   _Conversation call(
       {String? id,
       required String name,
-      @JsonKey(name: 'created_by') required String createdBy,
-      @JsonKey(name: 'created_by_user') User? createdByUser,
-      @JsonKey(name: 'created_at') DateTime? createdAt,
-      @JsonKey(name: 'updated_at') DateTime? updatedAt,
-      @JsonKey(name: 'deleted_at') DateTime? deletedAt}) {
+      @JsonKey(name: 'conversation_participants')
+          List<ConversationParticipant>? participants,
+      @JsonKey(name: 'created_by')
+          required String createdBy,
+      @JsonKey(name: 'created_by_user')
+          User? createdByUser,
+      @JsonKey(name: 'created_at')
+          DateTime? createdAt,
+      @JsonKey(name: 'updated_at')
+          DateTime? updatedAt,
+      @JsonKey(name: 'deleted_at')
+          DateTime? deletedAt}) {
     return _Conversation(
       id: id,
       name: name,
+      participants: participants,
       createdBy: createdBy,
       createdByUser: createdByUser,
       createdAt: createdAt,
@@ -51,6 +59,9 @@ const $Conversation = _$ConversationTearOff();
 mixin _$Conversation {
   String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'conversation_participants')
+  List<ConversationParticipant>? get participants =>
+      throw _privateConstructorUsedError;
   @JsonKey(name: 'created_by')
   String get createdBy => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_by_user')
@@ -76,11 +87,18 @@ abstract class $ConversationCopyWith<$Res> {
   $Res call(
       {String? id,
       String name,
-      @JsonKey(name: 'created_by') String createdBy,
-      @JsonKey(name: 'created_by_user') User? createdByUser,
-      @JsonKey(name: 'created_at') DateTime? createdAt,
-      @JsonKey(name: 'updated_at') DateTime? updatedAt,
-      @JsonKey(name: 'deleted_at') DateTime? deletedAt});
+      @JsonKey(name: 'conversation_participants')
+          List<ConversationParticipant>? participants,
+      @JsonKey(name: 'created_by')
+          String createdBy,
+      @JsonKey(name: 'created_by_user')
+          User? createdByUser,
+      @JsonKey(name: 'created_at')
+          DateTime? createdAt,
+      @JsonKey(name: 'updated_at')
+          DateTime? updatedAt,
+      @JsonKey(name: 'deleted_at')
+          DateTime? deletedAt});
 
   $UserCopyWith<$Res>? get createdByUser;
 }
@@ -97,6 +115,7 @@ class _$ConversationCopyWithImpl<$Res> implements $ConversationCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? participants = freezed,
     Object? createdBy = freezed,
     Object? createdByUser = freezed,
     Object? createdAt = freezed,
@@ -112,6 +131,10 @@ class _$ConversationCopyWithImpl<$Res> implements $ConversationCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      participants: participants == freezed
+          ? _value.participants
+          : participants // ignore: cast_nullable_to_non_nullable
+              as List<ConversationParticipant>?,
       createdBy: createdBy == freezed
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
@@ -157,11 +180,18 @@ abstract class _$ConversationCopyWith<$Res>
   $Res call(
       {String? id,
       String name,
-      @JsonKey(name: 'created_by') String createdBy,
-      @JsonKey(name: 'created_by_user') User? createdByUser,
-      @JsonKey(name: 'created_at') DateTime? createdAt,
-      @JsonKey(name: 'updated_at') DateTime? updatedAt,
-      @JsonKey(name: 'deleted_at') DateTime? deletedAt});
+      @JsonKey(name: 'conversation_participants')
+          List<ConversationParticipant>? participants,
+      @JsonKey(name: 'created_by')
+          String createdBy,
+      @JsonKey(name: 'created_by_user')
+          User? createdByUser,
+      @JsonKey(name: 'created_at')
+          DateTime? createdAt,
+      @JsonKey(name: 'updated_at')
+          DateTime? updatedAt,
+      @JsonKey(name: 'deleted_at')
+          DateTime? deletedAt});
 
   @override
   $UserCopyWith<$Res>? get createdByUser;
@@ -181,6 +211,7 @@ class __$ConversationCopyWithImpl<$Res> extends _$ConversationCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? participants = freezed,
     Object? createdBy = freezed,
     Object? createdByUser = freezed,
     Object? createdAt = freezed,
@@ -196,6 +227,10 @@ class __$ConversationCopyWithImpl<$Res> extends _$ConversationCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      participants: participants == freezed
+          ? _value.participants
+          : participants // ignore: cast_nullable_to_non_nullable
+              as List<ConversationParticipant>?,
       createdBy: createdBy == freezed
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
@@ -226,6 +261,7 @@ class _$_Conversation extends _Conversation {
   _$_Conversation(
       {this.id,
       required this.name,
+      @JsonKey(name: 'conversation_participants') this.participants,
       @JsonKey(name: 'created_by') required this.createdBy,
       @JsonKey(name: 'created_by_user') this.createdByUser,
       @JsonKey(name: 'created_at') this.createdAt,
@@ -240,6 +276,9 @@ class _$_Conversation extends _Conversation {
   final String? id;
   @override
   final String name;
+  @override
+  @JsonKey(name: 'conversation_participants')
+  final List<ConversationParticipant>? participants;
   @override
   @JsonKey(name: 'created_by')
   final String createdBy;
@@ -258,7 +297,7 @@ class _$_Conversation extends _Conversation {
 
   @override
   String toString() {
-    return 'Conversation(id: $id, name: $name, createdBy: $createdBy, createdByUser: $createdByUser, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'Conversation(id: $id, name: $name, participants: $participants, createdBy: $createdBy, createdByUser: $createdByUser, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -269,6 +308,9 @@ class _$_Conversation extends _Conversation {
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.participants, participants) ||
+                const DeepCollectionEquality()
+                    .equals(other.participants, participants)) &&
             (identical(other.createdBy, createdBy) ||
                 const DeepCollectionEquality()
                     .equals(other.createdBy, createdBy)) &&
@@ -291,6 +333,7 @@ class _$_Conversation extends _Conversation {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(participants) ^
       const DeepCollectionEquality().hash(createdBy) ^
       const DeepCollectionEquality().hash(createdByUser) ^
       const DeepCollectionEquality().hash(createdAt) ^
@@ -312,11 +355,18 @@ abstract class _Conversation extends Conversation {
   factory _Conversation(
       {String? id,
       required String name,
-      @JsonKey(name: 'created_by') required String createdBy,
-      @JsonKey(name: 'created_by_user') User? createdByUser,
-      @JsonKey(name: 'created_at') DateTime? createdAt,
-      @JsonKey(name: 'updated_at') DateTime? updatedAt,
-      @JsonKey(name: 'deleted_at') DateTime? deletedAt}) = _$_Conversation;
+      @JsonKey(name: 'conversation_participants')
+          List<ConversationParticipant>? participants,
+      @JsonKey(name: 'created_by')
+          required String createdBy,
+      @JsonKey(name: 'created_by_user')
+          User? createdByUser,
+      @JsonKey(name: 'created_at')
+          DateTime? createdAt,
+      @JsonKey(name: 'updated_at')
+          DateTime? updatedAt,
+      @JsonKey(name: 'deleted_at')
+          DateTime? deletedAt}) = _$_Conversation;
   _Conversation._() : super._();
 
   factory _Conversation.fromJson(Map<String, dynamic> json) =
@@ -326,6 +376,10 @@ abstract class _Conversation extends Conversation {
   String? get id => throw _privateConstructorUsedError;
   @override
   String get name => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: 'conversation_participants')
+  List<ConversationParticipant>? get participants =>
+      throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'created_by')
   String get createdBy => throw _privateConstructorUsedError;

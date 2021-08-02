@@ -32,6 +32,7 @@ class MessagesTabView extends StatelessWidget with UiUtilMixin {
               final conversation = conversations[index];
 
               return _ConversationListTile(
+                conversation: conversation,
                 onTap: () => onTap?.call(conversation),
                 onLongPress: () => onLongPress?.call(conversation),
               );
@@ -50,10 +51,12 @@ class MessagesTabView extends StatelessWidget with UiUtilMixin {
 class _ConversationListTile extends StatefulWidget {
   const _ConversationListTile({
     Key? key,
+    required this.conversation,
     this.onTap,
     this.onLongPress,
   }) : super(key: key);
 
+  final Conversation conversation;
   final Function()? onTap;
   final Function()? onLongPress;
 
@@ -66,6 +69,8 @@ class _ConversationListTileState extends State<_ConversationListTile>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    // widget.conversation.participants
 
     return InkWell(
       onTap: widget.onTap,

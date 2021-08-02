@@ -6,7 +6,6 @@
 
 // ignore_for_file: public_member_api_docs
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -82,68 +81,79 @@ class StackedRouter extends RouterBase {
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, StackedRouteFactory>{
     StartupView: (data) {
-      return CupertinoPageRoute<dynamic>(
-        builder: (context) => const StartupView(),
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const StartupView(),
         settings: data,
       );
     },
     AppView: (data) {
-      return CupertinoPageRoute<dynamic>(
-        builder: (context) => const AppView(),
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const AppView(),
         settings: data,
       );
     },
     SignInView: (data) {
-      return CupertinoPageRoute<dynamic>(
-        builder: (context) => const SignInView(),
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const SignInView(),
         settings: data,
       );
     },
     SignUpView: (data) {
-      return CupertinoPageRoute<dynamic>(
-        builder: (context) => const SignUpView(),
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const SignUpView(),
         settings: data,
       );
     },
     ResetPasswordView: (data) {
-      return CupertinoPageRoute<dynamic>(
-        builder: (context) => const ResetPasswordView(),
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const ResetPasswordView(),
         settings: data,
       );
     },
     ForgotPasswordView: (data) {
-      return CupertinoPageRoute<dynamic>(
-        builder: (context) => const ForgotPasswordView(),
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const ForgotPasswordView(),
         settings: data,
       );
     },
     SetupTeamProfileView: (data) {
-      return CupertinoPageRoute<dynamic>(
-        builder: (context) => const SetupTeamProfileView(),
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const SetupTeamProfileView(),
         settings: data,
       );
     },
     UploadTeamPhotoView: (data) {
-      return CupertinoPageRoute<dynamic>(
-        builder: (context) => const UploadTeamPhotoView(),
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const UploadTeamPhotoView(),
         settings: data,
       );
     },
     SelectGoalView: (data) {
-      return CupertinoPageRoute<dynamic>(
-        builder: (context) => const SelectGoalView(),
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const SelectGoalView(),
         settings: data,
       );
     },
     UploadPhotoView: (data) {
-      return CupertinoPageRoute<dynamic>(
-        builder: (context) => const UploadPhotoView(),
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const UploadPhotoView(),
         settings: data,
       );
     },
     SelectInterestsView: (data) {
-      return CupertinoPageRoute<dynamic>(
-        builder: (context) => const SelectInterestsView(),
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const SelectInterestsView(),
         settings: data,
       );
     },
@@ -151,8 +161,9 @@ class StackedRouter extends RouterBase {
       var args = data.getArgs<SetupUserProfileViewArguments>(
         orElse: () => SetupUserProfileViewArguments(),
       );
-      return CupertinoPageRoute<dynamic>(
-        builder: (context) => SetupUserProfileView(key: args.key),
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            SetupUserProfileView(key: args.key),
         settings: data,
       );
     },
@@ -196,8 +207,9 @@ class AppViewRouter extends RouterBase {
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, StackedRouteFactory>{
     HomeView: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => const HomeView(),
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const HomeView(),
         settings: data,
       );
     },
@@ -205,8 +217,8 @@ class AppViewRouter extends RouterBase {
       var args = data.getArgs<TeamDetailViewArguments>(
         orElse: () => TeamDetailViewArguments(),
       );
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => TeamDetailView(
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) => TeamDetailView(
           key: args.key,
           teamId: data.pathParams['teamId'].getString(),
         ),
@@ -214,8 +226,9 @@ class AppViewRouter extends RouterBase {
       );
     },
     WelcomeToTeamView: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => const WelcomeToTeamView(),
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const WelcomeToTeamView(),
         settings: data,
       );
     },
@@ -223,8 +236,9 @@ class AppViewRouter extends RouterBase {
       var args = data.getArgs<ConversationDetailViewArguments>(
         orElse: () => ConversationDetailViewArguments(),
       );
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => ConversationDetailView(
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            ConversationDetailView(
           key: args.key,
           conversationId: data.pathParams['conversationId'].getString(),
         ),
@@ -235,8 +249,8 @@ class AppViewRouter extends RouterBase {
       var args = data.getArgs<UserDetailViewArguments>(
         orElse: () => UserDetailViewArguments(),
       );
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => UserDetailView(
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) => UserDetailView(
           key: args.key,
           userId: data.pathParams['userId'].optString(),
         ),

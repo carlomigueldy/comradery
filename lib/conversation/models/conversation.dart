@@ -1,3 +1,4 @@
+import 'package:comradery/conversation/models/conversation_participant.dart';
 import 'package:comradery/user/models/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +13,10 @@ class Conversation with _$Conversation {
   factory Conversation({
     String? id,
     required String name,
+    @JsonKey(
+      name: 'conversation_participants',
+    )
+        List<ConversationParticipant>? participants,
     @JsonKey(
       name: 'created_by',
     )
@@ -56,6 +61,7 @@ class Conversation with _$Conversation {
     json.remove('updated_at');
     json.remove('deleted_at');
     json.remove('created_by_user');
+    json.remove('conversation_participants');
     return json;
   }
 }
