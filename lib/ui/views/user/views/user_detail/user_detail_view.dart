@@ -1,3 +1,5 @@
+import 'package:comradery/common/utils/ui_util.dart';
+import 'package:comradery/ui/widgets/dumb_widgets/button/app_button.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -5,7 +7,7 @@ import 'package:stacked/stacked_annotations.dart';
 
 import 'user_detail_viewmodel.dart';
 
-class UserDetailView extends StatelessWidget {
+class UserDetailView extends StatelessWidget with UiUtilMixin {
   const UserDetailView({
     Key? key,
     @PathParam('userId') this.userId,
@@ -16,7 +18,10 @@ class UserDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<UserDetailViewModel>.reactive(
-      viewModelBuilder: () => UserDetailViewModel(),
+      onModelReady: (model) => model.init(),
+      viewModelBuilder: () => UserDetailViewModel(
+        userId: userId,
+      ),
       builder: (
         BuildContext context,
         UserDetailViewModel model,
@@ -26,9 +31,17 @@ class UserDetailView extends StatelessWidget {
           appBar: AppBar(
             title: AppText.body('$userId'),
           ),
-          body: Center(
-            child: Text(
-              'UserDetailView $userId',
+          body: SingleChildScrollView(
+            padding: uiUtil.edgeInsets.horizontalSymmetric25,
+            child: Column(
+              children: [
+                uiUtil.verticalSpacing.large,
+                AppButton(
+                  label: 'Start Converastion',
+                  onPressed: () => model.startConversation(),
+                ),
+                uiUtil.verticalSpacing.large,
+              ],
             ),
           ),
         );

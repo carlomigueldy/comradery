@@ -31,7 +31,7 @@ class ConversationDetailView extends StatelessWidget with UiUtilMixin {
       ) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('Hello World'),
+            title: Text('$conversationId'),
           ),
           body: Row(
             children: [
