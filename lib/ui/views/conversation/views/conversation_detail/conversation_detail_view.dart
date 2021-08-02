@@ -1,5 +1,6 @@
 import 'package:comradery/common/utils/ui_util.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
+import 'package:comradery/ui/widgets/dumb_widgets/spinner/app_spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -23,7 +24,10 @@ class ConversationDetailView extends StatelessWidget with UiUtilMixin {
     final theme = Theme.of(context);
 
     return ViewModelBuilder<ConversationDetailViewModel>.reactive(
-      viewModelBuilder: () => ConversationDetailViewModel(),
+      onModelReady: (model) => model.init(),
+      viewModelBuilder: () => ConversationDetailViewModel(
+        conversationId: conversationId,
+      ),
       builder: (
         BuildContext context,
         ConversationDetailViewModel model,
@@ -31,7 +35,9 @@ class ConversationDetailView extends StatelessWidget with UiUtilMixin {
       ) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('$conversationId'),
+            title: model.fetchConversationBusy
+                ? AppSpinner()
+                : Text(model.conversation?.name ?? '-'),
           ),
           body: Row(
             children: [

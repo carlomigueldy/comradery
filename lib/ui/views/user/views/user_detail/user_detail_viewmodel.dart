@@ -17,8 +17,6 @@ class UserDetailViewModel extends BaseViewModel {
   final _authService = locator<AuthService>();
   final _userService = locator<UserService>();
   final _conversationService = locator<ConversationService>();
-  final _conversationParticipantService =
-      locator<ConversationParticipantService>();
   final _router = locator<NavigationService>();
 
   UserDetailViewModel({
@@ -78,34 +76,12 @@ class UserDetailViewModel extends BaseViewModel {
 
     // create converastion
     final response = await runBusyFuture<PostgrestResponse>(
-      _conversationService.create(
-        Conversation(
-          name: '${user?.fullName}, ${_authService.user?.fullName}',
-          createdBy: _authService.user!.id!,
-        ).toPayload(),
-      ),
+      _conversationService.startConversation(user!),
       busyObject: _createConversationKey,
       throwException: true,
     );
     log.v('response "${response.toJson()}"');
     final conversation = Conversation.fromJson(response.data.first);
-
-    // conversation participants
-    final cpResponse = await runBusyFuture<PostgrestResponse>(
-      supabase.from('conversation_participants').insert([
-        ConversationParticipant(
-          userId: userId!,
-          conversationId: conversation.id!,
-        ).toPayload(),
-        ConversationParticipant(
-          userId: _authService.user!.id!,
-          conversationId: conversation.id!,
-        ).toPayload(),
-      ]).execute(),
-      busyObject: _createConversationParticipantsKey,
-      throwException: true,
-    );
-    log.v('cpResponse "${cpResponse.toJson()}"');
 
     // navigate to conversation view
     _router.replaceWith(
@@ -114,14 +90,9 @@ class UserDetailViewModel extends BaseViewModel {
     );
   }
 
-  // TODO: Better check
   Future<String?> existingConversation() async {
     final response = await runBusyFuture<PostgrestResponse>(
-      supabase
-          .from('conversation_participants')
-          .select('user_id, conversation_id')
-          .or('user_id.eq.$userId,user_id.eq.${_authService.user!.id}')
-          .execute(),
+      _conversationService.findExistingConversation(user!),
       busyObject: _checkExistingConversationKey,
       throwException: true,
     );
@@ -129,6 +100,16 @@ class UserDetailViewModel extends BaseViewModel {
 
     if (response.data.length == 0) return null;
 
-    return response.data.first['conversation_id'];
+    final data = (response.data as List<dynamic>);
+
+    try {
+      return data
+          .where((e) => e['conversation_participant'].length > 0)
+          .toList()
+          .first['id'];
+    } catch (e) {
+      return null;
+    }
+    // return response.data.first['id'];
   }
 }
