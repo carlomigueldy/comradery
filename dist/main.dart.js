@@ -40583,18 +40583,16 @@ case 1:return P.H(q,r)}})
 return P.I($async$jI,r)},
 x_:function(){var s=0,r=P.J(t.H),q,p=this,o,n,m
 var $async$x_=P.F(function(a,b){if(a===1)return P.G(b,r)
-while(true)switch(s){case 0:n=$.dX().eY("conversations").je(0,"*, conversation_participant: conversation_participants (*, user: users (id, first_name, last_name, email, photo_url))")
-m=p.x.c.a
-m.toString
-n.dF("conversation_participant.user_id","eq."+m)
+while(true)switch(s){case 0:m=$.dX().eY("conversations").je(0,"*, conversation_participants: conversation_participants (*, user: users (id, first_name, last_name, email, photo_url))")
+m.dF("deleted_at","is.null")
 s=3
-return P.C(p.fB(n.cQ(),"_fetchMyConversationsKey",!0,t.i),$async$x_)
+return P.C(p.fB(m.cQ(),"_fetchMyConversationsKey",!0,t.i),$async$x_)
 case 3:o=b
-n=p.r
-n.aQ(C.a3,'fetchMyConversations-response "'+o.bw().j(0)+'"',null,null)
-n.aQ(C.az,o.bw(),null,null)
-m=o.c
-if(m!=null){n.aQ(C.ab,m.a,null,null)
+m=p.r
+m.aQ(C.a3,'fetchMyConversations-response "'+o.bw().j(0)+'"',null,null)
+m.aQ(C.az,o.bw(),null,null)
+n=o.c
+if(n!=null){m.aQ(C.ab,n.a,null,null)
 s=1
 break}p.cx=J.jZ(t.j.a(o.a),new E.Wl(),t.fs).ed(0)
 if(!p.e)p.cA()
