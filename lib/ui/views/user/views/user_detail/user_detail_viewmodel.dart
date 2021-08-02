@@ -114,13 +114,13 @@ class UserDetailViewModel extends BaseViewModel {
     );
   }
 
+  // TODO: Better check
   Future<String?> existingConversation() async {
     final response = await runBusyFuture<PostgrestResponse>(
       supabase
           .from('conversation_participants')
           .select('user_id, conversation_id')
-          .eq('user_id', userId)
-          .eq('user_id', _authService.user!.id)
+          .or('user_id.eq.$userId,user_id.eq.${_authService.user!.id}')
           .execute(),
       busyObject: _checkExistingConversationKey,
       throwException: true,
