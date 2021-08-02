@@ -96,7 +96,8 @@ class UserDetailViewModel extends BaseViewModel {
       busyObject: _checkExistingConversationKey,
       throwException: true,
     );
-    log.v('response "${response.toJson()}"');
+    // log.v('response "${response.toJson()}"');
+    log.v(response.toJson());
 
     if (response.data.length == 0) return null;
 

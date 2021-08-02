@@ -17,7 +17,6 @@ class ConversationService extends SupabaseService {
   Future<PostgrestResponse> startConversation(User targetUser) async {
     final response = await create(
       Conversation(
-        name: '${_authService.user?.fullName}, ${targetUser.fullName}',
         createdBy: _authService.user!.id!,
       ).toPayload(),
     );
@@ -44,15 +43,16 @@ class ConversationService extends SupabaseService {
   }
 
   Future<PostgrestResponse> findExistingConversation(User targetUser) async {
-    return await supabase
+    return supabase
         .from('conversations')
         .select(
-          'id, conversation_participant: conversation_participants (user_id)',
+          'id, conversation_participant: conversation_participants (user_id, user: users (first_name, last_name, email) )',
         )
         .eq('conversation_participant.user_id', targetUser.id!)
-        .or(
-          'created_by.eq.${targetUser.id!},created_by.eq.${_authService.user!.id}',
-        )
+        .eq('conversation_participant.user_id', _authService.user!.id!)
+        // .or(
+        //   'created_by.eq.${targetUser!.id!},created_by.eq.${_authService.user!.id}',
+        // )
         .execute();
   }
 }

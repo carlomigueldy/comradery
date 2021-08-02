@@ -12,7 +12,7 @@ class Conversation with _$Conversation {
 
   factory Conversation({
     String? id,
-    required String name,
+    String? name,
     @JsonKey(
       name: 'conversation_participants',
     )
@@ -52,6 +52,12 @@ class Conversation with _$Conversation {
 
   String get formattedDeletedAt {
     return DateFormat('EEEE M/d/y').format(deletedAt!);
+  }
+
+  String get participantNames {
+    if (participants == null) return 'ssss';
+
+    return participants!.map((e) => e.user?.fullName ?? '').toList().join(', ');
   }
 
   Map<String, dynamic> toPayload() {

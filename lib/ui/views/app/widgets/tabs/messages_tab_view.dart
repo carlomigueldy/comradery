@@ -94,20 +94,24 @@ class _ConversationListTileState extends State<_ConversationListTile>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AppText.body('User'),
-                  Row(
-                    children: [
-                      Flexible(
-                        child: AppText.bodySmall(
-                          'textdasdaseqwnjenqwlkeqwnlekqwnlewq',
-                          style: uiUtil.textStyles.bodySmall.copyWith(
-                            color: uiUtil.colors.mediumGray,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
+                  AppText.body(
+                    widget.conversation.name != null
+                        ? widget.conversation.name!
+                        : widget.conversation.participantNames,
                   ),
+                  // Row(
+                  //   children: [
+                  //     Flexible(
+                  //       child: AppText.bodySmall(
+                  //         'textdasdaseqwnjenqwlkeqwnlekqwnlewq',
+                  //         style: uiUtil.textStyles.bodySmall.copyWith(
+                  //           color: uiUtil.colors.mediumGray,
+                  //         ),
+                  //         overflow: TextOverflow.ellipsis,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),

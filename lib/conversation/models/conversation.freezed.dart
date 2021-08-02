@@ -22,7 +22,7 @@ class _$ConversationTearOff {
 
   _Conversation call(
       {String? id,
-      required String name,
+      String? name,
       @JsonKey(name: 'conversation_participants')
           List<ConversationParticipant>? participants,
       @JsonKey(name: 'created_by')
@@ -58,7 +58,7 @@ const $Conversation = _$ConversationTearOff();
 /// @nodoc
 mixin _$Conversation {
   String? get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'conversation_participants')
   List<ConversationParticipant>? get participants =>
       throw _privateConstructorUsedError;
@@ -86,7 +86,7 @@ abstract class $ConversationCopyWith<$Res> {
       _$ConversationCopyWithImpl<$Res>;
   $Res call(
       {String? id,
-      String name,
+      String? name,
       @JsonKey(name: 'conversation_participants')
           List<ConversationParticipant>? participants,
       @JsonKey(name: 'created_by')
@@ -130,7 +130,7 @@ class _$ConversationCopyWithImpl<$Res> implements $ConversationCopyWith<$Res> {
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       participants: participants == freezed
           ? _value.participants
           : participants // ignore: cast_nullable_to_non_nullable
@@ -179,7 +179,7 @@ abstract class _$ConversationCopyWith<$Res>
   @override
   $Res call(
       {String? id,
-      String name,
+      String? name,
       @JsonKey(name: 'conversation_participants')
           List<ConversationParticipant>? participants,
       @JsonKey(name: 'created_by')
@@ -226,7 +226,7 @@ class __$ConversationCopyWithImpl<$Res> extends _$ConversationCopyWithImpl<$Res>
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       participants: participants == freezed
           ? _value.participants
           : participants // ignore: cast_nullable_to_non_nullable
@@ -260,7 +260,7 @@ class __$ConversationCopyWithImpl<$Res> extends _$ConversationCopyWithImpl<$Res>
 class _$_Conversation extends _Conversation {
   _$_Conversation(
       {this.id,
-      required this.name,
+      this.name,
       @JsonKey(name: 'conversation_participants') this.participants,
       @JsonKey(name: 'created_by') required this.createdBy,
       @JsonKey(name: 'created_by_user') this.createdByUser,
@@ -275,7 +275,7 @@ class _$_Conversation extends _Conversation {
   @override
   final String? id;
   @override
-  final String name;
+  final String? name;
   @override
   @JsonKey(name: 'conversation_participants')
   final List<ConversationParticipant>? participants;
@@ -354,7 +354,7 @@ class _$_Conversation extends _Conversation {
 abstract class _Conversation extends Conversation {
   factory _Conversation(
       {String? id,
-      required String name,
+      String? name,
       @JsonKey(name: 'conversation_participants')
           List<ConversationParticipant>? participants,
       @JsonKey(name: 'created_by')
@@ -375,7 +375,7 @@ abstract class _Conversation extends Conversation {
   @override
   String? get id => throw _privateConstructorUsedError;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'conversation_participants')
   List<ConversationParticipant>? get participants =>

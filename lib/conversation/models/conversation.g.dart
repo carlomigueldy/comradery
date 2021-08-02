@@ -9,7 +9,7 @@ part of 'conversation.dart';
 _$_Conversation _$_$_ConversationFromJson(Map<String, dynamic> json) {
   return _$_Conversation(
     id: json['id'] as String?,
-    name: json['name'] as String,
+    name: json['name'] as String?,
     participants: (json['conversation_participants'] as List<dynamic>?)
         ?.map(
             (e) => ConversationParticipant.fromJson(e as Map<String, dynamic>))

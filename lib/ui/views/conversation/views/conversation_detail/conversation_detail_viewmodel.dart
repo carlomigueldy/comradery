@@ -1,4 +1,5 @@
 import 'package:comradery/app.dart';
+import 'package:comradery/common/supabase/supabase_client.dart';
 import 'package:comradery/conversation/models/conversation.dart';
 import 'package:comradery/conversation/services/conversation_service.dart';
 import 'package:logger/logger.dart';
@@ -27,11 +28,18 @@ class ConversationDetailViewModel extends BaseViewModel {
 
   Future<void> fetchConversation() async {
     final response = await runBusyFuture<PostgrestResponse>(
-      _conversationService.find(conversationId),
+      supabase
+          .from(_conversationService.table)
+          .select(
+            '*, conversation_participants: conversation_participants (*, user: users (*))',
+          )
+          .single()
+          .execute(),
       busyObject: _fetchConversationKey,
       throwException: true,
     );
     log.v('response "${response.toJson()}"');
+    log.i(response.toJson());
 
     if (response.error != null) {
       log.e(response.error?.message);

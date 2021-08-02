@@ -130,12 +130,12 @@ class AppViewModel extends BaseViewModel {
           .from('conversations')
           .select(
             '*, '
-            'conversation_participants ('
+            'conversation_participant: conversation_participants ('
             '*, user: users (id, first_name, last_name, email, photo_url)'
             ')',
           )
           .eq('conversation_participant.user_id', _authService.user!.id!)
-          .is_('deleted_at', null)
+          // .is_('deleted_at', null)
           .execute(),
       busyObject: _fetchMyConversationsKey,
       throwException: true,

@@ -37,7 +37,10 @@ class ConversationDetailView extends StatelessWidget with UiUtilMixin {
           appBar: AppBar(
             title: model.fetchConversationBusy
                 ? AppSpinner()
-                : Text(model.conversation?.name ?? '-'),
+                : Text(
+                    model.conversation?.name ??
+                        (model.conversation?.participantNames ?? '--'),
+                  ),
           ),
           body: Row(
             children: [
