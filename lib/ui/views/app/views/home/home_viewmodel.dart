@@ -124,12 +124,7 @@ class HomeViewModel extends BaseViewModel {
 
   Future<void> fetchMyMatchings() async {
     final response = await runBusyFuture<sb.PostgrestResponse>(
-      supabase
-          .from(_matchingService.table)
-          .select('*, target_user: users (id, first_name, email)')
-          .eq('created_by', _authService.user!.id!)
-          .is_('deleted_at', null)
-          .execute(),
+      _matchingService.fetchMyMatchingSubmissions(),
       busyObject: _fetchMyMatchingsKey,
       throwException: true,
     );

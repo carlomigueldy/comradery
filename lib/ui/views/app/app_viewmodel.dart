@@ -82,16 +82,7 @@ class AppViewModel extends BaseViewModel {
 
   Future<void> fetchMyMatchings() async {
     final response = await runBusyFuture<PostgrestResponse>(
-      supabase
-          .from(_matchingService.table)
-          .select(
-            '*, created_by_user: users (id, first_name, last_name, email)',
-          )
-          .eq('target_user_id', _authService.user!.id!)
-          .neq('created_by', _authService.user!.id!)
-          .is_('liked', true)
-          .is_('deleted_at', null)
-          .execute(),
+      _matchingService.fetchMyMatchings(),
       busyObject: _fetchMyMatchingsKey,
       throwException: true,
     );
@@ -109,16 +100,7 @@ class AppViewModel extends BaseViewModel {
 
   Future<void> fetchWhoLikedMe() async {
     final response = await runBusyFuture<PostgrestResponse>(
-      supabase
-          .from(_matchingService.table)
-          .select(
-            '*, created_by_user: users (id, first_name, last_name, email)',
-          )
-          .neq('target_user_id', _authService.user!.id!)
-          .eq('created_by', _authService.user!.id!)
-          .is_('liked', true)
-          .is_('deleted_at', null)
-          .execute(),
+      _matchingService.fetchWhoLikedMe(),
       busyObject: _fetchWhoLikedMeKey,
       throwException: true,
     );
