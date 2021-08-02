@@ -6,11 +6,11 @@ import 'package:comradery/conversation/models/conversation_message.dart';
 import 'package:comradery/conversation/models/conversation_participant.dart';
 import 'package:comradery/conversation/services/conversation_message_service.dart';
 import 'package:comradery/conversation/services/conversation_service.dart';
-import 'package:comradery/user/models/user.dart';
+import 'package:comradery/user/models/user.dart' as user;
 import 'package:logger/logger.dart';
 import 'package:postgrest/postgrest.dart';
 import 'package:stacked/stacked.dart';
-import 'package:supabase/supabase.dart' as sp;
+import 'package:supabase/supabase.dart';
 
 class ConversationDetailViewModel extends BaseViewModel {
   final log = Logger();
@@ -47,8 +47,8 @@ class ConversationDetailViewModel extends BaseViewModel {
   String get _sendMessageKey => '_sendMessageKey';
   bool get sendMessageBusy => busy(_sendMessageKey);
 
-  List<User> _participants = [];
-  List<User> get participants => _participants;
+  List<user.User> _participants = [];
+  List<user.User> get participants => _participants;
   String get _fetchParticipantsKey => '_fetchParticipantsKey';
   bool get fetchParticipantsBusy => busy(_fetchParticipantsKey);
 
@@ -60,8 +60,8 @@ class ConversationDetailViewModel extends BaseViewModel {
     await fetchMessages();
 
     supabase
-        .from('conversation_messages:id=eq.${conversationId}')
-        .on(sp.SupabaseEventTypes.insert, (payload) {
+        .from('conversation_messages:id=eq.$conversationId')
+        .on(SupabaseEventTypes.insert, (payload) {
       _messages.add(ConversationMessage.fromJson(payload.newRecord));
     }).subscribe();
   }
@@ -113,7 +113,7 @@ class ConversationDetailViewModel extends BaseViewModel {
     _participants = (response.data as List).map((e) {
       log.v('e "${e['user']}"');
 
-      return User.fromJson(e['user']);
+      return user.User.fromJson(e['user']);
     }).toList();
     notifyListeners();
   }
