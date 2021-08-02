@@ -2,12 +2,14 @@ import 'package:comradery/common/utils/ui_util.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/spinner/app_spinner.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
+import 'package:stacked_hooks/stacked_hooks.dart';
 
 import 'conversation_detail_viewmodel.dart';
 
-class ConversationDetailView extends StatelessWidget with UiUtilMixin {
+class ConversationDetailView extends StatefulWidget {
   const ConversationDetailView({
     Key? key,
     @PathParam(
@@ -19,6 +21,12 @@ class ConversationDetailView extends StatelessWidget with UiUtilMixin {
   final String conversationId;
 
   @override
+  _ConversationDetailViewState createState() => _ConversationDetailViewState();
+}
+
+class _ConversationDetailViewState extends State<ConversationDetailView>
+    with UiUtilMixin {
+  @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final theme = Theme.of(context);
@@ -26,7 +34,7 @@ class ConversationDetailView extends StatelessWidget with UiUtilMixin {
     return ViewModelBuilder<ConversationDetailViewModel>.reactive(
       onModelReady: (model) => model.init(),
       viewModelBuilder: () => ConversationDetailViewModel(
-        conversationId: conversationId,
+        conversationId: widget.conversationId,
       ),
       builder: (
         BuildContext context,
@@ -51,28 +59,41 @@ class ConversationDetailView extends StatelessWidget with UiUtilMixin {
                     children: [
                       SingleChildScrollView(
                         padding: uiUtil.edgeInsets.horizontalSymmetric25,
+                        reverse: true,
                         child: Column(
                           children: [
                             uiUtil.verticalSpacing.large,
                             ListView.separated(
                               shrinkWrap: true,
-                              itemCount: 30,
+                              itemCount: model.messages.length,
                               physics: NeverScrollableScrollPhysics(),
-                              reverse: true,
+                              // reverse: true,
                               itemBuilder: (context, index) {
+                                final message = model.messages[index];
+                                final isMe =
+                                    message.createdBy == model.authUserId;
+
                                 return Row(
-                                  mainAxisAlignment: index % 2 == 0
+                                  mainAxisAlignment: isMe
                                       ? MainAxisAlignment.end
                                       : MainAxisAlignment.start,
                                   children: [
                                     Container(
-                                      child: Text('$index'),
+                                      padding: uiUtil.edgeInsets.all10,
+                                      decoration: BoxDecoration(
+                                        color: isMe
+                                            ? theme.primaryColor
+                                                .withOpacity(0.1)
+                                            : uiUtil.colors.veryLightGrey,
+                                        borderRadius: uiUtil.borderRadius.large,
+                                      ),
+                                      child: Text(message.content),
                                     ),
                                   ],
                                 );
                               },
                               separatorBuilder: (context, index) {
-                                return uiUtil.verticalSpacing.large;
+                                return uiUtil.verticalSpacing.normal;
                               },
                             ),
                             uiUtil.verticalSpacing.veryLarge,
@@ -91,9 +112,7 @@ class ConversationDetailView extends StatelessWidget with UiUtilMixin {
                               uiUtil.boxShadows.small,
                             ],
                           ),
-                          child: AppTextField(
-                            name: 'message',
-                          ),
+                          child: _TextField(),
                         ),
                       ),
                     ],
@@ -108,6 +127,30 @@ class ConversationDetailView extends StatelessWidget with UiUtilMixin {
           ),
         );
       },
+    );
+  }
+}
+
+class _TextField extends HookViewModelWidget<ConversationDetailViewModel> {
+  const _TextField({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget buildViewModelWidget(
+    BuildContext context,
+    ConversationDetailViewModel model,
+  ) {
+    final messageController = useTextEditingController();
+
+    return AppTextField(
+      name: 'message',
+      label: 'Message',
+      controller: messageController,
+      onChanged: model.onInputMessageChange,
+      onEditingComplete: () => model.sendMessage().then((value) {
+        messageController.clear();
+      }),
     );
   }
 }

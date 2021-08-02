@@ -55,10 +55,9 @@ class HomeViewModel extends BaseViewModel {
 
   Future<void> init() async {
     setBusy(true);
-    await Future.wait([
-      fetchMyMatchings(),
-      fetchUsers(),
-    ]);
+    await fetchMyMatchings();
+    await fetchUsers();
+
     // INSERT
     supabase
         .from(
