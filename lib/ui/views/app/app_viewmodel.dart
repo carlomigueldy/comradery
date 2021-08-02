@@ -1,6 +1,7 @@
 import 'package:comradery/app.dart';
 import 'package:comradery/auth/services/auth_service.dart';
 import 'package:comradery/common/supabase/supabase_client.dart';
+import 'package:comradery/conversation/models/conversation.dart';
 import 'package:comradery/matching/models/matching.dart';
 import 'package:comradery/matching/services/matching_service.dart';
 import 'package:logger/logger.dart';
@@ -35,13 +36,19 @@ class AppViewModel extends BaseViewModel {
   String get _fetchWhoLikedMeKey => '_fetchWhoLikedMeKey';
   bool get fetchWhoLikedMeBusy => busy(_fetchWhoLikedMeKey);
 
+  List<Conversation> _conversations = [];
+  List<Conversation> get conversations => _conversations;
+  String get _fetchMyConversationsKey => '_fetchMyConversationsKey';
+  bool get fetchMyConversationsBusy => busy(_fetchMyConversationsKey);
+
   Future<void> init() async {
     await Future.wait([
       fetchWhoLikedMe(),
       fetchMyMatchings(),
+      fetchMyConversations(),
     ]);
 
-    // INSERT
+    // INSERT `matchings`
     supabase
         .from(
       '${_matchingService.table}:created_by=eq.${_authService.user?.id}',
@@ -58,7 +65,7 @@ class AppViewModel extends BaseViewModel {
       notifyListeners();
     }).subscribe();
 
-    // DELETE
+    // DELETE `matchings`
     supabase
         .from(
       '${_matchingService.table}:created_by=eq.${_authService.user?.id}',
@@ -116,14 +123,41 @@ class AppViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  // TODO: WIP WIP WIP
+  Future<void> fetchMyConversations() async {
+    final response = await runBusyFuture<PostgrestResponse>(
+      supabase
+          .from('conversation_participants')
+          .select(
+            'conversation_id, conversation: conversations (*)',
+          )
+          .eq('user_id', _authService.user!.id!)
+          .is_('deleted_at', null)
+          .execute(),
+      busyObject: _fetchMyConversationsKey,
+      throwException: true,
+    );
+    log.v('fetchMyConversations-response "${response.toJson()}"');
+
+    if (response.error != null) {
+      log.e(response.error?.message);
+      return;
+    }
+
+    _conversations = (response.data as List)
+        .map((e) => Conversation.fromJson(e['conversation']))
+        .toList();
+    notifyListeners();
+  }
+
   void logout() {
     _authService.signOut();
     _router.replaceWith(Routes.signInView);
   }
 
-  void toConversationDetailView(int value) {
+  void toConversationDetailView(String value) {
     _router.navigateTo(
-      AppViewRoutes.conversationDetailView(conversationId: 'value$value'),
+      AppViewRoutes.conversationDetailView(conversationId: value),
       id: AppRouterId.appView,
     );
   }

@@ -1,4 +1,5 @@
 import 'package:comradery/common/utils/ui_util.dart';
+import 'package:comradery/conversation/models/conversation.dart';
 import 'package:comradery/ui/placeholders/placeholder_images.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:flutter/material.dart';
@@ -6,12 +7,14 @@ import 'package:flutter/material.dart';
 class MessagesTabView extends StatelessWidget with UiUtilMixin {
   const MessagesTabView({
     Key? key,
+    required this.conversations,
     this.onTap,
     this.onLongPress,
   }) : super(key: key);
 
-  final Function(int)? onTap;
-  final Function(int)? onLongPress;
+  final List<Conversation> conversations;
+  final Function(Conversation)? onTap;
+  final Function(Conversation)? onLongPress;
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +26,14 @@ class MessagesTabView extends StatelessWidget with UiUtilMixin {
           uiUtil.verticalSpacing.large,
           ListView.separated(
             shrinkWrap: true,
-            itemCount: 25,
+            itemCount: conversations.length,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
+              final conversation = conversations[index];
+
               return _ConversationListTile(
-                onTap: () => onTap?.call(index),
-                onLongPress: () => onLongPress?.call(index),
+                onTap: () => onTap?.call(conversation),
+                onLongPress: () => onLongPress?.call(conversation),
               );
             },
             separatorBuilder: (context, index) {

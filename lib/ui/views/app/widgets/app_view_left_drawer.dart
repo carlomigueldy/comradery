@@ -134,8 +134,9 @@ class _AppViewLeftDrawerState extends State<AppViewLeftDrawer>
                   },
                 ),
                 MessagesTabView(
+                  conversations: widget.model.conversations,
                   onTap: (value) {
-                    widget.model.toConversationDetailView(value);
+                    widget.model.toConversationDetailView(value.id!);
                   },
                 ),
                 MyTeamsTabView(
