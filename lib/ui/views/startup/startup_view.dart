@@ -9,9 +9,17 @@ class StartupView extends StatefulWidget {
   const StartupView({
     Key? key,
     @QueryParam('access_token') this.accessToken,
+    @QueryParam('expires_in') this.expiresIn,
+    @QueryParam('provider_token') this.providerToken,
+    @QueryParam('refresh_token') this.refreshToken,
+    @QueryParam('token_type') this.tokenType,
   }) : super(key: key);
 
   final String? accessToken;
+  final String? expiresIn;
+  final String? providerToken;
+  final String? refreshToken;
+  final String? tokenType;
 
   @override
   _StartupViewState createState() => _StartupViewState();
@@ -24,6 +32,10 @@ class _StartupViewState extends State<StartupView> with UiUtilMixin {
       onModelReady: (model) => model.init(),
       viewModelBuilder: () => StartupViewModel(
         accessToken: widget.accessToken,
+        expiresIn: widget.expiresIn,
+        providerToken: widget.providerToken,
+        refreshToken: widget.refreshToken,
+        tokenType: widget.tokenType,
       ),
       builder: (
         BuildContext context,

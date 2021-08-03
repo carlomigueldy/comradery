@@ -12,15 +12,29 @@ class StartupViewModel extends BaseViewModel {
 
   StartupViewModel({
     this.accessToken,
+    this.expiresIn,
+    this.providerToken,
+    this.refreshToken,
+    this.tokenType,
   });
 
   final String? accessToken;
+  final String? expiresIn;
+  final String? providerToken;
+  final String? refreshToken;
+  final String? tokenType;
 
   Future<void> init() async {
+    log.v(
+      'accessToken "$accessToken"\n'
+      'expiresIn "$expiresIn"\n'
+      'providerToken "$providerToken"'
+      'refreshToken "$refreshToken"'
+      'tokenType "$tokenType"',
+    );
+
     await _authService.initialize();
     await Future.delayed(Duration(seconds: 1));
-
-    log.v('accessToken "$accessToken"');
 
     if (_authService.hasUser) {
       return _router.replaceWith(Routes.appView);
