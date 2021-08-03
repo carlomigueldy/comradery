@@ -44,12 +44,10 @@ class ThemeService with ReactiveServiceMixin, UiUtilMixin {
         cardTheme: _cardTheme.copyWith(
           color: uiUtil.colors.veryLightGrey,
         ),
-        pageTransitionsTheme: PageTransitionsTheme(
-      builders: {
-        TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
-        TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-      }
-    ),
+        pageTransitionsTheme: PageTransitionsTheme(builders: {
+          TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
+          TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+        }),
       );
 
   ThemeData dark() => ThemeData(
@@ -66,12 +64,10 @@ class ThemeService with ReactiveServiceMixin, UiUtilMixin {
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: uiUtil.colors.darkGrey,
         ),
-        pageTransitionsTheme: PageTransitionsTheme(
-      builders: {
-        TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
-        TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-      }
-    ),
+        pageTransitionsTheme: PageTransitionsTheme(builders: {
+          TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
+          // TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+        }),
       );
 
   String get fontFamily => 'Sora';

@@ -138,6 +138,7 @@ class _AppViewLeftDrawerState extends State<AppViewLeftDrawer>
                 ),
                 MessagesTabView(
                   conversations: widget.model.conversations,
+                  authUserFullName: widget.model.userFullName ?? '',
                   onTap: (value) {
                     widget.model.toConversationDetailView(value.id!);
                   },

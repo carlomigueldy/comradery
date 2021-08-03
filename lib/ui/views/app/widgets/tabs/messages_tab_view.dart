@@ -10,11 +10,13 @@ class MessagesTabView extends StatelessWidget with UiUtilMixin {
     required this.conversations,
     this.onTap,
     this.onLongPress,
+    required this.authUserFullName,
   }) : super(key: key);
 
   final List<Conversation> conversations;
   final Function(Conversation)? onTap;
   final Function(Conversation)? onLongPress;
+  final String authUserFullName;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,12 @@ class MessagesTabView extends StatelessWidget with UiUtilMixin {
               return _ConversationListTile(
                 title: conversation.name != null
                     ? conversation.name!
-                    : conversation.participantNames.replaceAll(',', ''),
+                    : conversation.participantNames
+                        .replaceAll(',', '')
+                        .replaceAll(
+                          authUserFullName,
+                          '',
+                        ),
                 conversation: conversation,
                 onTap: () => onTap?.call(conversation),
                 onLongPress: () => onLongPress?.call(conversation),

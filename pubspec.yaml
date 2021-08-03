@@ -79,6 +79,7 @@ flutter:
   assets:
     - dotenv
     - assets/fonts/Sora/
+    - assets/png/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

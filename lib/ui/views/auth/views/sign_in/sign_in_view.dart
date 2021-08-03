@@ -29,17 +29,17 @@ class _SignInViewState extends State<SignInView> with UiUtilMixin {
       ) {
         final theme = Theme.of(context);
 
-        return GestureDetector(
-          onTap: () => uiUtil.dismissKeyboard(context),
-          child: Scaffold(
-            body: Row(
+        return Scaffold(
+          body: Container(
+            color: uiUtil.colors.backgroundColor,
+            child: Row(
               children: [
                 Expanded(
                   flex: 1,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: theme.primaryColor,
-                    ),
+                        // color: theme.primaryColor,
+                        ),
                   ),
                 ),
                 Expanded(

@@ -30,8 +30,8 @@ import 'ui/views/team/views/welcome_to_team/welcome_to_team_view.dart';
 import 'ui/views/user/views/user_detail/user_detail_view.dart';
 
 class Routes {
-  static const String startupView = '/init';
-  static const String landingView = '/';
+  static const String startupView = '/';
+  static const String landingView = '/index';
   static const String aboutView = '/about';
   static const String appView = 'app';
   static const String signInView = '/auth/sign-in';

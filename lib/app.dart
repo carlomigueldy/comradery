@@ -45,11 +45,11 @@ class AppRouterId {
     MaterialRoute(
       page: StartupView,
       initial: true,
-      path: '/init',
+      path: '/',
     ),
     MaterialRoute(
       page: LandingView,
-      path: '/',
+      path: '/index',
     ),
     MaterialRoute(
       page: AboutView,

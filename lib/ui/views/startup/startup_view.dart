@@ -22,11 +22,13 @@ class _StartupViewState extends State<StartupView> with UiUtilMixin {
         Widget? child,
       ) {
         return Scaffold(
-          body: Center(
-            child: Text(
-              'Comradery App',
-              style: uiUtil.textStyles.body.copyWith(
-                fontSize: 24,
+          body: Container(
+            color: uiUtil.colors.backgroundColor,
+            child: Center(
+              child: Image.asset(
+                'assets/png/banner.png',
+                height: 300,
+                width: 300,
               ),
             ),
           ),
