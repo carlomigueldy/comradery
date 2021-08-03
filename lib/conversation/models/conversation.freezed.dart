@@ -23,6 +23,7 @@ class _$ConversationTearOff {
   _Conversation call(
       {String? id,
       String? name,
+      ConversationType type = ConversationType.private,
       @JsonKey(name: 'conversation_participants')
           List<ConversationParticipant>? participants,
       @JsonKey(name: 'created_by')
@@ -38,6 +39,7 @@ class _$ConversationTearOff {
     return _Conversation(
       id: id,
       name: name,
+      type: type,
       participants: participants,
       createdBy: createdBy,
       createdByUser: createdByUser,
@@ -59,6 +61,7 @@ const $Conversation = _$ConversationTearOff();
 mixin _$Conversation {
   String? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
+  ConversationType get type => throw _privateConstructorUsedError;
   @JsonKey(name: 'conversation_participants')
   List<ConversationParticipant>? get participants =>
       throw _privateConstructorUsedError;
@@ -87,6 +90,7 @@ abstract class $ConversationCopyWith<$Res> {
   $Res call(
       {String? id,
       String? name,
+      ConversationType type,
       @JsonKey(name: 'conversation_participants')
           List<ConversationParticipant>? participants,
       @JsonKey(name: 'created_by')
@@ -115,6 +119,7 @@ class _$ConversationCopyWithImpl<$Res> implements $ConversationCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? type = freezed,
     Object? participants = freezed,
     Object? createdBy = freezed,
     Object? createdByUser = freezed,
@@ -131,6 +136,10 @@ class _$ConversationCopyWithImpl<$Res> implements $ConversationCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as ConversationType,
       participants: participants == freezed
           ? _value.participants
           : participants // ignore: cast_nullable_to_non_nullable
@@ -180,6 +189,7 @@ abstract class _$ConversationCopyWith<$Res>
   $Res call(
       {String? id,
       String? name,
+      ConversationType type,
       @JsonKey(name: 'conversation_participants')
           List<ConversationParticipant>? participants,
       @JsonKey(name: 'created_by')
@@ -211,6 +221,7 @@ class __$ConversationCopyWithImpl<$Res> extends _$ConversationCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? type = freezed,
     Object? participants = freezed,
     Object? createdBy = freezed,
     Object? createdByUser = freezed,
@@ -227,6 +238,10 @@ class __$ConversationCopyWithImpl<$Res> extends _$ConversationCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as ConversationType,
       participants: participants == freezed
           ? _value.participants
           : participants // ignore: cast_nullable_to_non_nullable
@@ -261,6 +276,7 @@ class _$_Conversation extends _Conversation {
   _$_Conversation(
       {this.id,
       this.name,
+      this.type = ConversationType.private,
       @JsonKey(name: 'conversation_participants') this.participants,
       @JsonKey(name: 'created_by') required this.createdBy,
       @JsonKey(name: 'created_by_user') this.createdByUser,
@@ -276,6 +292,9 @@ class _$_Conversation extends _Conversation {
   final String? id;
   @override
   final String? name;
+  @JsonKey(defaultValue: ConversationType.private)
+  @override
+  final ConversationType type;
   @override
   @JsonKey(name: 'conversation_participants')
   final List<ConversationParticipant>? participants;
@@ -297,7 +316,7 @@ class _$_Conversation extends _Conversation {
 
   @override
   String toString() {
-    return 'Conversation(id: $id, name: $name, participants: $participants, createdBy: $createdBy, createdByUser: $createdByUser, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'Conversation(id: $id, name: $name, type: $type, participants: $participants, createdBy: $createdBy, createdByUser: $createdByUser, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -308,6 +327,8 @@ class _$_Conversation extends _Conversation {
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.type, type) ||
+                const DeepCollectionEquality().equals(other.type, type)) &&
             (identical(other.participants, participants) ||
                 const DeepCollectionEquality()
                     .equals(other.participants, participants)) &&
@@ -333,6 +354,7 @@ class _$_Conversation extends _Conversation {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(type) ^
       const DeepCollectionEquality().hash(participants) ^
       const DeepCollectionEquality().hash(createdBy) ^
       const DeepCollectionEquality().hash(createdByUser) ^
@@ -355,6 +377,7 @@ abstract class _Conversation extends Conversation {
   factory _Conversation(
       {String? id,
       String? name,
+      ConversationType type,
       @JsonKey(name: 'conversation_participants')
           List<ConversationParticipant>? participants,
       @JsonKey(name: 'created_by')
@@ -376,6 +399,8 @@ abstract class _Conversation extends Conversation {
   String? get id => throw _privateConstructorUsedError;
   @override
   String? get name => throw _privateConstructorUsedError;
+  @override
+  ConversationType get type => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'conversation_participants')
   List<ConversationParticipant>? get participants =>

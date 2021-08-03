@@ -6,6 +6,13 @@ import 'package:intl/intl.dart';
 part 'conversation.freezed.dart';
 part 'conversation.g.dart';
 
+enum ConversationType {
+  @JsonValue('private')
+  private,
+  @JsonValue('team')
+  team,
+}
+
 @freezed
 class Conversation with _$Conversation {
   const Conversation._();
@@ -13,6 +20,8 @@ class Conversation with _$Conversation {
   factory Conversation({
     String? id,
     String? name,
+    @Default(ConversationType.private)
+        ConversationType type,
     @JsonKey(
       name: 'conversation_participants',
     )

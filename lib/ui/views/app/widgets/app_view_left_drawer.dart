@@ -50,12 +50,13 @@ class _AppViewLeftDrawerState extends State<AppViewLeftDrawer>
       ),
       child: Column(
         children: [
-          uiUtil.verticalSpacing.large,
-          Expanded(
-            flex: 1,
+          Container(
+            height: 175,
             child: Padding(
               padding: uiUtil.edgeInsets.horizontalSymmetric25,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
                     children: [
