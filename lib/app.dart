@@ -15,6 +15,7 @@ import 'notification/services/notification_service.dart';
 import 'team/services/team_member_service.dart';
 import 'team/services/team_request_service.dart';
 import 'team/services/team_service.dart';
+import 'ui/views/app/app_viewmodel.dart';
 import 'user/services/user_interest_service.dart';
 import 'auth/services/auth_service.dart';
 import 'common/services/local_storage_service.dart';
@@ -82,6 +83,9 @@ class AppRouterId {
     LazySingleton(classType: DialogService),
     LazySingleton(classType: BottomSheetService),
     LazySingleton(classType: SnackbarService),
+
+    // viewmodels
+    LazySingleton(classType: AppViewModel)
   ],
 )
 class AppSetup {}

@@ -20,6 +20,9 @@ class ConversationService extends SupabaseService {
         createdBy: _authService.user!.id!,
       ).toPayload(),
     );
+    log.v(
+      'ConversationService.startConversation response "${response.toJson()}"',
+    );
 
     if (response.error == null) {
       final conversation = Conversation.fromJson(response.data.first);
@@ -36,7 +39,16 @@ class ConversationService extends SupabaseService {
           conversationId: conversation.id!,
         ).toPayload(),
       ]).execute();
-      log.v('cpResponse "${cpResponse.toJson()}"');
+      log.v('ConversationService_cpResponse "${cpResponse.toJson()}"');
+
+      if (cpResponse.error != null) {
+        log.e(
+            'ConversationService_cpResponse.error "${cpResponse.error?.message}"');
+      }
+    }
+
+    if (response.error != null) {
+      log.e('ConversationService_response.error "${response.error?.message}"');
     }
 
     return response;

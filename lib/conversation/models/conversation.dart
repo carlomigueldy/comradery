@@ -69,6 +69,12 @@ class Conversation with _$Conversation {
     return participants!.map((e) => e.user?.fullName ?? '').toList().join(', ');
   }
 
+  List<String> get participantIds {
+    if (participants == null) return [];
+
+    return participants!.map((e) => e.userId).toList();
+  }
+
   Map<String, dynamic> toPayload() {
     final json = toJson();
     json.remove('id');

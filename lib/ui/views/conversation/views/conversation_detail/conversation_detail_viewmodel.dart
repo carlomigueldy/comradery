@@ -115,7 +115,7 @@ class ConversationDetailViewModel extends BaseViewModel {
     }
 
     _participants = (response.data as List).map((e) {
-      log.v('e "${e['user']}"');
+      // log.v('e "${e['user']}"');
 
       return user.User.fromJson(e['user']);
     }).toList();

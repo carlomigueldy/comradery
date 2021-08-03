@@ -1,10 +1,7 @@
 import 'package:comradery/app.dart';
 import 'package:comradery/auth/services/auth_service.dart';
-import 'package:comradery/common/supabase/supabase_client.dart';
-import 'package:comradery/conversation/models/conversation.dart';
-import 'package:comradery/conversation/models/conversation_participant.dart';
-import 'package:comradery/conversation/services/conversation_participant_service.dart';
 import 'package:comradery/conversation/services/conversation_service.dart';
+import 'package:comradery/ui/views/app/app_viewmodel.dart';
 import 'package:comradery/user/models/user.dart';
 import 'package:comradery/user/services/user_service.dart';
 import 'package:logger/logger.dart';
@@ -15,6 +12,7 @@ import 'package:stacked_services/stacked_services.dart';
 class UserDetailViewModel extends BaseViewModel {
   final log = Logger();
   final _authService = locator<AuthService>();
+  final _appViewModel = locator<AppViewModel>();
   final _userService = locator<UserService>();
   final _conversationService = locator<ConversationService>();
   final _router = locator<NavigationService>();
@@ -64,36 +62,38 @@ class UserDetailViewModel extends BaseViewModel {
   }
 
   Future<void> startConversation() async {
-    final conversationId = await existingConversation();
+    _appViewModel.hasConversationWith(user!);
 
-    if (conversationId != null) {
-      // navigate to conversation view
-      return _router.replaceWith(
-        AppViewRoutes.conversationDetailView(conversationId: conversationId),
-        id: AppRouterId.appView,
-      );
-    }
+    // final conversationId = await existingConversation();
 
-    // create converastion
-    final response = await runBusyFuture<PostgrestResponse>(
-      _conversationService.startConversation(user!),
-      busyObject: _createConversationKey,
-      throwException: true,
-    );
-    log.v('startConversation-response "${response.toJson()}"');
-    if (response.error != null) {
-      return log.e(
-        'startConversation_response.error?.message "${response.error?.message}"',
-      );
-    }
+    // if (conversationId != null) {
+    //   // navigate to conversation view
+    //   return _router.replaceWith(
+    //     AppViewRoutes.conversationDetailView(conversationId: conversationId),
+    //     id: AppRouterId.appView,
+    //   );
+    // }
 
-    final conversation = Conversation.fromJson(response.data.first);
+    // // create converastion
+    // final response = await runBusyFuture<PostgrestResponse>(
+    //   _conversationService.startConversation(user!),
+    //   busyObject: _createConversationKey,
+    //   throwException: true,
+    // );
+    // log.v('startConversation-response "${response.toJson()}"');
+    // if (response.error != null) {
+    //   return log.e(
+    //     'startConversation_response.error?.message "${response.error?.message}"',
+    //   );
+    // }
 
-    // navigate to conversation view
-    _router.replaceWith(
-      AppViewRoutes.conversationDetailView(conversationId: conversation.id!),
-      id: AppRouterId.appView,
-    );
+    // final conversation = Conversation.fromJson(response.data.first);
+
+    // // navigate to conversation view
+    // _router.replaceWith(
+    //   AppViewRoutes.conversationDetailView(conversationId: conversation.id!),
+    //   id: AppRouterId.appView,
+    // );
   }
 
   Future<String?> existingConversation() async {
@@ -107,7 +107,7 @@ class UserDetailViewModel extends BaseViewModel {
 
     if (response.error != null) {
       log.e(
-        'response.error?.message "${response.error?.message}"',
+        'existingConversation_response.error?.message "${response.error?.message}"',
       );
       return null;
     }
