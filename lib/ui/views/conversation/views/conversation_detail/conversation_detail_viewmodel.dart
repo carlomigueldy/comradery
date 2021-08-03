@@ -29,7 +29,7 @@ class ConversationDetailViewModel extends BaseViewModel {
   String? get inputMessage => _inputMessage;
 
   void onInputMessageChange(String? value) {
-    log.v('value "$value"');
+    // log.v('value "$value"');
     _inputMessage = value;
     notifyListeners();
   }
@@ -62,7 +62,11 @@ class ConversationDetailViewModel extends BaseViewModel {
     supabase
         .from('conversation_messages:conversation_id=eq.$conversationId')
         .on(SupabaseEventTypes.insert, (payload) {
+      log.v(
+        'SupabaseEventTypes.insert: payload.newRecord "${payload.newRecord}"',
+      );
       _messages.add(ConversationMessage.fromJson(payload.newRecord));
+      notifyListeners();
     }).subscribe();
   }
 
