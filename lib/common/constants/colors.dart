@@ -38,4 +38,6 @@ class AppColor {
   Color get veryLightGrey => kcVeryLightGrey;
 
   Color get darkGrey => kcDarkGrey;
+
+  Color get backgroundColor => kcBackgroundColor;
 }

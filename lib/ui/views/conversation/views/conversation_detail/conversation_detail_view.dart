@@ -1,4 +1,5 @@
 import 'package:comradery/common/utils/ui_util.dart';
+import 'package:comradery/ui/widgets/dumb_widgets/app_bar/app_top_bar.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/spinner/app_spinner.dart';
 import 'package:flutter/material.dart';
@@ -42,63 +43,77 @@ class _ConversationDetailViewState extends State<ConversationDetailView>
         Widget? child,
       ) {
         return Scaffold(
-          appBar: AppBar(
-            title: model.fetchConversationBusy
-                ? AppSpinner()
-                : Text(
-                    model.conversation?.name ??
-                        (model.conversation?.participantNames ?? '--'),
-                  ),
-          ),
           body: Row(
             children: [
               Expanded(
                 child: Container(
                   height: mediaQuery.size.height,
+                  color: uiUtil.colors.backgroundColor,
                   child: Stack(
                     children: [
-                      SingleChildScrollView(
-                        padding: uiUtil.edgeInsets.horizontalSymmetric25,
-                        reverse: true,
-                        child: Column(
-                          children: [
-                            uiUtil.verticalSpacing.large,
-                            ListView.separated(
-                              shrinkWrap: true,
-                              itemCount: model.messages.length,
-                              physics: NeverScrollableScrollPhysics(),
-                              // reverse: true,
-                              itemBuilder: (context, index) {
-                                final message = model.messages[index];
-                                final isMe =
-                                    message.createdBy == model.authUserId;
+                      !model.fetchMessagesBusy
+                          ?
+                          // Chat Layout
+                          SingleChildScrollView(
+                              padding: uiUtil.edgeInsets.horizontalSymmetric25,
+                              reverse: true,
+                              child: Column(
+                                children: [
+                                  uiUtil.verticalSpacing.large,
+                                  uiUtil.verticalSpacing.veryLarge,
+                                  ListView.separated(
+                                    shrinkWrap: true,
+                                    itemCount: model.messages.length,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    // reverse: true,
+                                    itemBuilder: (context, index) {
+                                      final message = model.messages[index];
+                                      final isMe =
+                                          message.createdBy == model.authUserId;
 
-                                return Row(
-                                  mainAxisAlignment: isMe
-                                      ? MainAxisAlignment.end
-                                      : MainAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      padding: uiUtil.edgeInsets.all10,
-                                      decoration: BoxDecoration(
-                                        color: isMe
-                                            ? theme.primaryColor
-                                                .withOpacity(0.1)
-                                            : uiUtil.colors.veryLightGrey,
-                                        borderRadius: uiUtil.borderRadius.large,
-                                      ),
-                                      child: Text(message.content),
-                                    ),
-                                  ],
-                                );
-                              },
-                              separatorBuilder: (context, index) {
-                                return uiUtil.verticalSpacing.normal;
-                              },
-                            ),
-                            uiUtil.verticalSpacing.veryLarge,
-                            uiUtil.verticalSpacing.veryLarge,
-                          ],
+                                      return Row(
+                                        mainAxisAlignment: isMe
+                                            ? MainAxisAlignment.end
+                                            : MainAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            padding: uiUtil.edgeInsets.all10,
+                                            decoration: BoxDecoration(
+                                              color: isMe
+                                                  ? theme.primaryColor
+                                                      .withOpacity(0.1)
+                                                  : uiUtil.colors.veryLightGrey,
+                                              borderRadius:
+                                                  uiUtil.borderRadius.large,
+                                            ),
+                                            child: Text(message.content),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                    separatorBuilder: (context, index) {
+                                      return uiUtil.verticalSpacing.normal;
+                                    },
+                                  ),
+                                  uiUtil.verticalSpacing.veryLarge,
+                                  uiUtil.verticalSpacing.veryLarge,
+                                ],
+                              ),
+                            )
+                          : AppSpinner(),
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        child: AppTopBar(
+                          title: model.fetchMessagesBusy ||
+                                  model.fetchConversationBusy ||
+                                  model.fetchParticipantsBusy
+                              ? 'Loading...'
+                              : model.conversation?.name ??
+                                  (model.conversation?.participantNames ??
+                                      '...'),
+                          backgroundColor: uiUtil.colors.backgroundColor,
                         ),
                       ),
                       Positioned(
@@ -109,7 +124,7 @@ class _ConversationDetailViewState extends State<ConversationDetailView>
                           decoration: BoxDecoration(
                             borderRadius: uiUtil.borderRadius.large,
                             boxShadow: [
-                              uiUtil.boxShadows.small,
+                              uiUtil.boxShadows.normal,
                             ],
                           ),
                           child: _TextField(),
@@ -121,7 +136,7 @@ class _ConversationDetailViewState extends State<ConversationDetailView>
               ),
               Container(
                 width: 300,
-                color: Colors.blue,
+                color: uiUtil.colors.backgroundColor,
               ),
             ],
           ),

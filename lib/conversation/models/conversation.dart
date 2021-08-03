@@ -64,7 +64,7 @@ class Conversation with _$Conversation {
   }
 
   String get participantNames {
-    if (participants == null) return 'ssss';
+    if (participants == null) return 'Unknown';
 
     return participants!.map((e) => e.user?.fullName ?? '').toList().join(', ');
   }

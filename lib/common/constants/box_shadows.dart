@@ -7,4 +7,11 @@ class AppBoxShadows {
         spreadRadius: 0.5,
         offset: Offset(0, 3),
       );
+
+  BoxShadow get normal => BoxShadow(
+        color: Colors.black.withOpacity(0.15),
+        blurRadius: 10.0,
+        spreadRadius: 0.15,
+        offset: Offset(0, 6),
+      );
 }

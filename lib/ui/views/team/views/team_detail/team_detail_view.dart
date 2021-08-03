@@ -1,3 +1,5 @@
+import 'package:comradery/common/utils/ui_util.dart';
+import 'package:comradery/ui/widgets/dumb_widgets/app_bar/app_top_bar.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -5,7 +7,7 @@ import 'package:stacked/stacked_annotations.dart';
 
 import 'team_detail_viewmodel.dart';
 
-class TeamDetailView extends StatelessWidget {
+class TeamDetailView extends StatelessWidget with UiUtilMixin {
   const TeamDetailView({
     Key? key,
     @PathParam(
@@ -18,6 +20,8 @@ class TeamDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+
     return ViewModelBuilder<TeamDetailViewModel>.reactive(
       viewModelBuilder: () => TeamDetailViewModel(),
       builder: (
@@ -26,12 +30,17 @@ class TeamDetailView extends StatelessWidget {
         Widget? child,
       ) {
         return Scaffold(
-          appBar: AppBar(
-            title: AppText(''),
+          appBar: AppTopBar(
+            title: 'Team Detail $teamId',
           ),
-          body: Center(
-            child: Text(
-              'TeamDetailView',
+          body: Container(
+            width: mediaQuery.size.width,
+            height: mediaQuery.size.height,
+            color: uiUtil.colors.backgroundColor,
+            child: Center(
+              child: Text(
+                'TeamDetailView',
+              ),
             ),
           ),
         );

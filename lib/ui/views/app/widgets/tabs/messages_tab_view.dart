@@ -32,6 +32,9 @@ class MessagesTabView extends StatelessWidget with UiUtilMixin {
               final conversation = conversations[index];
 
               return _ConversationListTile(
+                title: conversation.name != null
+                    ? conversation.name!
+                    : conversation.participantNames.replaceAll(',', ''),
                 conversation: conversation,
                 onTap: () => onTap?.call(conversation),
                 onLongPress: () => onLongPress?.call(conversation),
@@ -54,8 +57,10 @@ class _ConversationListTile extends StatefulWidget {
     required this.conversation,
     this.onTap,
     this.onLongPress,
+    this.title,
   }) : super(key: key);
 
+  final String? title;
   final Conversation conversation;
   final Function()? onTap;
   final Function()? onLongPress;
@@ -95,9 +100,11 @@ class _ConversationListTileState extends State<_ConversationListTile>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppText.body(
-                    widget.conversation.name != null
-                        ? widget.conversation.name!
-                        : widget.conversation.participantNames,
+                    widget.title != null
+                        ? widget.title!
+                        : widget.conversation.name != null
+                            ? widget.conversation.name!
+                            : widget.conversation.participantNames,
                   ),
                   // Row(
                   //   children: [

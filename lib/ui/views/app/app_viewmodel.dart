@@ -197,21 +197,21 @@ class AppViewModel extends BaseViewModel {
   }
 
   void toConversationDetailView(String value) {
-    _router.navigateTo(
+    _router.replaceWith(
       AppViewRoutes.conversationDetailView(conversationId: value),
       id: AppRouterId.appView,
     );
   }
 
   void toUserDetailView(String value) {
-    _router.navigateTo(
+    _router.replaceWith(
       AppViewRoutes.userDetailView(userId: value),
       id: AppRouterId.appView,
     );
   }
 
   void toTeamDetailView(int value) {
-    _router.navigateTo(
+    _router.replaceWith(
       AppViewRoutes.teamDetailView(teamId: 'value$value'),
       id: AppRouterId.appView,
     );
