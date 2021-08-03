@@ -105,13 +105,8 @@ class UserDetailViewModel extends BaseViewModel {
 
     if (response.data.length == 0) return null;
 
-    final data = (response.data as List<dynamic>);
-
     try {
-      return data
-          .where((e) => e['conversation_participant'].length > 0)
-          .toList()
-          .first['id'];
+      return response.data['id'];
     } catch (e) {
       return null;
     }
