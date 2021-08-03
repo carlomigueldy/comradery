@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+import 'ui/views/about/about_view.dart';
 import 'ui/views/app/app_view.dart';
 import 'ui/views/app/views/home/home_view.dart';
 import 'ui/views/auth/views/forgot_password/forgot_password_view.dart';
@@ -16,6 +17,7 @@ import 'ui/views/auth/views/reset_password/reset_password_view.dart';
 import 'ui/views/auth/views/sign_in/sign_in_view.dart';
 import 'ui/views/auth/views/sign_up/sign_up_view.dart';
 import 'ui/views/conversation/views/conversation_detail/conversation_detail_view.dart';
+import 'ui/views/landing/landing_view.dart';
 import 'ui/views/on_boarding/views/create_team/views/setup_team_profile/setup_team_profile_view.dart';
 import 'ui/views/on_boarding/views/create_team/views/upload_team_photo/upload_team_photo_view.dart';
 import 'ui/views/on_boarding/views/individual/views/select_goal/select_goal_view.dart';
@@ -28,7 +30,9 @@ import 'ui/views/team/views/welcome_to_team/welcome_to_team_view.dart';
 import 'ui/views/user/views/user_detail/user_detail_view.dart';
 
 class Routes {
-  static const String startupView = '/';
+  static const String startupView = '/init';
+  static const String landingView = '/';
+  static const String aboutView = '/about';
   static const String appView = 'app';
   static const String signInView = '/auth/sign-in';
   static const String signUpView = '/auth/sign-up';
@@ -42,6 +46,8 @@ class Routes {
   static const String setupUserProfileView = '/on-boarding/setup-profile';
   static const all = <String>{
     startupView,
+    landingView,
+    aboutView,
     appView,
     signInView,
     signUpView,
@@ -61,6 +67,8 @@ class StackedRouter extends RouterBase {
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
     RouteDef(Routes.startupView, page: StartupView),
+    RouteDef(Routes.landingView, page: LandingView),
+    RouteDef(Routes.aboutView, page: AboutView),
     RouteDef(
       Routes.appView,
       page: AppView,
@@ -81,16 +89,26 @@ class StackedRouter extends RouterBase {
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, StackedRouteFactory>{
     StartupView: (data) {
-      return PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const StartupView(),
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const StartupView(),
+        settings: data,
+      );
+    },
+    LandingView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const LandingView(),
+        settings: data,
+      );
+    },
+    AboutView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const AboutView(),
         settings: data,
       );
     },
     AppView: (data) {
-      return PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const AppView(),
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const AppView(),
         settings: data,
       );
     },

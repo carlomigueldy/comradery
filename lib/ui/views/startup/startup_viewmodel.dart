@@ -16,6 +16,6 @@ class StartupViewModel extends BaseViewModel {
       return _router.replaceWith(Routes.appView);
     }
 
-    return _router.replaceWith(Routes.signInView);
+    return _router.replaceWith(Routes.landingView);
   }
 }

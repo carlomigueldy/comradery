@@ -15,7 +15,9 @@ import 'notification/services/notification_service.dart';
 import 'team/services/team_member_service.dart';
 import 'team/services/team_request_service.dart';
 import 'team/services/team_service.dart';
+import 'ui/views/about/about_view.dart';
 import 'ui/views/app/app_viewmodel.dart';
+import 'ui/views/landing/landing_view.dart';
 import 'user/services/user_interest_service.dart';
 import 'auth/services/auth_service.dart';
 import 'common/services/local_storage_service.dart';
@@ -40,12 +42,20 @@ class AppRouterId {
 
 @StackedApp(
   routes: [
-    CustomRoute(
+    MaterialRoute(
       page: StartupView,
       initial: true,
+      path: '/init',
+    ),
+    MaterialRoute(
+      page: LandingView,
       path: '/',
     ),
-    CustomRoute(
+    MaterialRoute(
+      page: AboutView,
+      path: '/about',
+    ),
+    MaterialRoute(
       page: AppView,
       path: 'app',
       children: [
