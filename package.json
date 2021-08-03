@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:web": "flutter build web && rm -rf dist && cp -r build/web dist/",
+    "build:web": "rm -rf dist && flutter build web && cp -r build/web dist/",
     "deploy": "npm run build:web && git add dist && git commit -m 'Build' && git push",
     "generate": "flutter pub run build_runner build --delete-conflicting-outputs"
   },
