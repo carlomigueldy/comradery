@@ -36,8 +36,11 @@ class ConversationDetailViewModel extends BaseViewModel {
 
   Conversation? _conversation;
   Conversation? get conversation => _conversation;
+  bool get hasConversation => _conversation != null;
   String get _fetchConversationKey => '_fetchConversationKey';
   bool get fetchConversationBusy => busy(_fetchConversationKey);
+
+  ConversationType? get conversationType => _conversation?.type;
 
   List<ConversationMessage> _messages = [];
   List<ConversationMessage> get messages => _messages;

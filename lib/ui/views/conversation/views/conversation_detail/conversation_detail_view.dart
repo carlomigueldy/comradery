@@ -30,7 +30,6 @@ class _ConversationDetailViewState extends State<ConversationDetailView>
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final theme = Theme.of(context);
 
     return ViewModelBuilder<ConversationDetailViewModel>.reactive(
       onModelReady: (model) => model.init(),
@@ -54,52 +53,7 @@ class _ConversationDetailViewState extends State<ConversationDetailView>
                       !model.fetchMessagesBusy
                           ?
                           // Chat Layout
-                          SingleChildScrollView(
-                              padding: uiUtil.edgeInsets.horizontalSymmetric25,
-                              reverse: true,
-                              child: Column(
-                                children: [
-                                  uiUtil.verticalSpacing.large,
-                                  uiUtil.verticalSpacing.veryLarge,
-                                  ListView.separated(
-                                    shrinkWrap: true,
-                                    itemCount: model.messages.length,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    // reverse: true,
-                                    itemBuilder: (context, index) {
-                                      final message = model.messages[index];
-                                      final isMe =
-                                          message.createdBy == model.authUserId;
-
-                                      return Row(
-                                        mainAxisAlignment: isMe
-                                            ? MainAxisAlignment.end
-                                            : MainAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            padding: uiUtil.edgeInsets.all10,
-                                            decoration: BoxDecoration(
-                                              color: isMe
-                                                  ? theme.primaryColor
-                                                      .withOpacity(0.1)
-                                                  : uiUtil.colors.veryLightGrey,
-                                              borderRadius:
-                                                  uiUtil.borderRadius.large,
-                                            ),
-                                            child: Text(message.content),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                    separatorBuilder: (context, index) {
-                                      return uiUtil.verticalSpacing.normal;
-                                    },
-                                  ),
-                                  uiUtil.verticalSpacing.veryLarge,
-                                  uiUtil.verticalSpacing.veryLarge,
-                                ],
-                              ),
-                            )
+                          _ChatLayout(model: model)
                           : AppSpinner(),
                       Positioned(
                         top: 0,
@@ -137,11 +91,71 @@ class _ConversationDetailViewState extends State<ConversationDetailView>
               Container(
                 width: 300,
                 color: uiUtil.colors.backgroundColor,
+                child: Column(
+                  children: [],
+                ),
               ),
             ],
           ),
         );
       },
+    );
+  }
+}
+
+class _ChatLayout extends StatelessWidget with UiUtilMixin {
+  const _ChatLayout({
+    Key? key,
+    required this.model,
+  }) : super(key: key);
+
+  final ConversationDetailViewModel model;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return SingleChildScrollView(
+      padding: uiUtil.edgeInsets.horizontalSymmetric25,
+      reverse: true,
+      child: Column(
+        children: [
+          uiUtil.verticalSpacing.large,
+          uiUtil.verticalSpacing.veryLarge,
+          ListView.separated(
+            shrinkWrap: true,
+            itemCount: model.messages.length,
+            physics: NeverScrollableScrollPhysics(),
+            // reverse: true,
+            itemBuilder: (context, index) {
+              final message = model.messages[index];
+              final isMe = message.createdBy == model.authUserId;
+
+              return Row(
+                mainAxisAlignment:
+                    isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: uiUtil.edgeInsets.all10,
+                    decoration: BoxDecoration(
+                      color: isMe
+                          ? theme.primaryColor.withOpacity(0.1)
+                          : uiUtil.colors.veryLightGrey,
+                      borderRadius: uiUtil.borderRadius.large,
+                    ),
+                    child: Text(message.content),
+                  ),
+                ],
+              );
+            },
+            separatorBuilder: (context, index) {
+              return uiUtil.verticalSpacing.normal;
+            },
+          ),
+          uiUtil.verticalSpacing.veryLarge,
+          uiUtil.verticalSpacing.veryLarge,
+        ],
+      ),
     );
   }
 }
