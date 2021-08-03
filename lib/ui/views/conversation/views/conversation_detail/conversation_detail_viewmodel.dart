@@ -60,7 +60,7 @@ class ConversationDetailViewModel extends BaseViewModel {
     await fetchMessages();
 
     supabase
-        .from('conversation_messages:id=eq.$conversationId')
+        .from('conversation_messages:conversation_id=eq.$conversationId')
         .on(SupabaseEventTypes.insert, (payload) {
       _messages.add(ConversationMessage.fromJson(payload.newRecord));
     }).subscribe();
