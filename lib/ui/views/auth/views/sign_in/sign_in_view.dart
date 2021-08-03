@@ -163,7 +163,7 @@ class _Form extends HookViewModelWidget<SignInViewModel> with UiUtilMixin {
                   uiUtil.verticalSpacing.large,
                   AppButton(
                     label: 'Continue with Google',
-                    onPressed: () {},
+                    onPressed: () => model.continueWithGoogle(),
                     backgroundColor: Colors.white,
                     textColor: Colors.black,
                   ),

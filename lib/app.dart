@@ -49,7 +49,7 @@ class AppRouterId {
     ),
     MaterialRoute(
       page: LandingView,
-      path: '/index',
+      path: '/home',
     ),
     MaterialRoute(
       page: AboutView,
@@ -97,5 +97,8 @@ class AppRouterId {
     // viewmodels
     LazySingleton(classType: AppViewModel)
   ],
+  logger: StackedLogger(
+    logHelperName: 'stackedLogger',
+  ),
 )
 class AppSetup {}

@@ -31,7 +31,7 @@ import 'ui/views/user/views/user_detail/user_detail_view.dart';
 
 class Routes {
   static const String startupView = '/';
-  static const String landingView = '/index';
+  static const String landingView = '/home';
   static const String aboutView = '/about';
   static const String appView = 'app';
   static const String signInView = '/auth/sign-in';
@@ -89,8 +89,14 @@ class StackedRouter extends RouterBase {
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, StackedRouteFactory>{
     StartupView: (data) {
+      var args = data.getArgs<StartupViewArguments>(
+        orElse: () => StartupViewArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const StartupView(),
+        builder: (context) => StartupView(
+          key: args.key,
+          accessToken: data.queryParams['access_token'].optString(),
+        ),
         settings: data,
       );
     },
@@ -275,6 +281,12 @@ class AppViewRouter extends RouterBase {
 /// ************************************************************************
 /// Arguments holder classes
 /// *************************************************************************
+
+/// StartupView arguments holder class
+class StartupViewArguments {
+  final Key? key;
+  StartupViewArguments({this.key});
+}
 
 /// SetupUserProfileView arguments holder class
 class SetupUserProfileViewArguments {
