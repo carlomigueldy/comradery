@@ -3,7 +3,7 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "assets/AssetManifest.json": "ea63fc6ff37ec48a751d970cf856bbac",
+  "assets/AssetManifest.json": "b345c42ed16acab1552edf92a32b8106",
 "assets/assets/fonts/Sora/OFL.txt": "6ed93967ff0dc6dd9c8d31c17f817a06",
 "assets/assets/fonts/Sora/Sora-Bold.ttf": "8b24edfb87ce7942c970dbaeaa73a511",
 "assets/assets/fonts/Sora/Sora-ExtraBold.ttf": "23b29030a22fc02a05c8ca5d2cda8bc5",
@@ -13,6 +13,12 @@ const RESOURCES = {
 "assets/assets/fonts/Sora/Sora-Regular.ttf": "aa64200d21f88f287becbe3f3cebaf0e",
 "assets/assets/fonts/Sora/Sora-SemiBold.ttf": "fb54a7a5fdc54d9385f3f42421083ca4",
 "assets/assets/fonts/Sora/Sora-Thin.ttf": "c41ed373cfbf85cd6deb945dbd4996c0",
+"assets/assets/png/banner.png": "f61e61a8e125cb7039629704001d85a6",
+"assets/assets/png/google.png": "110bd5501c4b86b329409103e30c9013",
+"assets/assets/png/landing-illustration.png": "c9f91d97f572e4bcfa8b1a1a85150e42",
+"assets/assets/png/logo.png": "8037553db65a8e2a370d5a6d05f6ab1d",
+"assets/assets/png/sign-in-illustration.png": "6f8b7e526983357e9a4e1baaf45650e9",
+"assets/assets/png/sign-up-illustration.png": "daecec6c032b58eff94dd1e9a3843cb9",
 "assets/dotenv": "9afc40884076b132de2a821f49079c61",
 "assets/FontManifest.json": "2cc6cc75f2d817db8687e279fc3b4950",
 "assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
@@ -20,9 +26,9 @@ const RESOURCES = {
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
-"index.html": "31f24dec4cf6aeb1514e81afdef3445f",
-"/": "31f24dec4cf6aeb1514e81afdef3445f",
-"main.dart.js": "086bec2fdb86fd733275a9216a216e78",
+"index.html": "b013769e2b7c01c134569489fca33189",
+"/": "b013769e2b7c01c134569489fca33189",
+"main.dart.js": "6079620d32db14282f0ddcc1dc522ce4",
 "manifest.json": "55076722cfa659413d1df2011cc3ff43",
 "version.json": "dd97e380589dc2a1be5d14b75d362396"
 };
