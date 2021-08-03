@@ -43,7 +43,7 @@ class ConversationService extends SupabaseService {
   }
 
   Future<PostgrestResponse> findExistingConversation(User targetUser) async {
-    return supabase
+    return await supabase
         .from('conversations')
         .select(
           'id, conversation_participants: conversation_participants (user_id)',
