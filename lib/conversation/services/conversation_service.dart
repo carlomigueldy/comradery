@@ -54,18 +54,18 @@ class ConversationService extends SupabaseService {
     return response;
   }
 
-  Future<PostgrestResponse> findExistingConversation(User targetUser) async {
-    return await supabase
-        .from('conversations')
-        .select(
-          'id, conversation_participants: conversation_participants (user_id)',
-        )
-        .in_('conversation_participants.user_id', [
-          targetUser.id!,
-          _authService.user!.id!,
-        ])
-        .limit(1)
-        .single()
-        .execute();
-  }
+  // Future<PostgrestResponse> findExistingConversation(User targetUser) async {
+  //   return await supabase
+  //       .from('conversations')
+  //       .select(
+  //         'id, conversation_participants: conversation_participants (user_id)',
+  //       )
+  //       .in_('conversation_participants.user_id', [
+  //         targetUser.id!,
+  //         _authService.user!.id!,
+  //       ])
+  //       .limit(1)
+  //       .single()
+  //       .execute();
+  // }
 }

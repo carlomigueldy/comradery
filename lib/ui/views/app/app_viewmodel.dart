@@ -173,20 +173,22 @@ class AppViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  bool hasConversationWith(User targetUser) {
-    var hasConversation = false;
+  Conversation? findConversationFromUser(User targetUser) {
+    Conversation? conversation;
 
-    _conversations.forEach((element) {
+    _conversations
+        .where((element) => element.type == ConversationType.private)
+        .forEach((element) {
       if (element.participantIds.contains(targetUser.id)) {
-        hasConversation = true;
+        conversation = element;
       }
 
       return;
     });
 
-    log.v('${targetUser.fullName} hasConversation "$hasConversation"');
+    log.v('${targetUser.fullName} conversation "${conversation?.toJson()}"');
 
-    return hasConversation;
+    return conversation;
   }
 
   void logout() {
