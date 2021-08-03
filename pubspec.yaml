@@ -25,8 +25,9 @@ dependencies:
     sdk: flutter
 
   stacked: ^2.2.3
-  stacked_services: 
-    path: packages/stacked_services
+  stacked_services: ^0.8.13
+  # stacked_services: 
+  #   path: packages/stacked_services
   stacked_hooks: ^0.2.1
   stacked_themes:
   observable_ish: ^3.0.0

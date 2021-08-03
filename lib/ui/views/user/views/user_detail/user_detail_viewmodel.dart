@@ -1,10 +1,9 @@
 import 'package:comradery/app.dart';
 import 'package:comradery/auth/services/auth_service.dart';
-import 'package:comradery/common/supabase/supabase_client.dart';
+import 'package:comradery/common/services/app_snackbar_service.dart';
 import 'package:comradery/conversation/models/conversation.dart';
-import 'package:comradery/conversation/models/conversation_participant.dart';
-import 'package:comradery/conversation/services/conversation_participant_service.dart';
 import 'package:comradery/conversation/services/conversation_service.dart';
+import 'package:comradery/ui/views/app/app_viewmodel.dart';
 import 'package:comradery/user/models/user.dart';
 import 'package:comradery/user/services/user_service.dart';
 import 'package:logger/logger.dart';
@@ -14,9 +13,10 @@ import 'package:stacked_services/stacked_services.dart';
 
 class UserDetailViewModel extends BaseViewModel {
   final log = Logger();
-  final _authService = locator<AuthService>();
+  final _appViewModel = locator<AppViewModel>();
   final _userService = locator<UserService>();
   final _conversationService = locator<ConversationService>();
+  final _snackbarService = locator<AppSnackbarService>();
   final _router = locator<NavigationService>();
 
   UserDetailViewModel({
@@ -64,16 +64,20 @@ class UserDetailViewModel extends BaseViewModel {
   }
 
   Future<void> startConversation() async {
-    final conversationId = await existingConversation();
+    final conversation = _appViewModel.findConversationFromUser(user!);
 
-    if (conversationId != null) {
+    if (conversation != null) {
       // navigate to conversation view
       return _router.replaceWith(
-        AppViewRoutes.conversationDetailView(conversationId: conversationId),
+        AppViewRoutes.conversationDetailView(conversationId: conversation.id),
         id: AppRouterId.appView,
       );
     }
 
+    return await _createConversation();
+  }
+
+  Future<void> _createConversation() async {
     // create converastion
     final response = await runBusyFuture<PostgrestResponse>(
       _conversationService.startConversation(user!),
@@ -82,6 +86,7 @@ class UserDetailViewModel extends BaseViewModel {
     );
     log.v('startConversation-response "${response.toJson()}"');
     if (response.error != null) {
+      _snackbarService.showError();
       return log.e(
         'startConversation_response.error?.message "${response.error?.message}"',
       );
@@ -90,35 +95,35 @@ class UserDetailViewModel extends BaseViewModel {
     final conversation = Conversation.fromJson(response.data.first);
 
     // navigate to conversation view
-    _router.replaceWith(
+    return _router.replaceWith(
       AppViewRoutes.conversationDetailView(conversationId: conversation.id!),
       id: AppRouterId.appView,
     );
   }
 
-  Future<String?> existingConversation() async {
-    final response = await runBusyFuture<PostgrestResponse>(
-      _conversationService.findExistingConversation(user!),
-      busyObject: _checkExistingConversationKey,
-      throwException: true,
-    );
-    // log.v('response "${response.toJson()}"');
-    log.v(response.toJson());
+  // Future<String?> existingConversation() async {
+  //   final response = await runBusyFuture<PostgrestResponse>(
+  //     _conversationService.findExistingConversation(user!),
+  //     busyObject: _checkExistingConversationKey,
+  //     throwException: true,
+  //   );
+  //   // log.v('response "${response.toJson()}"');
+  //   log.v(response.toJson());
 
-    if (response.error != null) {
-      log.e(
-        'response.error?.message "${response.error?.message}"',
-      );
-      return null;
-    }
+  //   if (response.error != null) {
+  //     log.e(
+  //       'existingConversation_response.error?.message "${response.error?.message}"',
+  //     );
+  //     return null;
+  //   }
 
-    if (response.data.length == 0) return null;
+  //   if (response.data.length == 0) return null;
 
-    try {
-      return response.data['id'];
-    } catch (e) {
-      return null;
-    }
-    // return response.data.first['id'];
-  }
+  //   try {
+  //     return response.data['id'];
+  //   } catch (e) {
+  //     return null;
+  //   }
+  //   // return response.data.first['id'];
+  // }
 }

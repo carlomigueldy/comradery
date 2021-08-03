@@ -743,9 +743,9 @@ packages:
   stacked_services:
     dependency: "direct main"
     description:
-      path: "packages/stacked_services"
-      relative: true
-    source: path
+      name: stacked_services
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.8.13"
   stacked_themes:
     dependency: "direct main"

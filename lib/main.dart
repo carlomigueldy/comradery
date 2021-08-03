@@ -39,8 +39,7 @@ class ComraderyAppView extends StatelessWidget {
           ),
           navigatorKey: StackedService.navigatorKey,
           onGenerateRoute: StackedRouter().onGenerateRoute,
-
-          // home: HomeView(),
+          // home: SelectGoalView(),
         );
       },
     );

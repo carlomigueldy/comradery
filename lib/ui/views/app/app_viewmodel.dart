@@ -4,10 +4,11 @@ import 'package:comradery/common/supabase/supabase_client.dart';
 import 'package:comradery/conversation/models/conversation.dart';
 import 'package:comradery/matching/models/matching.dart';
 import 'package:comradery/matching/services/matching_service.dart';
+import 'package:comradery/user/models/user.dart';
 import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:supabase/supabase.dart';
+import 'package:supabase/supabase.dart' as sp;
 
 class AppViewModel extends BaseViewModel {
   final log = Logger();
@@ -53,7 +54,7 @@ class AppViewModel extends BaseViewModel {
         .from(
       '${_matchingService.table}:created_by=eq.${_authService.user?.id}',
     )
-        .on(SupabaseEventTypes.insert, (payload) {
+        .on(sp.SupabaseEventTypes.insert, (payload) {
       log.v('payload?.newRecord "${payload.newRecord}"');
       // final matching = Matching.fromJson(payload.newRecord);
 
@@ -70,7 +71,7 @@ class AppViewModel extends BaseViewModel {
         .from(
       '${_matchingService.table}:created_by=eq.${_authService.user?.id}',
     )
-        .on(SupabaseEventTypes.delete, (payload) {
+        .on(sp.SupabaseEventTypes.delete, (payload) {
       log.v(
         'payload?.newRecord "${payload.newRecord}", payload?.oldRecord "${payload.oldRecord}"',
       );
@@ -88,7 +89,7 @@ class AppViewModel extends BaseViewModel {
   }
 
   Future<void> fetchMyMatchings() async {
-    final response = await runBusyFuture<PostgrestResponse>(
+    final response = await runBusyFuture<sp.PostgrestResponse>(
       _matchingService.fetchMyMatchings(),
       busyObject: _fetchMyMatchingsKey,
       throwException: true,
@@ -106,7 +107,7 @@ class AppViewModel extends BaseViewModel {
   }
 
   Future<void> fetchWhoLikedMe() async {
-    final response = await runBusyFuture<PostgrestResponse>(
+    final response = await runBusyFuture<sp.PostgrestResponse>(
       _matchingService.fetchWhoLikedMe(),
       busyObject: _fetchWhoLikedMeKey,
       throwException: true,
@@ -143,7 +144,7 @@ class AppViewModel extends BaseViewModel {
       return;
     }
 
-    final response = await runBusyFuture<PostgrestResponse>(
+    final response = await runBusyFuture<sp.PostgrestResponse>(
       supabase
           .from('conversations')
           .select(
@@ -170,6 +171,24 @@ class AppViewModel extends BaseViewModel {
     _conversations =
         (response.data as List).map((e) => Conversation.fromJson(e)).toList();
     notifyListeners();
+  }
+
+  Conversation? findConversationFromUser(User targetUser) {
+    Conversation? conversation;
+
+    _conversations
+        .where((element) => element.type == ConversationType.private)
+        .forEach((element) {
+      if (element.participantIds.contains(targetUser.id)) {
+        conversation = element;
+      }
+
+      return;
+    });
+
+    log.v('${targetUser.fullName} conversation "${conversation?.toJson()}"');
+
+    return conversation;
   }
 
   void logout() {
