@@ -56,6 +56,7 @@ class ConversationDetailViewModel extends BaseViewModel {
   bool get fetchParticipantsBusy => busy(_fetchParticipantsKey);
 
   String get authUserId => _authService.user!.id!;
+  String get authUserFullName => _authService.user!.fullName;
 
   Future<void> init() async {
     await fetchConversation();

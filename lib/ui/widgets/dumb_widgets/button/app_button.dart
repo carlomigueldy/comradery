@@ -18,6 +18,7 @@ class AppButton extends StatelessWidget with UiUtilMixin {
     this.textColor = kcWhite,
     this.color = kcPrimary,
     this.borderRadius,
+    this.backgroundColor,
   })  : variant = AppButtonType.basic,
         super(key: key);
 
@@ -31,12 +32,14 @@ class AppButton extends StatelessWidget with UiUtilMixin {
     this.borderRadius,
   })  : color = null,
         variant = AppButtonType.text,
+        backgroundColor = null,
         super(key: key);
 
   final String label;
   final bool? busy;
   final bool? disabled;
   final VoidCallback? onPressed;
+  final Color? backgroundColor;
   final Color? color;
   final Color? textColor;
   final BorderRadiusGeometry? borderRadius;
@@ -67,16 +70,17 @@ class AppButton extends StatelessWidget with UiUtilMixin {
                   style: TextStyle(
                     fontWeight: variant == AppButtonType.basic
                         ? FontWeight.normal
-                        : FontWeight.normal,
+                        : FontWeight.w400,
                     fontSize: 16,
                     color: textColor ?? Theme.of(context).primaryColor,
                   ),
                 ),
               ),
       ),
-      color: variant == AppButtonType.basic
-          ? Theme.of(context).primaryColor
-          : null,
+      color: backgroundColor ??
+          (variant == AppButtonType.basic
+              ? Theme.of(context).primaryColor
+              : null),
       height: 50,
       elevation: 0,
       focusElevation: 0,

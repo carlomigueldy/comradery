@@ -65,7 +65,10 @@ class _ConversationDetailViewState extends State<ConversationDetailView>
                                   model.fetchParticipantsBusy
                               ? 'Loading...'
                               : model.conversation?.name ??
-                                  (model.conversation?.participantNames ??
+                                  (model.conversation?.participantNames
+                                          .replaceAll(',', '')
+                                          .replaceAll(
+                                              model.authUserFullName, '') ??
                                       '...'),
                           backgroundColor: uiUtil.colors.backgroundColor,
                         ),

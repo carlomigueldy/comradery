@@ -20,6 +20,9 @@ class _SignInViewState extends State<SignInView> with UiUtilMixin {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final theme = Theme.of(context);
+
     return ViewModelBuilder<SignInViewModel>.reactive(
       viewModelBuilder: () => SignInViewModel(),
       builder: (
@@ -27,19 +30,23 @@ class _SignInViewState extends State<SignInView> with UiUtilMixin {
         SignInViewModel model,
         Widget? child,
       ) {
-        final theme = Theme.of(context);
-
         return Scaffold(
           body: Container(
             color: uiUtil.colors.backgroundColor,
+            width: mediaQuery.size.width,
+            height: mediaQuery.size.height,
+            padding: uiUtil.edgeInsets.horizontalSymmetric25,
             child: Row(
               children: [
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Container(
-                    decoration: BoxDecoration(
-                        // color: theme.primaryColor,
-                        ),
+                    child: Center(
+                      child: Image.asset(
+                        'assets/png/sign-in-illustration.png',
+                        // width: 350,
+                      ),
+                    ),
                   ),
                 ),
                 Expanded(
@@ -83,6 +90,7 @@ class _Form extends HookViewModelWidget<SignInViewModel> with UiUtilMixin {
     BuildContext context,
     SignInViewModel model,
   ) {
+    final theme = Theme.of(context);
     final emailFocusNode = useFocusNode();
     final passwordFocusNode = useFocusNode();
 
@@ -151,6 +159,13 @@ class _Form extends HookViewModelWidget<SignInViewModel> with UiUtilMixin {
                         onPressed: () => model.createAccount(),
                       ),
                     ],
+                  ),
+                  uiUtil.verticalSpacing.large,
+                  AppButton(
+                    label: 'Continue with Google',
+                    onPressed: () {},
+                    backgroundColor: Colors.white,
+                    textColor: Colors.black,
                   ),
                 ],
               ),

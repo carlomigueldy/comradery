@@ -20,6 +20,9 @@ class _SignUpViewState extends State<SignUpView> with UiUtilMixin {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final theme = Theme.of(context);
+
     return ViewModelBuilder<SignUpViewModel>.reactive(
       viewModelBuilder: () => SignUpViewModel(),
       builder: (
@@ -27,18 +30,22 @@ class _SignUpViewState extends State<SignUpView> with UiUtilMixin {
         SignUpViewModel model,
         Widget? child,
       ) {
-        final theme = Theme.of(context);
-
-        return GestureDetector(
-          onTap: () => uiUtil.dismissKeyboard(context),
-          child: Scaffold(
-            body: Row(
+        return Scaffold(
+          body: Container(
+            color: uiUtil.colors.backgroundColor,
+            width: mediaQuery.size.width,
+            height: mediaQuery.size.height,
+            padding: uiUtil.edgeInsets.horizontalSymmetric25,
+            child: Row(
               children: [
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Container(
-                    decoration: BoxDecoration(
-                      color: theme.primaryColor,
+                    child: Center(
+                      child: Image.asset(
+                        'assets/png/sign-up-illustration.png',
+                        // width: 350,
+                      ),
                     ),
                   ),
                 ),
@@ -89,75 +96,78 @@ class _Form extends HookViewModelWidget<SignUpViewModel> with UiUtilMixin {
 
     return FormBuilder(
       key: formKey,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 450,
-            child: SingleChildScrollView(
-              padding: uiUtil.edgeInsets.horizontalSymmetric25,
-              child: Column(
-                children: [
-                  uiUtil.verticalSpacing.large,
-                  Row(children: [
-                    AppText.body(
-                      'Sign Up',
-                      style: uiUtil.textStyles.body.copyWith(
-                        fontSize: 32,
+      child: SingleChildScrollView(
+        padding: uiUtil.edgeInsets.horizontalSymmetric25,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 450,
+              child: SingleChildScrollView(
+                padding: uiUtil.edgeInsets.horizontalSymmetric25,
+                child: Column(
+                  children: [
+                    uiUtil.verticalSpacing.large,
+                    Row(children: [
+                      AppText.body(
+                        'Sign Up',
+                        style: uiUtil.textStyles.body.copyWith(
+                          fontSize: 32,
+                        ),
                       ),
+                    ]),
+                    uiUtil.verticalSpacing.large,
+                    AppTextField(
+                      name: 'email',
+                      label: 'Email',
+                      focusNode: emailFocusNode,
+                      onEditingComplete: () => passwordFocusNode.nextFocus(),
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(context),
+                        FormBuilderValidators.email(context),
+                      ]),
                     ),
-                  ]),
-                  uiUtil.verticalSpacing.large,
-                  AppTextField(
-                    name: 'email',
-                    label: 'Email',
-                    focusNode: emailFocusNode,
-                    onEditingComplete: () => passwordFocusNode.nextFocus(),
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(context),
-                      FormBuilderValidators.email(context),
-                    ]),
-                  ),
-                  uiUtil.verticalSpacing.large,
-                  AppTextField(
-                    name: 'password',
-                    label: 'Password',
-                    obscureText: true,
-                    onEditingComplete: onSubmit,
-                    focusNode: passwordFocusNode,
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(context),
-                    ]),
-                  ),
-                  uiUtil.verticalSpacing.large,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      AppText('Forgot password?'),
-                      uiUtil.horizontalSpacing.large,
-                      AppButton(
-                        label: 'Create Account',
-                        onPressed: onSubmit,
-                        busy: model.isBusy,
-                      ),
-                    ],
-                  ),
-                  uiUtil.verticalSpacing.large,
-                  Row(
-                    children: [
-                      AppText.body("Already have an account?"),
-                      uiUtil.horizontalSpacing.large,
-                      AppButton.text(
-                        label: 'Sign In',
-                        onPressed: () => model.login(),
-                      )
-                    ],
-                  ),
-                ],
+                    uiUtil.verticalSpacing.large,
+                    AppTextField(
+                      name: 'password',
+                      label: 'Password',
+                      obscureText: true,
+                      onEditingComplete: onSubmit,
+                      focusNode: passwordFocusNode,
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(context),
+                      ]),
+                    ),
+                    uiUtil.verticalSpacing.large,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        AppText('Forgot password?'),
+                        uiUtil.horizontalSpacing.large,
+                        AppButton(
+                          label: 'Create Account',
+                          onPressed: onSubmit,
+                          busy: model.isBusy,
+                        ),
+                      ],
+                    ),
+                    uiUtil.verticalSpacing.large,
+                    Row(
+                      children: [
+                        AppText.body("Already have an account?"),
+                        uiUtil.horizontalSpacing.large,
+                        AppButton.text(
+                          label: 'Sign In',
+                          onPressed: () => model.login(),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

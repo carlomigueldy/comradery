@@ -60,9 +60,21 @@ class _AppViewLeftDrawerState extends State<AppViewLeftDrawer>
                 children: [
                   Row(
                     children: [
-                      AppText.heading1('Comradery'),
+                      Image.asset(
+                        'assets/png/banner.png',
+                        width: 225,
+                      ),
                     ],
                   ),
+                  // Row(
+                  //   children: [
+                  //     Image.asset(
+                  //       'assets/png/logo.png',
+                  //       width: 50,
+                  //       height: 50,
+                  //     ),
+                  //   ],
+                  // ),
                   ListTile(
                     leading: CircleAvatar(
                       backgroundColor: theme.primaryColor,
