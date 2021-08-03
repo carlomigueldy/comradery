@@ -80,9 +80,11 @@ class UserDetailViewModel extends BaseViewModel {
       busyObject: _createConversationKey,
       throwException: true,
     );
-    log.v('response "${response.toJson()}"');
+    log.v('startConversation-response "${response.toJson()}"');
     if (response.error != null) {
-      return log.e(response.error?.message);
+      return log.e(
+        'startConversation_response.error?.message "${response.error?.message}"',
+      );
     }
 
     final conversation = Conversation.fromJson(response.data.first);
@@ -102,6 +104,13 @@ class UserDetailViewModel extends BaseViewModel {
     );
     // log.v('response "${response.toJson()}"');
     log.v(response.toJson());
+
+    if (response.error != null) {
+      log.e(
+        'response.error?.message "${response.error?.message}"',
+      );
+      return null;
+    }
 
     if (response.data.length == 0) return null;
 

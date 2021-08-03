@@ -83,8 +83,8 @@ class ConversationDetailViewModel extends BaseViewModel {
       busyObject: _fetchConversationKey,
       throwException: true,
     );
-    log.v('response "${response.toJson()}"');
-    log.i(response.toJson());
+    log.v('fetchConversation_response "${response.toJson()}"');
+    // log.i(response.toJson());
 
     if (response.error != null) {
       log.e(response.error?.message);
@@ -107,7 +107,7 @@ class ConversationDetailViewModel extends BaseViewModel {
       busyObject: _fetchParticipantsKey,
       throwException: true,
     );
-    log.v('response "${response.toJson()}"');
+    log.v('fetchParticipants_response "${response.toJson()}"');
 
     if (response.error != null) {
       log.e(response.error?.message);
@@ -132,8 +132,8 @@ class ConversationDetailViewModel extends BaseViewModel {
       busyObject: _fetchMessagesKey,
       throwException: true,
     );
-    log.v('response "${response.toJson()}"');
-    log.i(response.toJson());
+    // log.v('fetchMessages_response "${response.toJson()}"');
+    // log.i(response.toJson());
 
     if (response.error != null) {
       log.e(response.error?.message);
@@ -166,8 +166,8 @@ class ConversationDetailViewModel extends BaseViewModel {
       busyObject: _sendMessageKey,
       throwException: true,
     );
-    log.v('response "${response.toJson()}"');
-    log.i(response.toJson());
+    log.v('sendMessage_response "${response.toJson()}"');
+    // log.i(response.toJson());
 
     if (response.error != null) {
       log.e(response.error?.message);

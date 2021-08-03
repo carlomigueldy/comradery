@@ -6,10 +6,10 @@ import 'views/welcome_to_team/welcome_to_team_view.dart';
 const routes = [
   CustomRoute(
     page: TeamDetailView,
-    path: 'teams/:teamId',
+    path: '/teams/:teamId',
   ),
   CustomRoute(
     page: WelcomeToTeamView,
-    path: 'teams/:teamId/welcome',
+    path: '/teams/:teamId/welcome',
   ),
 ];

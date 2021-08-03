@@ -34,12 +34,12 @@ class Routes {
   static const String signUpView = '/auth/sign-up';
   static const String resetPasswordView = '/auth/reset-password';
   static const String forgotPasswordView = '/auth/forgot-password';
-  static const String setupTeamProfileView = 'on-boarding/setup-team-profile';
-  static const String uploadTeamPhotoView = 'on-boarding/upload-team-photo';
-  static const String selectGoalView = 'on-boarding/select-goal';
-  static const String uploadPhotoView = 'on-boarding/upload-photo';
-  static const String selectInterestsView = 'on-boarding/select-interests';
-  static const String setupUserProfileView = 'on-boarding/setup-profile';
+  static const String setupTeamProfileView = '/on-boarding/setup-team-profile';
+  static const String uploadTeamPhotoView = '/on-boarding/upload-team-photo';
+  static const String selectGoalView = '/on-boarding/select-goal';
+  static const String uploadPhotoView = '/on-boarding/upload-photo';
+  static const String selectInterestsView = '/on-boarding/select-interests';
+  static const String setupUserProfileView = '/on-boarding/setup-profile';
   static const all = <String>{
     startupView,
     appView,
@@ -123,37 +123,32 @@ class StackedRouter extends RouterBase {
       );
     },
     SetupTeamProfileView: (data) {
-      return PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const SetupTeamProfileView(),
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const SetupTeamProfileView(),
         settings: data,
       );
     },
     UploadTeamPhotoView: (data) {
-      return PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const UploadTeamPhotoView(),
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const UploadTeamPhotoView(),
         settings: data,
       );
     },
     SelectGoalView: (data) {
-      return PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const SelectGoalView(),
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const SelectGoalView(),
         settings: data,
       );
     },
     UploadPhotoView: (data) {
-      return PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const UploadPhotoView(),
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const UploadPhotoView(),
         settings: data,
       );
     },
     SelectInterestsView: (data) {
-      return PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const SelectInterestsView(),
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const SelectInterestsView(),
         settings: data,
       );
     },
@@ -161,9 +156,8 @@ class StackedRouter extends RouterBase {
       var args = data.getArgs<SetupUserProfileViewArguments>(
         orElse: () => SetupUserProfileViewArguments(),
       );
-      return PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            SetupUserProfileView(key: args.key),
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => SetupUserProfileView(key: args.key),
         settings: data,
       );
     },
@@ -171,18 +165,18 @@ class StackedRouter extends RouterBase {
 }
 
 class AppViewRoutes {
-  static const String homeView = '';
-  static const String _teamDetailView = 'teams/:teamId';
-  static String teamDetailView({@required dynamic teamId}) => 'teams/$teamId';
-  static const String _welcomeToTeamView = 'teams/:teamId/welcome';
+  static const String homeView = '/home';
+  static const String _teamDetailView = '/teams/:teamId';
+  static String teamDetailView({@required dynamic teamId}) => '/teams/$teamId';
+  static const String _welcomeToTeamView = '/teams/:teamId/welcome';
   static String welcomeToTeamView({@required dynamic teamId}) =>
-      'teams/$teamId/welcome';
+      '/teams/$teamId/welcome';
   static const String _conversationDetailView =
       '/conversations/:conversationId';
   static String conversationDetailView({@required dynamic conversationId}) =>
       '/conversations/$conversationId';
-  static const String _userDetailView = 'users/:userId';
-  static String userDetailView({@required dynamic userId}) => 'users/$userId';
+  static const String _userDetailView = '/users/:userId';
+  static String userDetailView({@required dynamic userId}) => '/users/$userId';
   static const all = <String>{
     homeView,
     _teamDetailView,

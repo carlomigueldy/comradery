@@ -5,7 +5,7 @@ import 'views/home/home_view.dart';
 const routes = [
   CustomRoute(
     page: HomeView,
-    path: '',
+    path: '/home',
     initial: true,
   ),
 ];

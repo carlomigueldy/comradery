@@ -41,8 +41,7 @@ class AppView extends StatelessWidget with UiUtilMixin {
                   navigatorKey: StackedService.nestedNavigationKey(
                     AppRouterId.appView,
                   ),
-
-                  // initialRoute: AppViewRoutes.homeView,
+                  initialRoute: AppViewRoutes.homeView,
                 ),
               ),
             ],
