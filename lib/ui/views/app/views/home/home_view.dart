@@ -58,63 +58,61 @@ class _MatchLayout extends StatelessWidget with UiUtilMixin {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          if (model.likeUserBusy || model.nopeUserBusy) AppSpinner(),
-          SwipeCards(
-            matchEngine: model.matchEngine,
-            itemBuilder: (context, index) {
-              final user = model.users[index];
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        if (model.likeUserBusy || model.nopeUserBusy) AppSpinner(),
+        SwipeCards(
+          matchEngine: model.matchEngine,
+          itemBuilder: (context, index) {
+            final user = model.users[index];
 
-              return AppMatchingCard(
-                user: user,
-                onTapNope: () {
+            return AppMatchingCard(
+              user: user,
+              onTapNope: () {
+                model.matchEngine.currentItem?.nope();
+              },
+              onTapLike: () {
+                model.matchEngine.currentItem?.like();
+              },
+            );
+          },
+          onStackFinished: () {},
+        ),
+        uiUtil.verticalSpacing.large,
+        Container(
+          // width: mediaQuery.size.width * 0.3,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AppButton.text(
+                label: 'Nope',
+                onPressed: () {
                   model.matchEngine.currentItem?.nope();
                 },
-                onTapLike: () {
+              ),
+              // TODO: To remove
+              AppButton.text(
+                label: 'Chat',
+                onPressed: () {
+                  model.toConversationView();
+                },
+              ),
+              AppButton.text(
+                label: 'Open Profile',
+                onPressed: () => model.viewUserProfile(),
+              ),
+              AppButton.text(
+                label: 'Like',
+                onPressed: () {
                   model.matchEngine.currentItem?.like();
                 },
-              );
-            },
-            onStackFinished: () {},
+              ),
+            ],
           ),
-          uiUtil.verticalSpacing.large,
-          Container(
-            // width: mediaQuery.size.width * 0.3,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                AppButton.text(
-                  label: 'Nope',
-                  onPressed: () {
-                    model.matchEngine.currentItem?.nope();
-                  },
-                ),
-                // TODO: To remove
-                AppButton.text(
-                  label: 'Chat',
-                  onPressed: () {
-                    model.toConversationView();
-                  },
-                ),
-                AppButton.text(
-                  label: 'Open Profile',
-                  onPressed: () => model.viewUserProfile(),
-                ),
-                AppButton.text(
-                  label: 'Like',
-                  onPressed: () {
-                    model.matchEngine.currentItem?.like();
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

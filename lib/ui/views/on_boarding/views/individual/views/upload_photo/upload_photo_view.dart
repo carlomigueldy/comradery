@@ -23,37 +23,43 @@ class UploadPhotoView extends StatelessWidget with UiUtilMixin {
         return Scaffold(
           body: Container(
             width: double.infinity,
-            child: SingleChildScrollView(
-              padding: uiUtil.edgeInsets.horizontalSymmetric25,
-              child: Column(
-                children: [
-                  uiUtil.verticalSpacing.large,
-                  AppText.body('Upload your photo'),
-                  uiUtil.verticalSpacing.large,
-                  CircleAvatar(
-                    backgroundColor: theme.primaryColor,
-                    radius: 128,
+            color: uiUtil.colors.backgroundColor,
+            padding: uiUtil.edgeInsets.horizontalSymmetric25,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                uiUtil.verticalSpacing.large,
+                AppText.body(
+                  'Upload your photo',
+                  style: uiUtil.textStyles.heading1,
+                ),
+                uiUtil.verticalSpacing.large,
+                Spacer(),
+                CircleAvatar(
+                  backgroundColor: theme.primaryColor,
+                  radius: 128,
+                ),
+                uiUtil.verticalSpacing.large,
+                Container(
+                  width: 300,
+                  child: Column(
+                    children: [
+                      AppButton(
+                        label: 'Continue',
+                        onPressed: () => model.toSetupUserProfileView(),
+                      ),
+                      uiUtil.verticalSpacing.large,
+                      AppButton.text(
+                        label: 'Skip',
+                        onPressed: () => model.toSetupUserProfileView(),
+                      ),
+                    ],
                   ),
-                  uiUtil.verticalSpacing.large,
-                  Container(
-                    width: 300,
-                    child: Column(
-                      children: [
-                        AppButton(
-                          label: 'Continue',
-                          onPressed: () => model.toSetupUserProfileView(),
-                        ),
-                        uiUtil.verticalSpacing.large,
-                        AppButton.text(
-                          label: 'Skip',
-                          onPressed: () => model.toSetupUserProfileView(),
-                        ),
-                      ],
-                    ),
-                  ),
-                  uiUtil.verticalSpacing.large,
-                ],
-              ),
+                ),
+                Spacer(),
+                uiUtil.verticalSpacing.large,
+              ],
             ),
           ),
         );

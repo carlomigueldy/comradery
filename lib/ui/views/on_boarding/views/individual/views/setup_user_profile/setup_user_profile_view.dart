@@ -4,6 +4,7 @@ import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 
@@ -18,6 +19,8 @@ class SetupUserProfileView extends StatelessWidget with UiUtilMixin {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+
     return ViewModelBuilder<SetupUserProfileViewModel>.reactive(
       viewModelBuilder: () => SetupUserProfileViewModel(),
       builder: (
@@ -29,30 +32,19 @@ class SetupUserProfileView extends StatelessWidget with UiUtilMixin {
           body: Container(
             color: uiUtil.colors.backgroundColor,
             padding: uiUtil.edgeInsets.horizontalSymmetric25,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 450,
-                  child: Center(
-                    child: SingleChildScrollView(
-                      padding: uiUtil.edgeInsets.horizontalSymmetric25,
-                      child: _Form(
-                        formKey: _formKey,
-                        onSubmit: () {
-                          _formKey.currentState?.save();
+            width: mediaQuery.size.width,
+            height: mediaQuery.size.height,
+            child: _Form(
+              formKey: _formKey,
+              onSubmit: () {
+                _formKey.currentState?.save();
 
-                          if (_formKey.currentState?.validate() == false) {
-                            return;
-                          }
+                if (_formKey.currentState?.validate() == false) {
+                  return;
+                }
 
-                          model.setupUserProfile(_formKey.currentState!.value);
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+                model.setupUserProfile(_formKey.currentState!.value);
+              },
             ),
           ),
         );
@@ -81,62 +73,76 @@ class _Form extends HookViewModelWidget<SetupUserProfileViewModel>
     final lastNameFocusNode = useFocusNode();
     final bioFocusNode = useFocusNode();
 
+    final column = Column(
+      children: [
+        uiUtil.verticalSpacing.large,
+        AppText(
+          'Create your profile',
+          style: uiUtil.textStyles.heading1,
+        ),
+        Spacer(),
+        AppTextField(
+          name: 'first_name',
+          label: 'First Name',
+          focusNode: firstNameFocusNode,
+          onEditingComplete: () => lastNameFocusNode.nextFocus(),
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(context),
+          ]),
+        ),
+        uiUtil.verticalSpacing.large,
+        AppTextField(
+          name: 'last_name',
+          label: 'Last Name',
+          focusNode: lastNameFocusNode,
+          onEditingComplete: () => bioFocusNode.nextFocus(),
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(context),
+          ]),
+        ),
+        uiUtil.verticalSpacing.large,
+        AppTextField(
+          name: 'bio',
+          label: 'Bio',
+          height: 140,
+          maxLines: 6,
+          focusNode: bioFocusNode,
+          onEditingComplete: onSubmit,
+        ),
+        uiUtil.verticalSpacing.large,
+        Row(
+          children: [
+            AppButton(
+              label: 'Continue',
+              onPressed: onSubmit,
+              busy: model.isBusy,
+            ),
+          ],
+        ),
+        Spacer(),
+        uiUtil.verticalSpacing.large,
+      ],
+    );
+
     return FormBuilder(
       key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-            children: [
-              AppText(
-                'Create your profile',
-                style: uiUtil.textStyles.body.copyWith(
-                  fontSize: 32,
-                ),
+          Expanded(
+            child: ScreenTypeLayout(
+              tablet: Container(
+                width: 450,
+                child: column,
               ),
-            ],
-          ),
-          uiUtil.verticalSpacing.veryLarge,
-          AppTextField(
-            name: 'first_name',
-            label: 'First Name',
-            focusNode: firstNameFocusNode,
-            onEditingComplete: () => lastNameFocusNode.nextFocus(),
-            validator: FormBuilderValidators.compose([
-              FormBuilderValidators.required(context),
-            ]),
-          ),
-          uiUtil.verticalSpacing.large,
-          AppTextField(
-            name: 'last_name',
-            label: 'Last Name',
-            focusNode: lastNameFocusNode,
-            onEditingComplete: () => bioFocusNode.nextFocus(),
-            validator: FormBuilderValidators.compose([
-              FormBuilderValidators.required(context),
-            ]),
-          ),
-          uiUtil.verticalSpacing.large,
-          AppTextField(
-            name: 'bio',
-            label: 'Bio',
-            height: 140,
-            maxLines: 6,
-            focusNode: bioFocusNode,
-            onEditingComplete: onSubmit,
-          ),
-          uiUtil.verticalSpacing.large,
-          Row(
-            children: [
-              AppButton(
-                label: 'Continue',
-                onPressed: onSubmit,
-                busy: model.isBusy,
+              desktop: Container(
+                width: 450,
+                child: column,
               ),
-            ],
+              mobile: column,
+            ),
           ),
-          uiUtil.verticalSpacing.large,
         ],
       ),
     );

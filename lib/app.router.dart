@@ -96,6 +96,10 @@ class StackedRouter extends RouterBase {
         builder: (context) => StartupView(
           key: args.key,
           accessToken: data.queryParams['access_token'].optString(),
+          expiresIn: data.queryParams['expires_in'].optString(),
+          providerToken: data.queryParams['provider_token'].optString(),
+          refreshToken: data.queryParams['refresh_token'].optString(),
+          tokenType: data.queryParams['token_type'].optString(),
         ),
         settings: data,
       );
@@ -113,8 +117,11 @@ class StackedRouter extends RouterBase {
       );
     },
     AppView: (data) {
+      var args = data.getArgs<AppViewArguments>(
+        orElse: () => AppViewArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const AppView(),
+        builder: (context) => AppView(key: args.key),
         settings: data,
       );
     },
@@ -286,6 +293,12 @@ class AppViewRouter extends RouterBase {
 class StartupViewArguments {
   final Key? key;
   StartupViewArguments({this.key});
+}
+
+/// AppView arguments holder class
+class AppViewArguments {
+  final Key? key;
+  AppViewArguments({this.key});
 }
 
 /// SetupUserProfileView arguments holder class

@@ -10,10 +10,12 @@ class AppTopBar extends StatelessWidget
     required this.title,
     this.backgroundColor,
     this.height = 60.0,
+    this.leading,
   }) : super(key: key);
 
   final String title;
   final Color? backgroundColor;
+  final Widget? leading;
   final double height;
 
   @override
@@ -23,19 +25,20 @@ class AppTopBar extends StatelessWidget
     return AppBar(
       backgroundColor: backgroundColor ?? uiUtil.colors.backgroundColor,
       elevation: 0,
-      leading: IconButton(
-        icon: Icon(
-          Icons.keyboard_arrow_left_rounded,
-          color: uiUtil.colors.black,
-        ),
-        onPressed: () => Navigator.pushNamedAndRemoveUntil(
-          context,
-          AppViewRoutes.homeView,
-          (route) => false,
-        ),
-        // onPressed: () =>
-        //     Navigator.canPop(context) ? Navigator.pop(context) : null,
-      ),
+      leading: leading ??
+          IconButton(
+            icon: Icon(
+              Icons.keyboard_arrow_left_rounded,
+              color: uiUtil.colors.black,
+            ),
+            onPressed: () => Navigator.pushNamedAndRemoveUntil(
+              context,
+              AppViewRoutes.homeView,
+              (route) => false,
+            ),
+            // onPressed: () =>
+            //     Navigator.canPop(context) ? Navigator.pop(context) : null,
+          ),
       centerTitle: true,
       title: Text(
         title,

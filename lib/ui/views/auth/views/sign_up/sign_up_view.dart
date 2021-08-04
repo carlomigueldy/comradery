@@ -4,6 +4,7 @@ import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 
@@ -30,44 +31,63 @@ class _SignUpViewState extends State<SignUpView> with UiUtilMixin {
         SignUpViewModel model,
         Widget? child,
       ) {
+        final assetContainer = Container(
+          child: Center(
+            child: Image.asset(
+              'assets/png/sign-up-illustration.png',
+              // width: 350,
+            ),
+          ),
+        );
+        var form = Container(
+          child: _Form(
+            formKey: _formKey,
+            onSubmit: () {
+              _formKey.currentState?.save();
+
+              if (_formKey.currentState?.validate() == false) {
+                return;
+              }
+
+              model.createAccountWithEmailAndPassword(
+                  _formKey.currentState!.value);
+            },
+          ),
+        );
+        final row = Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: assetContainer,
+            ),
+            Expanded(
+              flex: 2,
+              child: form,
+            ),
+          ],
+        );
         return Scaffold(
-          body: Container(
-            color: uiUtil.colors.backgroundColor,
-            width: mediaQuery.size.width,
-            height: mediaQuery.size.height,
-            padding: uiUtil.edgeInsets.horizontalSymmetric25,
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    child: Center(
-                      child: Image.asset(
-                        'assets/png/sign-up-illustration.png',
-                        // width: 350,
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    child: _Form(
-                      formKey: _formKey,
-                      onSubmit: () {
-                        _formKey.currentState?.save();
-
-                        if (_formKey.currentState?.validate() == false) {
-                          return;
-                        }
-
-                        model.createAccountWithEmailAndPassword(
-                            _formKey.currentState!.value);
-                      },
-                    ),
-                  ),
-                ),
-              ],
+          body: ScreenTypeLayout(
+            mobile: Container(
+              color: uiUtil.colors.backgroundColor,
+              width: mediaQuery.size.width,
+              height: mediaQuery.size.height,
+              padding: uiUtil.edgeInsets.horizontalSymmetric25,
+              child: form,
+            ),
+            tablet: Container(
+              color: uiUtil.colors.backgroundColor,
+              width: mediaQuery.size.width,
+              height: mediaQuery.size.height,
+              padding: uiUtil.edgeInsets.horizontalSymmetric25,
+              child: row,
+            ),
+            desktop: Container(
+              color: uiUtil.colors.backgroundColor,
+              width: mediaQuery.size.width,
+              height: mediaQuery.size.height,
+              padding: uiUtil.edgeInsets.horizontalSymmetric25,
+              child: row,
             ),
           ),
         );
@@ -96,7 +116,7 @@ class _Form extends HookViewModelWidget<SignUpViewModel> with UiUtilMixin {
 
     return FormBuilder(
       key: formKey,
-      child: SingleChildScrollView(
+      child: Padding(
         padding: uiUtil.edgeInsets.horizontalSymmetric25,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
