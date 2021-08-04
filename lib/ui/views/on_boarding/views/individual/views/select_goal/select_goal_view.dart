@@ -2,6 +2,7 @@ import 'package:comradery/common/utils/ui_util.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/button/app_button.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
 
 import 'select_goal_viewmodel.dart';
@@ -35,9 +36,55 @@ class _SelectGoalViewState extends State<SelectGoalView> with UiUtilMixin {
         SelectGoalViewModel model,
         Widget? child,
       ) {
+        final column = Column(
+          children: [
+            _GoalListTile(
+              title: AppText(
+                'I want to find a team with similar interests',
+              ),
+              groupValue: _goal,
+              onChanged: (Goal? value) {
+                setState(() {
+                  if (value != null) _goal = value;
+                });
+              },
+              value: Goal.findTeam,
+              selected: _goal == Goal.findTeam,
+            ),
+            uiUtil.verticalSpacing.large,
+            _GoalListTile(
+              title: AppText(
+                'I want to find individuals with similar interests',
+              ),
+              groupValue: _goal,
+              onChanged: (Goal? value) {
+                setState(() {
+                  if (value != null) _goal = value;
+                });
+              },
+              value: Goal.findIndividuals,
+              selected: _goal == Goal.findIndividuals,
+            ),
+            uiUtil.verticalSpacing.veryLarge,
+            uiUtil.verticalSpacing.veryLarge,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  child: AppButton(
+                    label: 'Continue',
+                    onPressed: () => model.toUploadPhotoView(),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
         return Scaffold(
           body: Container(
             width: double.infinity,
+            color: uiUtil.colors.backgroundColor,
+            padding: uiUtil.edgeInsets.horizontalSymmetric25,
             child: Padding(
               padding: uiUtil.edgeInsets.horizontalSymmetric25,
               child: Column(
@@ -53,54 +100,15 @@ class _SelectGoalViewState extends State<SelectGoalView> with UiUtilMixin {
                   ),
                   uiUtil.verticalSpacing.veryLarge,
                   uiUtil.verticalSpacing.veryLarge,
-                  Container(
-                    width: containerWidth,
-                    child: Column(
-                      children: [
-                        _GoalListTile(
-                          title: AppText(
-                            'I want to find a team with similar interests',
-                          ),
-                          groupValue: _goal,
-                          onChanged: (Goal? value) {
-                            setState(() {
-                              if (value != null) _goal = value;
-                            });
-                          },
-                          value: Goal.findTeam,
-                          selected: _goal == Goal.findTeam,
-                        ),
-                        uiUtil.verticalSpacing.large,
-                        _GoalListTile(
-                          title: AppText(
-                            'I want to find individuals with similar interests',
-                          ),
-                          groupValue: _goal,
-                          onChanged: (Goal? value) {
-                            setState(() {
-                              if (value != null) _goal = value;
-                            });
-                          },
-                          value: Goal.findIndividuals,
-                          selected: _goal == Goal.findIndividuals,
-                        ),
-                      ],
+                  ScreenTypeLayout(
+                    mobile: column,
+                    desktop: SizedBox(
+                      width: containerWidth,
+                      child: column,
                     ),
-                  ),
-                  uiUtil.verticalSpacing.veryLarge,
-                  uiUtil.verticalSpacing.veryLarge,
-                  Container(
-                    width: containerWidth,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          child: AppButton(
-                            label: 'Continue',
-                            onPressed: () => model.toUploadPhotoView(),
-                          ),
-                        ),
-                      ],
+                    tablet: SizedBox(
+                      width: containerWidth,
+                      child: column,
                     ),
                   ),
                 ],

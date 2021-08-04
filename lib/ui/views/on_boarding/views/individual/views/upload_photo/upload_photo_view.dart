@@ -36,10 +36,17 @@ class UploadPhotoView extends StatelessWidget with UiUtilMixin {
                 ),
                 uiUtil.verticalSpacing.large,
                 Spacer(),
-                CircleAvatar(
-                  backgroundColor: theme.primaryColor,
-                  radius: 128,
+                InkWell(
+                  onTap: () => model.selectPhoto(),
+                  child: CircleAvatar(
+                    backgroundColor: theme.primaryColor,
+                    child: model.hasFile ? Image.file(model.file!) : null,
+                    radius: 128,
+                  ),
                 ),
+                uiUtil.verticalSpacing.large,
+                uiUtil.verticalSpacing.large,
+                uiUtil.verticalSpacing.large,
                 uiUtil.verticalSpacing.large,
                 Container(
                   width: 300,

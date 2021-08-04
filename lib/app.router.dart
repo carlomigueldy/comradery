@@ -105,8 +105,11 @@ class StackedRouter extends RouterBase {
       );
     },
     LandingView: (data) {
+      var args = data.getArgs<LandingViewArguments>(
+        orElse: () => LandingViewArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const LandingView(),
+        builder: (context) => LandingView(key: args.key),
         settings: data,
       );
     },
@@ -293,6 +296,12 @@ class AppViewRouter extends RouterBase {
 class StartupViewArguments {
   final Key? key;
   StartupViewArguments({this.key});
+}
+
+/// LandingView arguments holder class
+class LandingViewArguments {
+  final Key? key;
+  LandingViewArguments({this.key});
 }
 
 /// AppView arguments holder class
