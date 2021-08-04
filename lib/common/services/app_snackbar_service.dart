@@ -13,4 +13,10 @@ class AppSnackbarService {
       message: message ?? 'An error has occurred.',
     );
   }
+
+  void showUnexpectedError([String? message]) {
+    _snackbarService.showSnackbar(
+      message: message ?? 'An unexpected error has occurred.',
+    );
+  }
 }

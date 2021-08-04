@@ -26,30 +26,34 @@ class SetupUserProfileView extends StatelessWidget with UiUtilMixin {
         Widget? child,
       ) {
         return Scaffold(
-          body: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 450,
-                child: Center(
-                  child: SingleChildScrollView(
-                    padding: uiUtil.edgeInsets.horizontalSymmetric25,
-                    child: _Form(
-                      formKey: _formKey,
-                      onSubmit: () {
-                        _formKey.currentState?.save();
+          body: Container(
+            color: uiUtil.colors.backgroundColor,
+            padding: uiUtil.edgeInsets.horizontalSymmetric25,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 450,
+                  child: Center(
+                    child: SingleChildScrollView(
+                      padding: uiUtil.edgeInsets.horizontalSymmetric25,
+                      child: _Form(
+                        formKey: _formKey,
+                        onSubmit: () {
+                          _formKey.currentState?.save();
 
-                        if (_formKey.currentState?.validate() == false) {
-                          return;
-                        }
+                          if (_formKey.currentState?.validate() == false) {
+                            return;
+                          }
 
-                        model.setupUserProfile(_formKey.currentState!.value);
-                      },
+                          model.setupUserProfile(_formKey.currentState!.value);
+                        },
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
@@ -128,6 +132,7 @@ class _Form extends HookViewModelWidget<SetupUserProfileViewModel>
               AppButton(
                 label: 'Continue',
                 onPressed: onSubmit,
+                busy: model.isBusy,
               ),
             ],
           ),

@@ -13,29 +13,34 @@ class AppTag extends StatelessWidget with UiUtilMixin {
     required this.text,
     this.selected = false,
     this.size = AppTagSize.normal,
+    this.onTap,
   }) : super(key: key);
 
   final AppTagSize size;
   final String text;
   final bool selected;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Container(
-      padding: uiUtil.edgeInsets.all10,
-      decoration: BoxDecoration(
-        color: selected ? theme.primaryColor : theme.accentColor,
-        borderRadius: uiUtil.borderRadius.circle,
-      ),
-      child: AppText(
-        text,
-        style: uiUtil.textStyles.body.copyWith(
-          color: selected ? Colors.white : theme.textTheme.bodyText1?.color,
-          fontSize: size == AppTagSize.small
-              ? uiUtil.textStyles.bodySmall.fontSize
-              : uiUtil.textStyles.body.fontSize,
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: uiUtil.edgeInsets.all10,
+        decoration: BoxDecoration(
+          color: selected ? theme.primaryColor : uiUtil.colors.lightGrey,
+          borderRadius: uiUtil.borderRadius.circle,
+        ),
+        child: AppText(
+          text,
+          style: uiUtil.textStyles.body.copyWith(
+            color: selected ? Colors.white : theme.textTheme.bodyText1?.color,
+            fontSize: size == AppTagSize.small
+                ? uiUtil.textStyles.bodySmall.fontSize
+                : uiUtil.textStyles.body.fontSize,
+          ),
         ),
       ),
     );

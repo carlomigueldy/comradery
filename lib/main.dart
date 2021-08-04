@@ -1,5 +1,6 @@
 import 'package:comradery/app.locator.dart';
 import 'package:comradery/app.router.dart';
+import 'package:comradery/ui/views/on_boarding/views/individual/views/select_interests/select_interests_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:stacked/stacked.dart';
@@ -39,7 +40,7 @@ class ComraderyAppView extends StatelessWidget {
           ),
           navigatorKey: StackedService.navigatorKey,
           onGenerateRoute: StackedRouter().onGenerateRoute,
-          // home: SelectGoalView(),
+          // home: SelectInterestsView(),
         );
       },
     );
