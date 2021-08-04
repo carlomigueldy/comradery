@@ -2,6 +2,7 @@ import 'package:comradery/common/utils/ui_util.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/app_bar/app_top_bar.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/button/app_button.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
+import 'package:comradery/ui/widgets/feature/app_matching_card.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -33,25 +34,25 @@ class UserDetailView extends StatelessWidget with UiUtilMixin {
       ) {
         return Scaffold(
           appBar: AppTopBar(
-            title: 'userId',
+            title: model.fetchUserBusy
+                ? 'Loading...'
+                : (model.user?.fullName ?? '...'),
           ),
           body: Container(
             width: mediaQuery.size.width,
             height: mediaQuery.size.height,
             color: uiUtil.colors.backgroundColor,
-            child: SingleChildScrollView(
-              padding: uiUtil.edgeInsets.horizontalSymmetric25,
-              child: Column(
-                children: [
-                  uiUtil.verticalSpacing.large,
-                  AppButton(
-                    label: 'Start Converastion',
-                    onPressed: () => model.startConversation(),
+            child: model.fetchUserBusy
+                ? AppSpinner()
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      AppMatchingCard(
+                        user: model.user!,
+                      ),
+                    ],
                   ),
-                  uiUtil.verticalSpacing.large,
-                ],
-              ),
-            ),
           ),
         );
       },

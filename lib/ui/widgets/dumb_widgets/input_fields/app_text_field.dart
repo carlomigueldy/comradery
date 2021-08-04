@@ -124,7 +124,7 @@ class AppTextField extends StatelessWidget with UiUtilMixin {
 
   Color get fillColor {
     if (error == null) {
-      return uiUtil.colors.veryLightGrey;
+      return uiUtil.colors.white;
     }
 
     return uiUtil.colors.error.withOpacity(0.8);
@@ -143,10 +143,10 @@ class AppTextField extends StatelessWidget with UiUtilMixin {
               padding: uiUtil.edgeInsets.horizontalSymmetric15,
               constraints: BoxConstraints(minHeight: height ?? 50),
               decoration: BoxDecoration(
-                color: backgroundColor ?? UiUtil.isLight(context)
-                    ? fillColor
-                    : theme.canvasColor,
-                borderRadius: uiUtil.borderRadius.huge,
+                color: backgroundColor ??
+                    (UiUtil.isLight(context) ? fillColor : theme.canvasColor),
+                borderRadius: uiUtil.borderRadius.large,
+                border: Border.all(color: uiUtil.colors.black),
               ),
             ),
             Container(
@@ -157,6 +157,9 @@ class AppTextField extends StatelessWidget with UiUtilMixin {
                 focusNode: focusNode,
                 decoration: InputDecoration(
                   hintText: label,
+                  hintStyle: uiUtil.textStyles.body.copyWith(
+                    color: uiUtil.colors.black,
+                  ),
                   border: InputBorder.none,
                   suffixIcon: suffixIcon,
                 ),

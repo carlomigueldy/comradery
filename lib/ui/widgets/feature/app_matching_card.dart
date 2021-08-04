@@ -113,7 +113,7 @@ class AppMatchingCard extends StatelessWidget with UiUtilMixin {
                     onTap: onTapLike,
                     child: CircleAvatar(
                       child: Icon(
-                        Icons.favorite_rounded,
+                        Icons.thumb_up_sharp,
                         color: theme.canvasColor,
                       ),
                       radius: 32,

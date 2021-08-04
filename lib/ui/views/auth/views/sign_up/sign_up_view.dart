@@ -151,11 +151,13 @@ class _Form extends HookViewModelWidget<SignUpViewModel> with UiUtilMixin {
                         ),
                       ],
                     ),
-                    uiUtil.verticalSpacing.large,
+                    uiUtil.verticalSpacing.veryLarge,
+                    uiUtil.verticalSpacing.veryLarge,
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         AppText.body("Already have an account?"),
-                        uiUtil.horizontalSpacing.large,
+                        uiUtil.horizontalSpacing.normal,
                         AppButton.text(
                           label: 'Sign In',
                           onPressed: () => model.login(),
