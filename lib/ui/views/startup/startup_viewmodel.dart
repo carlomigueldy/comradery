@@ -37,7 +37,7 @@ class StartupViewModel extends BaseViewModel {
     await Future.delayed(Duration(seconds: 1));
 
     if (_authService.hasUser) {
-      return _router.replaceWith(Routes.appView);
+      return _router.replaceWith(Routes.homeView);
     }
 
     return _router.replaceWith(Routes.landingView);

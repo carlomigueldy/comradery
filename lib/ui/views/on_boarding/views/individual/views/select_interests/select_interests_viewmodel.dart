@@ -137,6 +137,6 @@ class SelectInterestsViewModel extends BaseViewModel {
       return log.e(response.error?.message);
     }
 
-    return _router.navigateTo(Routes.appView);
+    return _router.navigateTo(Routes.homeView);
   }
 }

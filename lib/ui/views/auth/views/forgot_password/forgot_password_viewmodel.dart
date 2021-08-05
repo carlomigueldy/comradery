@@ -22,7 +22,7 @@ class ForgotPasswordViewModel extends BaseViewModel {
         return;
       }
 
-      await _router.replaceWith(Routes.appView);
+      await _router.replaceWith(Routes.homeView);
     } catch (e) {
       log.e('error "$e"');
     } finally {

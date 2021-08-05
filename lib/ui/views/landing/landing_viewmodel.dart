@@ -13,7 +13,7 @@ class LandingViewModel extends BaseViewModel {
     await _authService.initialize();
 
     if (_authService.hasUser) {
-      return _router.replaceWith(Routes.appView);
+      return _router.replaceWith(Routes.homeView);
     }
   }
 

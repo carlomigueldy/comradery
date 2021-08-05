@@ -42,6 +42,7 @@ class UserDetailView extends StatelessWidget with UiUtilMixin {
             width: mediaQuery.size.width,
             height: mediaQuery.size.height,
             color: uiUtil.colors.backgroundColor,
+            padding: uiUtil.edgeInsets.horizontalSymmetric25,
             child: model.fetchUserBusy
                 ? AppSpinner()
                 : Column(

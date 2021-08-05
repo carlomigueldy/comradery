@@ -72,7 +72,7 @@ class _SignUpViewState extends State<SignUpView> with UiUtilMixin {
               color: uiUtil.colors.backgroundColor,
               width: mediaQuery.size.width,
               height: mediaQuery.size.height,
-              padding: uiUtil.edgeInsets.horizontalSymmetric25,
+              // padding: uiUtil.edgeInsets.horizontalSymmetric25,
               child: form,
             ),
             tablet: Container(
@@ -113,16 +113,16 @@ class _Form extends HookViewModelWidget<SignUpViewModel> with UiUtilMixin {
   ) {
     final emailFocusNode = useFocusNode();
     final passwordFocusNode = useFocusNode();
+    final theme = Theme.of(context);
 
     return FormBuilder(
       key: formKey,
-      child: Padding(
-        padding: uiUtil.edgeInsets.horizontalSymmetric25,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 450,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Container(
+              // width: 450,
               child: SingleChildScrollView(
                 padding: uiUtil.edgeInsets.horizontalSymmetric25,
                 child: Column(
@@ -159,17 +159,10 @@ class _Form extends HookViewModelWidget<SignUpViewModel> with UiUtilMixin {
                       ]),
                     ),
                     uiUtil.verticalSpacing.large,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        AppText('Forgot password?'),
-                        uiUtil.horizontalSpacing.large,
-                        AppButton(
-                          label: 'Create Account',
-                          onPressed: onSubmit,
-                          busy: model.isBusy,
-                        ),
-                      ],
+                    AppButton(
+                      label: 'Create Account',
+                      onPressed: onSubmit,
+                      busy: model.isBusy,
                     ),
                     uiUtil.verticalSpacing.veryLarge,
                     uiUtil.verticalSpacing.veryLarge,
@@ -178,9 +171,14 @@ class _Form extends HookViewModelWidget<SignUpViewModel> with UiUtilMixin {
                       children: [
                         AppText.body("Already have an account?"),
                         uiUtil.horizontalSpacing.normal,
-                        AppButton.text(
-                          label: 'Sign In',
-                          onPressed: () => model.login(),
+                        GestureDetector(
+                          onTap: () => model.login(),
+                          child: AppText.bodyBold(
+                            'Sign In',
+                            style: uiUtil.textStyles.bodyBold.copyWith(
+                              color: theme.primaryColor,
+                            ),
+                          ),
                         )
                       ],
                     ),
@@ -188,8 +186,8 @@ class _Form extends HookViewModelWidget<SignUpViewModel> with UiUtilMixin {
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

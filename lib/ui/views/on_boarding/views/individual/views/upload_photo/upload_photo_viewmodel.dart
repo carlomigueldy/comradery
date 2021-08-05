@@ -1,30 +1,39 @@
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:comradery/app.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
+import 'package:comradery/common/supabase/supabase_client.dart';
+import 'package:comradery/ui/views/on_boarding/common/on_boarding_viewmodel.dart';
 
-class UploadPhotoViewModel extends BaseViewModel {
-  final _router = locator<NavigationService>();
-  final _imagePicker = ImagePicker();
+class UploadPhotoViewModel extends OnBoardingViewModel {
+  Future<void> uploadPhoto() async {
+    final response = await runBusyFuture(
+      supabase.storage.from('main').upload(
+            'avatars/${authService.user!.id}',
+            file!,
+          ),
+      busyObject: uploadPhotoKey,
+      throwException: true,
+    );
+    log.v('response "$response"');
+    log.v('response.data "${response.data}"');
 
-  File? _file;
-  File? get file => _file;
-  bool get hasFile => file != null;
-
-  void toSetupUserProfileView() {
-    _router.navigateTo(Routes.setupUserProfileView);
-  }
-
-  Future<void> selectPhoto() async {
-    final image = await _imagePicker.pickImage(source: ImageSource.gallery);
-
-    if (image == null) {
-      return;
+    if (response.error != null) {
+      return log.e(response.error?.message);
     }
 
-    _file = File(image.path);
-    notifyListeners();
+    final updateUserResponse = await supabase
+        .from('users')
+        .update({'photo_url': response.data})
+        .eq('id', authService.user!.id!)
+        .execute();
+    log.v('updateUserResponse "${updateUserResponse.toJson()}"');
+  }
+
+  void proceed() async {
+    if (hasFile) {
+      await uploadPhoto();
+    }
+
+    router.navigateTo(Routes.setupUserProfileView);
   }
 }

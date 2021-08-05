@@ -1,7 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:comradery/common/utils/ui_util.dart';
+import 'package:comradery/ui/widgets/dumb_widgets/app_bar/app_top_bar.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/button/app_button.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:universal_io/io.dart';
 import 'package:stacked/stacked.dart';
 
 import 'upload_photo_viewmodel.dart';
@@ -21,6 +25,9 @@ class UploadPhotoView extends StatelessWidget with UiUtilMixin {
         final theme = Theme.of(context);
 
         return Scaffold(
+          appBar: AppTopBar(
+            title: '',
+          ),
           body: Container(
             width: double.infinity,
             color: uiUtil.colors.backgroundColor,
@@ -40,7 +47,16 @@ class UploadPhotoView extends StatelessWidget with UiUtilMixin {
                   onTap: () => model.selectPhoto(),
                   child: CircleAvatar(
                     backgroundColor: theme.primaryColor,
-                    child: model.hasFile ? Image.file(model.file!) : null,
+                    backgroundImage:
+                        model.hasFile ? FileImage(model.file!) : null,
+                    // backgroundImage:
+                    //     model.hasBytes ? MemoryImage(model.bytes!) : null,
+                    // child: model.hasFile ? Image.file(model.file!) : null,
+                    // child: model.hasBytes
+                    //     ? Image.memory(
+                    //         Uint8List.fromList(model.bytes!),
+                    //       )
+                    //     : null,
                     radius: 128,
                   ),
                 ),
@@ -54,12 +70,13 @@ class UploadPhotoView extends StatelessWidget with UiUtilMixin {
                     children: [
                       AppButton(
                         label: 'Continue',
-                        onPressed: () => model.toSetupUserProfileView(),
+                        onPressed: () => model.proceed(),
+                        busy: model.uploadPhotoBusy,
                       ),
                       uiUtil.verticalSpacing.large,
                       AppButton.text(
                         label: 'Skip',
-                        onPressed: () => model.toSetupUserProfileView(),
+                        onPressed: () => model.proceed(),
                       ),
                     ],
                   ),

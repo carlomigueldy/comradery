@@ -7,11 +7,6 @@ import 'package:stacked/stacked.dart';
 
 import 'select_goal_viewmodel.dart';
 
-enum Goal {
-  findTeam,
-  findIndividuals,
-}
-
 class SelectGoalView extends StatefulWidget {
   const SelectGoalView({Key? key}) : super(key: key);
 
@@ -20,8 +15,6 @@ class SelectGoalView extends StatefulWidget {
 }
 
 class _SelectGoalViewState extends State<SelectGoalView> with UiUtilMixin {
-  Goal _goal = Goal.findTeam;
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -42,28 +35,24 @@ class _SelectGoalViewState extends State<SelectGoalView> with UiUtilMixin {
               title: AppText(
                 'I want to find a team with similar interests',
               ),
-              groupValue: _goal,
+              groupValue: model.goal,
               onChanged: (Goal? value) {
-                setState(() {
-                  if (value != null) _goal = value;
-                });
+                if (value != null) model.onSelectGoal(value);
               },
               value: Goal.findTeam,
-              selected: _goal == Goal.findTeam,
+              selected: model.goal == Goal.findTeam,
             ),
             uiUtil.verticalSpacing.large,
             _GoalListTile(
               title: AppText(
                 'I want to find individuals with similar interests',
               ),
-              groupValue: _goal,
+              groupValue: model.goal,
               onChanged: (Goal? value) {
-                setState(() {
-                  if (value != null) _goal = value;
-                });
+                if (value != null) model.onSelectGoal(value);
               },
               value: Goal.findIndividuals,
-              selected: _goal == Goal.findIndividuals,
+              selected: model.goal == Goal.findIndividuals,
             ),
             uiUtil.verticalSpacing.veryLarge,
             uiUtil.verticalSpacing.veryLarge,
@@ -73,7 +62,7 @@ class _SelectGoalViewState extends State<SelectGoalView> with UiUtilMixin {
                 Container(
                   child: AppButton(
                     label: 'Continue',
-                    onPressed: () => model.toUploadPhotoView(),
+                    onPressed: () => model.proceed(),
                   ),
                 ),
               ],
@@ -84,7 +73,6 @@ class _SelectGoalViewState extends State<SelectGoalView> with UiUtilMixin {
           body: Container(
             width: double.infinity,
             color: uiUtil.colors.backgroundColor,
-            padding: uiUtil.edgeInsets.horizontalSymmetric25,
             child: Padding(
               padding: uiUtil.edgeInsets.horizontalSymmetric25,
               child: Column(

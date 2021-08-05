@@ -26,19 +26,15 @@ class AppTopBar extends StatelessWidget
       backgroundColor: backgroundColor ?? uiUtil.colors.backgroundColor,
       elevation: 0,
       leading: leading ??
-          IconButton(
-            icon: Icon(
-              Icons.keyboard_arrow_left_rounded,
-              color: uiUtil.colors.black,
-            ),
-            onPressed: () => Navigator.pushNamedAndRemoveUntil(
-              context,
-              AppViewRoutes.homeView,
-              (route) => false,
-            ),
-            // onPressed: () =>
-            //     Navigator.canPop(context) ? Navigator.pop(context) : null,
-          ),
+          (Navigator.canPop(context)
+              ? IconButton(
+                  icon: Icon(
+                    Icons.keyboard_arrow_left_rounded,
+                    color: uiUtil.colors.black,
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                )
+              : null),
       centerTitle: true,
       title: Text(
         title,

@@ -6,19 +6,19 @@ import 'views/sign_in/sign_in_view.dart';
 import 'views/sign_up/sign_up_view.dart';
 
 const routes = [
-  CustomRoute(
+  CupertinoRoute(
     page: SignInView,
     path: '/auth/sign-in',
   ),
-  CustomRoute(
+  CupertinoRoute(
     page: SignUpView,
     path: '/auth/sign-up',
   ),
-  CustomRoute(
+  CupertinoRoute(
     page: ResetPasswordView,
     path: '/auth/reset-password',
   ),
-  CustomRoute(
+  CupertinoRoute(
     page: ForgotPasswordView,
     path: '/auth/forgot-password',
   ),

@@ -6,11 +6,11 @@
 
 // ignore_for_file: public_member_api_docs
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import 'ui/views/about/about_view.dart';
-import 'ui/views/app/app_view.dart';
 import 'ui/views/app/views/home/home_view.dart';
 import 'ui/views/auth/views/forgot_password/forgot_password_view.dart';
 import 'ui/views/auth/views/reset_password/reset_password_view.dart';
@@ -30,10 +30,21 @@ import 'ui/views/team/views/welcome_to_team/welcome_to_team_view.dart';
 import 'ui/views/user/views/user_detail/user_detail_view.dart';
 
 class Routes {
-  static const String startupView = '/';
-  static const String landingView = '/home';
+  static const String startupView = '/init';
+  static const String landingView = '/';
   static const String aboutView = '/about';
-  static const String appView = 'app';
+  static const String homeView = '/home';
+  static const String _teamDetailView = '/teams/:teamId';
+  static String teamDetailView({@required dynamic teamId}) => '/teams/$teamId';
+  static const String _welcomeToTeamView = '/teams/:teamId/welcome';
+  static String welcomeToTeamView({@required dynamic teamId}) =>
+      '/teams/$teamId/welcome';
+  static const String _conversationDetailView =
+      '/conversations/:conversationId';
+  static String conversationDetailView({@required dynamic conversationId}) =>
+      '/conversations/$conversationId';
+  static const String _userDetailView = '/users/:userId';
+  static String userDetailView({@required dynamic userId}) => '/users/$userId';
   static const String signInView = '/auth/sign-in';
   static const String signUpView = '/auth/sign-up';
   static const String resetPasswordView = '/auth/reset-password';
@@ -48,7 +59,11 @@ class Routes {
     startupView,
     landingView,
     aboutView,
-    appView,
+    homeView,
+    _teamDetailView,
+    _welcomeToTeamView,
+    _conversationDetailView,
+    _userDetailView,
     signInView,
     signUpView,
     resetPasswordView,
@@ -69,11 +84,11 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.startupView, page: StartupView),
     RouteDef(Routes.landingView, page: LandingView),
     RouteDef(Routes.aboutView, page: AboutView),
-    RouteDef(
-      Routes.appView,
-      page: AppView,
-      generator: AppViewRouter(),
-    ),
+    RouteDef(Routes.homeView, page: HomeView),
+    RouteDef(Routes._teamDetailView, page: TeamDetailView),
+    RouteDef(Routes._welcomeToTeamView, page: WelcomeToTeamView),
+    RouteDef(Routes._conversationDetailView, page: ConversationDetailView),
+    RouteDef(Routes._userDetailView, page: UserDetailView),
     RouteDef(Routes.signInView, page: SignInView),
     RouteDef(Routes.signUpView, page: SignUpView),
     RouteDef(Routes.resetPasswordView, page: ResetPasswordView),
@@ -92,7 +107,7 @@ class StackedRouter extends RouterBase {
       var args = data.getArgs<StartupViewArguments>(
         orElse: () => StartupViewArguments(),
       );
-      return MaterialPageRoute<dynamic>(
+      return CupertinoPageRoute<dynamic>(
         builder: (context) => StartupView(
           key: args.key,
           accessToken: data.queryParams['access_token'].optString(),
@@ -108,51 +123,89 @@ class StackedRouter extends RouterBase {
       var args = data.getArgs<LandingViewArguments>(
         orElse: () => LandingViewArguments(),
       );
-      return MaterialPageRoute<dynamic>(
+      return CupertinoPageRoute<dynamic>(
         builder: (context) => LandingView(key: args.key),
         settings: data,
       );
     },
     AboutView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return CupertinoPageRoute<dynamic>(
         builder: (context) => const AboutView(),
         settings: data,
       );
     },
-    AppView: (data) {
-      var args = data.getArgs<AppViewArguments>(
-        orElse: () => AppViewArguments(),
+    HomeView: (data) {
+      var args = data.getArgs<HomeViewArguments>(
+        orElse: () => HomeViewArguments(),
       );
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => AppView(key: args.key),
+      return CupertinoPageRoute<dynamic>(
+        builder: (context) => HomeView(key: args.key),
+        settings: data,
+      );
+    },
+    TeamDetailView: (data) {
+      var args = data.getArgs<TeamDetailViewArguments>(
+        orElse: () => TeamDetailViewArguments(),
+      );
+      return CupertinoPageRoute<dynamic>(
+        builder: (context) => TeamDetailView(
+          key: args.key,
+          teamId: data.pathParams['teamId'].getString(),
+        ),
+        settings: data,
+      );
+    },
+    WelcomeToTeamView: (data) {
+      return CupertinoPageRoute<dynamic>(
+        builder: (context) => const WelcomeToTeamView(),
+        settings: data,
+      );
+    },
+    ConversationDetailView: (data) {
+      var args = data.getArgs<ConversationDetailViewArguments>(
+        orElse: () => ConversationDetailViewArguments(),
+      );
+      return CupertinoPageRoute<dynamic>(
+        builder: (context) => ConversationDetailView(
+          key: args.key,
+          conversationId: data.pathParams['conversationId'].getString(),
+        ),
+        settings: data,
+      );
+    },
+    UserDetailView: (data) {
+      var args = data.getArgs<UserDetailViewArguments>(
+        orElse: () => UserDetailViewArguments(),
+      );
+      return CupertinoPageRoute<dynamic>(
+        builder: (context) => UserDetailView(
+          key: args.key,
+          userId: data.pathParams['userId'].optString(),
+        ),
         settings: data,
       );
     },
     SignInView: (data) {
-      return PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const SignInView(),
+      return CupertinoPageRoute<dynamic>(
+        builder: (context) => const SignInView(),
         settings: data,
       );
     },
     SignUpView: (data) {
-      return PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const SignUpView(),
+      return CupertinoPageRoute<dynamic>(
+        builder: (context) => const SignUpView(),
         settings: data,
       );
     },
     ResetPasswordView: (data) {
-      return PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const ResetPasswordView(),
+      return CupertinoPageRoute<dynamic>(
+        builder: (context) => const ResetPasswordView(),
         settings: data,
       );
     },
     ForgotPasswordView: (data) {
-      return PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const ForgotPasswordView(),
+      return CupertinoPageRoute<dynamic>(
+        builder: (context) => const ForgotPasswordView(),
         settings: data,
       );
     },
@@ -198,96 +251,6 @@ class StackedRouter extends RouterBase {
   };
 }
 
-class AppViewRoutes {
-  static const String homeView = '/home';
-  static const String _teamDetailView = '/teams/:teamId';
-  static String teamDetailView({@required dynamic teamId}) => '/teams/$teamId';
-  static const String _welcomeToTeamView = '/teams/:teamId/welcome';
-  static String welcomeToTeamView({@required dynamic teamId}) =>
-      '/teams/$teamId/welcome';
-  static const String _conversationDetailView =
-      '/conversations/:conversationId';
-  static String conversationDetailView({@required dynamic conversationId}) =>
-      '/conversations/$conversationId';
-  static const String _userDetailView = '/users/:userId';
-  static String userDetailView({@required dynamic userId}) => '/users/$userId';
-  static const all = <String>{
-    homeView,
-    _teamDetailView,
-    _welcomeToTeamView,
-    _conversationDetailView,
-    _userDetailView,
-  };
-}
-
-class AppViewRouter extends RouterBase {
-  @override
-  List<RouteDef> get routes => _routes;
-  final _routes = <RouteDef>[
-    RouteDef(AppViewRoutes.homeView, page: HomeView),
-    RouteDef(AppViewRoutes._teamDetailView, page: TeamDetailView),
-    RouteDef(AppViewRoutes._welcomeToTeamView, page: WelcomeToTeamView),
-    RouteDef(AppViewRoutes._conversationDetailView,
-        page: ConversationDetailView),
-    RouteDef(AppViewRoutes._userDetailView, page: UserDetailView),
-  ];
-  @override
-  Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
-  final _pagesMap = <Type, StackedRouteFactory>{
-    HomeView: (data) {
-      return PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const HomeView(),
-        settings: data,
-      );
-    },
-    TeamDetailView: (data) {
-      var args = data.getArgs<TeamDetailViewArguments>(
-        orElse: () => TeamDetailViewArguments(),
-      );
-      return PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) => TeamDetailView(
-          key: args.key,
-          teamId: data.pathParams['teamId'].getString(),
-        ),
-        settings: data,
-      );
-    },
-    WelcomeToTeamView: (data) {
-      return PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const WelcomeToTeamView(),
-        settings: data,
-      );
-    },
-    ConversationDetailView: (data) {
-      var args = data.getArgs<ConversationDetailViewArguments>(
-        orElse: () => ConversationDetailViewArguments(),
-      );
-      return PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            ConversationDetailView(
-          key: args.key,
-          conversationId: data.pathParams['conversationId'].getString(),
-        ),
-        settings: data,
-      );
-    },
-    UserDetailView: (data) {
-      var args = data.getArgs<UserDetailViewArguments>(
-        orElse: () => UserDetailViewArguments(),
-      );
-      return PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) => UserDetailView(
-          key: args.key,
-          userId: data.pathParams['userId'].optString(),
-        ),
-        settings: data,
-      );
-    },
-  };
-}
-
 /// ************************************************************************
 /// Arguments holder classes
 /// *************************************************************************
@@ -304,16 +267,10 @@ class LandingViewArguments {
   LandingViewArguments({this.key});
 }
 
-/// AppView arguments holder class
-class AppViewArguments {
+/// HomeView arguments holder class
+class HomeViewArguments {
   final Key? key;
-  AppViewArguments({this.key});
-}
-
-/// SetupUserProfileView arguments holder class
-class SetupUserProfileViewArguments {
-  final Key? key;
-  SetupUserProfileViewArguments({this.key});
+  HomeViewArguments({this.key});
 }
 
 /// TeamDetailView arguments holder class
@@ -332,4 +289,10 @@ class ConversationDetailViewArguments {
 class UserDetailViewArguments {
   final Key? key;
   UserDetailViewArguments({this.key});
+}
+
+/// SetupUserProfileView arguments holder class
+class SetupUserProfileViewArguments {
+  final Key? key;
+  SetupUserProfileViewArguments({this.key});
 }

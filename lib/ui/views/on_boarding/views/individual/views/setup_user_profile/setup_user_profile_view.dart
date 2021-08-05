@@ -1,4 +1,5 @@
 import 'package:comradery/common/utils/ui_util.dart';
+import 'package:comradery/ui/widgets/dumb_widgets/app_bar/app_top_bar.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/button/app_button.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,9 @@ class SetupUserProfileView extends StatelessWidget with UiUtilMixin {
         Widget? child,
       ) {
         return Scaffold(
+          appBar: AppTopBar(
+            title: '',
+          ),
           body: Container(
             color: uiUtil.colors.backgroundColor,
             padding: uiUtil.edgeInsets.horizontalSymmetric25,
@@ -110,14 +114,10 @@ class _Form extends HookViewModelWidget<SetupUserProfileViewModel>
           onEditingComplete: onSubmit,
         ),
         uiUtil.verticalSpacing.large,
-        Row(
-          children: [
-            AppButton(
-              label: 'Continue',
-              onPressed: onSubmit,
-              busy: model.isBusy,
-            ),
-          ],
+        AppButton(
+          label: 'Continue',
+          onPressed: onSubmit,
+          busy: model.isBusy,
         ),
         Spacer(),
         uiUtil.verticalSpacing.large,
@@ -126,25 +126,7 @@ class _Form extends HookViewModelWidget<SetupUserProfileViewModel>
 
     return FormBuilder(
       key: formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: ScreenTypeLayout(
-              tablet: Container(
-                width: 450,
-                child: column,
-              ),
-              desktop: Container(
-                width: 450,
-                child: column,
-              ),
-              mobile: column,
-            ),
-          ),
-        ],
-      ),
+      child: column,
     );
   }
 }

@@ -52,13 +52,14 @@ class AppView extends StatelessWidget with UiUtilMixin {
               ),
               Expanded(
                 flex: 3,
-                child: ExtendedNavigator<AppViewRouter>(
-                  router: AppViewRouter(),
-                  navigatorKey: StackedService.nestedNavigationKey(
-                    AppRouterId.appView,
-                  ),
-                  initialRoute: AppViewRoutes.homeView,
-                ),
+                child: Container(),
+                // ExtendedNavigator<AppViewRouter>(
+                //   router: AppViewRouter(),
+                //   navigatorKey: StackedService.nestedNavigationKey(
+                //     AppRouterId.appView,
+                //   ),
+                //   initialRoute: AppViewRoutes.homeView,
+                // ),
               ),
             ],
           ),
@@ -72,30 +73,33 @@ class AppView extends StatelessWidget with UiUtilMixin {
           'ModalRoute.of(context)?.settings "${ModalRoute.of(context)?.settings}"',
         );
 
-        return ScreenTypeLayout(
-          mobile: Scaffold(
-            key: _scaffoldKey,
-            drawer: leftDrawer,
-            // appBar: AppTopBar(
-            //   leading: IconButton(
-            //     icon: Icon(
-            //       Icons.menu_rounded,
-            //       color: theme.primaryColor,
-            //     ),
-            //     onPressed: () {
-            //       _scaffoldKey.currentState?.openDrawer();
-            //     },
-            //   ),
-            //   title: 'Comradery',
-            // ),
-            body: ExtendedNavigator<AppViewRouter>(
-              router: AppViewRouter(),
-              navigatorKey: navigatorKey,
-              initialRoute: AppViewRoutes.homeView,
+        return SafeArea(
+          child: ScreenTypeLayout(
+            mobile: Scaffold(
+              key: _scaffoldKey,
+              drawer: leftDrawer,
+              appBar: AppTopBar(
+                leading: IconButton(
+                  icon: Icon(
+                    Icons.menu_rounded,
+                    color: theme.primaryColor,
+                  ),
+                  onPressed: () {
+                    _scaffoldKey.currentState?.openDrawer();
+                  },
+                ),
+                title: 'Comradery',
+              ),
+              body: Container(),
+              // ExtendedNavigator<AppViewRouter>(
+              //   router: AppViewRouter(),
+              //   navigatorKey: navigatorKey,
+              //   initialRoute: AppViewRoutes.homeView,
+              // ),
             ),
+            desktop: desktop,
+            tablet: desktop,
           ),
-          desktop: desktop,
-          tablet: desktop,
         );
       },
     );

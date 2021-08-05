@@ -42,29 +42,29 @@ class AppRouterId {
 
 @StackedApp(
   routes: [
-    MaterialRoute(
+    CupertinoRoute(
       page: StartupView,
       initial: true,
+      path: '/init',
+    ),
+    CupertinoRoute(
+      page: LandingView,
       path: '/',
     ),
-    MaterialRoute(
-      page: LandingView,
-      path: '/home',
-    ),
-    MaterialRoute(
+    CupertinoRoute(
       page: AboutView,
       path: '/about',
     ),
-    MaterialRoute(
-      page: AppView,
-      path: 'app',
-      children: [
-        ...app.routes,
-        ...team.routes,
-        ...conversation.routes,
-        ...user.routes,
-      ],
-    ),
+    // CupertinoRoute(
+    //   page: AppView,
+    //   path: 'app',
+    //   children: [
+    //   ],
+    // ),
+    ...app.routes,
+    ...team.routes,
+    ...conversation.routes,
+    ...user.routes,
     ...auth.routes,
     ...on_boarding.routes,
   ],

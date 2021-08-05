@@ -42,63 +42,49 @@ class _ConversationDetailViewState extends State<ConversationDetailView>
         Widget? child,
       ) {
         return Scaffold(
-          body: Row(
-            children: [
-              Expanded(
-                child: Container(
-                  height: mediaQuery.size.height,
-                  color: uiUtil.colors.backgroundColor,
-                  child: Stack(
-                    children: [
-                      !model.fetchMessagesBusy
-                          ?
-                          // Chat Layout
-                          _ChatLayout(model: model)
-                          : AppSpinner(),
-                      Positioned(
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        child: AppTopBar(
-                          title: model.fetchMessagesBusy ||
-                                  model.fetchConversationBusy ||
-                                  model.fetchParticipantsBusy
-                              ? 'Loading...'
-                              : model.conversation?.name ??
-                                  (model.conversation?.participantNames
-                                          .replaceAll(',', '')
-                                          .replaceAll(
-                                              model.authUserFullName, '') ??
-                                      '...'),
-                          backgroundColor: uiUtil.colors.backgroundColor,
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 25,
-                        left: 25,
-                        right: 25,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: uiUtil.borderRadius.large,
-                            boxShadow: [
-                              uiUtil.boxShadows.normal,
-                            ],
-                          ),
-                          child: _TextField(),
-                        ),
-                      ),
-                    ],
+          body: Container(
+            height: mediaQuery.size.height,
+            color: uiUtil.colors.backgroundColor,
+            child: Stack(
+              children: [
+                !model.fetchMessagesBusy
+                    ?
+                    // Chat Layout
+                    _ChatLayout(model: model)
+                    : AppSpinner(),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: AppTopBar(
+                    title: model.fetchMessagesBusy ||
+                            model.fetchConversationBusy ||
+                            model.fetchParticipantsBusy
+                        ? 'Loading...'
+                        : model.conversation?.name ??
+                            (model.conversation?.participantNames
+                                    .replaceAll(',', '')
+                                    .replaceAll(model.authUserFullName, '') ??
+                                '...'),
+                    backgroundColor: uiUtil.colors.backgroundColor,
                   ),
                 ),
-              ),
-              Container(
-                width: 300,
-                color: uiUtil.colors.backgroundColor,
-                child: Column(
-                  children: [],
+                Positioned(
+                  bottom: 25,
+                  left: 25,
+                  right: 25,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: uiUtil.borderRadius.large,
+                      boxShadow: [
+                        uiUtil.boxShadows.normal,
+                      ],
+                    ),
+                    child: _TextField(),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

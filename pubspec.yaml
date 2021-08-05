@@ -50,10 +50,12 @@ dependencies:
   url_strategy: ^0.2.0
   swipe_cards: ^0.1.0
   url_launcher: ^6.0.9
-  image_picker: ^0.8.3
-  image_picker_for_web: ^2.1.2
-  image_picker_platform_interface: ^2.2.0
-  flutter_plugin_android_lifecycle: ^2.0.2
+  file_picker: ^3.0.4
+  universal_io: ^2.0.4
+  # image_picker: ^0.8.3
+  # image_picker_for_web: ^2.1.2
+  # image_picker_platform_interface: ^2.2.0
+  # flutter_plugin_android_lifecycle: ^2.0.2
   # responsive_framework: ^0.1.4
   responsive_builder: ^0.4.1
 

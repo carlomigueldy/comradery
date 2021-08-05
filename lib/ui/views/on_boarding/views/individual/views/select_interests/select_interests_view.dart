@@ -1,4 +1,5 @@
 import 'package:comradery/common/utils/ui_util.dart';
+import 'package:comradery/ui/widgets/dumb_widgets/app_bar/app_top_bar.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/button/app_button.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:comradery/ui/widgets/feature/app_tag.dart';
@@ -25,95 +26,97 @@ class SelectInterestsView extends StatelessWidget with UiUtilMixin {
         Widget? child,
       ) {
         return Scaffold(
+          appBar: AppTopBar(
+            title: '',
+          ),
           body: Container(
             color: uiUtil.colors.backgroundColor,
             padding: uiUtil.edgeInsets.horizontalSymmetric25,
             width: mediaQuery.size.width,
             height: mediaQuery.size.height,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                uiUtil.verticalSpacing.large,
-                Container(
-                  width: mediaQuery.size.width * 0.5,
-                  child: Column(
-                    children: [
-                      Row(children: [
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  uiUtil.verticalSpacing.large,
+                  Container(
+                    child: Column(
+                      children: [
                         AppText(
                           'What are your interests?',
                           style: uiUtil.textStyles.body.copyWith(
                             fontSize: 32,
                           ),
                         ),
-                      ]),
-                      uiUtil.verticalSpacing.normal,
-                      Row(children: [
-                        AppText(
-                          'Select at least 3',
-                          style: uiUtil.textStyles.body.copyWith(
-                            fontSize: 18,
+                        uiUtil.verticalSpacing.normal,
+                        Row(children: [
+                          AppText(
+                            'Select at least 3',
+                            style: uiUtil.textStyles.body.copyWith(
+                              fontSize: 18,
+                            ),
                           ),
+                        ]),
+                        uiUtil.verticalSpacing.large,
+                        AppTextField(
+                          name: 'search',
+                          label: 'Search...',
+                          onChanged: (value) {
+                            EasyDebounce.debounce(
+                              model.textSearchDebounceKey,
+                              Duration(milliseconds: 500),
+                              () => model.onQueryChange(value),
+                            );
+                          },
                         ),
-                      ]),
-                      uiUtil.verticalSpacing.large,
-                      AppTextField(
-                        name: 'search',
-                        label: 'Search...',
-                        onChanged: (value) {
-                          EasyDebounce.debounce(
-                            model.textSearchDebounceKey,
-                            Duration(milliseconds: 500),
-                            () => model.onQueryChange(value),
-                          );
-                        },
-                      ),
-                      uiUtil.verticalSpacing.veryLarge,
-                      Container(
-                        height: 200,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: uiUtil.colors.black),
-                          borderRadius: uiUtil.borderRadius.large,
-                        ),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: Container(
-                            padding: uiUtil.edgeInsets.all10,
-                            child: Wrap(
-                              spacing: 8.0,
-                              runSpacing: 8.0,
-                              children: model.fetchInterestsBusy ||
-                                      model.textSearchBusy
-                                  ? [AppSpinner()]
-                                  : model.interests.map((interest) {
-                                      return AppTag(
-                                        text: interest.name,
-                                        onTap: () =>
-                                            model.onSelectInterest(interest),
-                                        selected: model.selectedInterests
-                                            .contains(interest),
-                                      );
-                                    }).toList(),
+                        uiUtil.verticalSpacing.large,
+                        Container(
+                          height: 300,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: uiUtil.colors.black),
+                            borderRadius: uiUtil.borderRadius.large,
+                          ),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Container(
+                              padding: uiUtil.edgeInsets.all10,
+                              child: Wrap(
+                                spacing: 8.0,
+                                runSpacing: 8.0,
+                                children: model.fetchInterestsBusy ||
+                                        model.textSearchBusy
+                                    ? [AppSpinner()]
+                                    : model.interests.map((interest) {
+                                        return AppTag(
+                                          text: interest.name,
+                                          onTap: () =>
+                                              model.onSelectInterest(interest),
+                                          selected: model.selectedInterests
+                                              .contains(interest),
+                                        );
+                                      }).toList(),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      uiUtil.verticalSpacing.veryLarge,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          AppButton(
-                            label: 'Continue',
-                            onPressed: () => model.onTapContinue(),
-                            busy: model.insertUserInterestsBusy,
-                          ),
-                        ],
-                      ),
-                    ],
+                        uiUtil.verticalSpacing.veryLarge,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            AppButton(
+                              label: 'Continue',
+                              onPressed: () => model.onTapContinue(),
+                              busy: model.insertUserInterestsBusy,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

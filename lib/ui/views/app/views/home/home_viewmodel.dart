@@ -4,6 +4,7 @@ import 'package:comradery/common/services/app_snackbar_service.dart';
 import 'package:comradery/common/supabase/supabase_client.dart';
 import 'package:comradery/matching/models/matching.dart';
 import 'package:comradery/matching/services/matching_service.dart';
+import 'package:comradery/ui/views/app/app_viewmodel.dart';
 import 'package:comradery/ui/views/conversation/views/conversation_detail/conversation_detail_view.dart';
 import 'package:comradery/user/models/user.dart';
 import 'package:comradery/user/services/user_service.dart';
@@ -20,6 +21,9 @@ class HomeViewModel extends BaseViewModel {
   final _matchingService = locator<MatchingService>();
   final _snackbarService = locator<AppSnackbarService>();
   final _router = locator<NavigationService>();
+  final _appViewModel = locator<AppViewModel>();
+
+  AppViewModel get appViewModel => _appViewModel;
 
   MatchEngine _matchEngine = MatchEngine(
     swipeItems: [],
@@ -54,6 +58,8 @@ class HomeViewModel extends BaseViewModel {
   String get userEmail => _authService.user?.email ?? '-';
 
   Future<void> init() async {
+    await _appViewModel.init();
+
     setBusy(true);
     await fetchMyMatchings();
     await fetchUsers();
@@ -187,10 +193,9 @@ class HomeViewModel extends BaseViewModel {
 
   void viewUserProfile() {
     _router.navigateTo(
-      AppViewRoutes.userDetailView(
+      Routes.userDetailView(
         userId: _matchEngine.currentItem!.content,
       ),
-      id: AppRouterId.appView,
     );
   }
 
@@ -198,7 +203,12 @@ class HomeViewModel extends BaseViewModel {
     _router.navigateWithTransition(
       ConversationDetailView(conversationId: '1231233'),
       transition: 'none',
-      id: AppRouterId.appView,
+    );
+  }
+
+  void toUserDetailView(User user) {
+    _router.navigateTo(
+      Routes.userDetailView(userId: user.id!),
     );
   }
 }

@@ -69,7 +69,7 @@ class UserDetailViewModel extends BaseViewModel {
     if (conversation != null) {
       // navigate to conversation view
       return _router.replaceWith(
-        AppViewRoutes.conversationDetailView(conversationId: conversation.id),
+        Routes.conversationDetailView(conversationId: conversation.id),
         id: AppRouterId.appView,
       );
     }
@@ -96,7 +96,7 @@ class UserDetailViewModel extends BaseViewModel {
 
     // navigate to conversation view
     return _router.replaceWith(
-      AppViewRoutes.conversationDetailView(conversationId: conversation.id!),
+      Routes.conversationDetailView(conversationId: conversation.id!),
       id: AppRouterId.appView,
     );
   }

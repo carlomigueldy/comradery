@@ -17,6 +17,7 @@ class LandingView extends StatelessWidget with UiUtilMixin {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final mediaQuery = MediaQuery.of(context);
 
     return ViewModelBuilder<LandingViewModel>.reactive(
       onModelReady: (model) => model.init(),
@@ -132,10 +133,14 @@ class LandingView extends StatelessWidget with UiUtilMixin {
                 title: 'Comradery',
               ),
               body: container(
-                Column(
-                  children: [
-                    ...body,
-                  ],
+                Container(
+                  width: mediaQuery.size.width,
+                  height: mediaQuery.size.height,
+                  child: Column(
+                    children: [
+                      ...body,
+                    ],
+                  ),
                 ),
               ),
             ),

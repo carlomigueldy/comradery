@@ -68,8 +68,8 @@ class _SignInViewState extends State<SignInView> with UiUtilMixin {
         return Scaffold(
           body: Container(
             color: uiUtil.colors.backgroundColor,
-            width: mediaQuery.size.width,
-            height: mediaQuery.size.height,
+            // width: mediaQuery.size.width,
+            // height: mediaQuery.size.height,
             padding: uiUtil.edgeInsets.horizontalSymmetric25,
             child: ScreenTypeLayout(
               mobile: form,
@@ -138,17 +138,10 @@ class _Form extends HookViewModelWidget<SignInViewModel> with UiUtilMixin {
           ]),
         ),
         uiUtil.verticalSpacing.large,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            AppText('Forgot password?'),
-            uiUtil.horizontalSpacing.large,
-            AppButton(
-              label: 'Login',
-              onPressed: onSubmit,
-              busy: model.isBusy,
-            ),
-          ],
+        AppButton(
+          label: 'Login',
+          onPressed: onSubmit,
+          busy: model.isBusy,
         ),
         uiUtil.verticalSpacing.veryLarge,
         uiUtil.verticalSpacing.veryLarge,
@@ -156,11 +149,16 @@ class _Form extends HookViewModelWidget<SignInViewModel> with UiUtilMixin {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AppText.body("Don't have an account?"),
-            // uiUtil.horizontalSpacing.normal,
-            AppButton.text(
-              label: 'Create Account',
-              onPressed: () => model.createAccount(),
-            ),
+            uiUtil.horizontalSpacing.normal,
+            GestureDetector(
+              onTap: () => model.createAccount(),
+              child: AppText.bodyBold(
+                'Create Account',
+                style: uiUtil.textStyles.bodyBold.copyWith(
+                  color: theme.primaryColor,
+                ),
+              ),
+            )
           ],
         ),
         // uiUtil.verticalSpacing.large,
@@ -174,27 +172,30 @@ class _Form extends HookViewModelWidget<SignInViewModel> with UiUtilMixin {
     );
     return FormBuilder(
       key: formKey,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: ScreenTypeLayout(
-              mobile: Container(
-                height: double.infinity,
-                width: double.infinity,
-                child: column,
-              ),
-              desktop: Container(
-                width: 450,
-                child: column,
-              ),
-              tablet: Container(
-                width: 450,
-                child: column,
-              ),
+      child: ScreenTypeLayout(
+        mobile: Container(
+          height: double.infinity,
+          width: double.infinity,
+          child: column,
+        ),
+        desktop: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 450,
+              child: column,
             ),
-          ),
-        ],
+          ],
+        ),
+        tablet: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 450,
+              child: column,
+            ),
+          ],
+        ),
       ),
     );
   }
