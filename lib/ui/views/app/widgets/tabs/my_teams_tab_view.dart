@@ -27,7 +27,7 @@ class MyTeamsTabView extends StatelessWidget with UiUtilMixin {
               ? ListView.separated(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: 3,
+                  itemCount: teams.length,
                   itemBuilder: (context, index) {
                     final team = teams[index];
 
