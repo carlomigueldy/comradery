@@ -1,11 +1,8 @@
-import 'dart:typed_data';
-
 import 'package:comradery/common/utils/ui_util.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/app_bar/app_top_bar.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/button/app_button.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:universal_io/io.dart';
 import 'package:stacked/stacked.dart';
 
 import 'upload_photo_viewmodel.dart';

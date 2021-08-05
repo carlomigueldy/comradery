@@ -210,8 +210,11 @@ class StackedRouter extends RouterBase {
       );
     },
     SetupTeamProfileView: (data) {
+      var args = data.getArgs<SetupTeamProfileViewArguments>(
+        orElse: () => SetupTeamProfileViewArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const SetupTeamProfileView(),
+        builder: (context) => SetupTeamProfileView(key: args.key),
         settings: data,
       );
     },
@@ -289,6 +292,12 @@ class ConversationDetailViewArguments {
 class UserDetailViewArguments {
   final Key? key;
   UserDetailViewArguments({this.key});
+}
+
+/// SetupTeamProfileView arguments holder class
+class SetupTeamProfileViewArguments {
+  final Key? key;
+  SetupTeamProfileViewArguments({this.key});
 }
 
 /// SetupUserProfileView arguments holder class

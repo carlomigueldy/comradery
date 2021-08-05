@@ -1,4 +1,5 @@
 import 'package:comradery/common/services/app_snackbar_service.dart';
+import 'package:comradery/ui/views/on_boarding/views/create_team/common/create_team_viewmodel.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -95,7 +96,8 @@ class AppRouterId {
     LazySingleton(classType: SnackbarService),
 
     // viewmodels
-    LazySingleton(classType: AppViewModel)
+    LazySingleton(classType: AppViewModel),
+    LazySingleton(classType: CreateTeamViewModel),
   ],
   logger: StackedLogger(
     logHelperName: 'stackedLogger',

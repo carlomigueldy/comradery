@@ -24,7 +24,7 @@ class SelectGoalViewModel extends BaseViewModel {
       return;
     }
 
-    _router.navigateTo(Routes.uploadTeamPhotoView);
+    _router.navigateTo(Routes.setupTeamProfileView);
     return;
   }
 }

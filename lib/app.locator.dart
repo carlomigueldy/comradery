@@ -24,6 +24,7 @@ import 'team/services/team_member_service.dart';
 import 'team/services/team_request_service.dart';
 import 'team/services/team_service.dart';
 import 'ui/views/app/app_viewmodel.dart';
+import 'ui/views/on_boarding/views/create_team/common/create_team_viewmodel.dart';
 import 'user/services/user_interest_service.dart';
 import 'user/services/user_service.dart';
 
@@ -55,4 +56,5 @@ void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
   locator.registerLazySingleton(() => BottomSheetService());
   locator.registerLazySingleton(() => SnackbarService());
   locator.registerLazySingleton(() => AppViewModel());
+  locator.registerLazySingleton(() => CreateTeamViewModel());
 }
