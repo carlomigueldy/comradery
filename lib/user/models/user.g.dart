@@ -14,6 +14,7 @@ _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
     firstName: json['first_name'] as String?,
     lastName: json['last_name'] as String?,
     bio: json['bio'] as String?,
+    interests: User._interestsFromJson(json['interests'] as List?),
     externalLinksJson: json['external_links_json'] as Map<String, dynamic>?,
     createdAt: json['created_at'] == null
         ? null
@@ -34,6 +35,7 @@ Map<String, dynamic> _$_$_UserToJson(_$_User instance) => <String, dynamic>{
       'first_name': instance.firstName,
       'last_name': instance.lastName,
       'bio': instance.bio,
+      'interests': User._interestsToJson(instance.interests),
       'external_links_json': instance.externalLinksJson,
       'created_at': instance.createdAt?.toIso8601String(),
       'updated_at': instance.updatedAt?.toIso8601String(),

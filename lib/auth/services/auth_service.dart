@@ -1,14 +1,14 @@
+import 'package:comradery/app.logger.dart';
 import 'package:comradery/common/services/local_storage_service.dart';
 import 'package:comradery/common/supabase/supabase_client.dart';
 import 'package:comradery/app.locator.dart';
 import 'package:comradery/user/models/user.dart';
 import 'package:gotrue/src/user.dart' as gotrue;
-import 'package:logger/logger.dart';
 import 'package:postgrest/postgrest.dart';
 import 'package:supabase/supabase.dart' as supa;
 
 class AuthService {
-  final log = Logger();
+  final log = stackedLogger('AuthService');
   final _localStorageService = locator<LocalStorageService>();
 
   User? _user;
@@ -110,23 +110,26 @@ class AuthService {
   }
 
   Future<User?> fetchUser({String? id}) async {
+    log.v('id "$id"');
+
     final response = await supabase
-        .from("users")
+        .from('users')
         .select()
         .eq('id', id ?? user!.id!)
         .single()
         .execute();
 
+    log.v('response.toJson() "${response.toJson()}"');
+
     log.i(
       'Count: ${response.count}, Status: ${response.status}, Data: ${response.data}',
     );
-
     if (response.error != null) {
-      log.e(response.error!.message);
+      log.e(response.error?.message);
       return null;
     }
 
-    log.i(response.data);
+    log.i('response.data "${response.data}"');
     final data = User.fromJson(response.data);
     _user = data;
 
@@ -146,14 +149,11 @@ class AuthService {
             email: user.email,
             firstName: firstName,
             lastName: lastName,
-            createdAt: DateTime.now(),
-            updatedAt: DateTime.now(),
-            deletedAt: null,
-          ).toJson(),
+          ).toPayload(),
         )
         .execute();
 
-    log.i(response.toJson());
+    log.i('response.toJson() "${response.toJson()}"');
 
     if (response.error != null) {
       log.e(response.error!.toJson());

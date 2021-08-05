@@ -36,7 +36,7 @@ class AppMatchingCard extends StatelessWidget with UiUtilMixin {
           color: theme.canvasColor,
           borderRadius: uiUtil.borderRadius.large,
           image: DecorationImage(
-            image: NetworkImage(PLACEHOLDER_IMG),
+            image: NetworkImage(user.photoUrl ?? PLACEHOLDER_IMG),
             fit: BoxFit.cover,
           ),
           boxShadow: [
@@ -67,27 +67,20 @@ class AppMatchingCard extends StatelessWidget with UiUtilMixin {
                   crossAxisAlignment: WrapCrossAlignment.start,
                   spacing: 8.0,
                   runSpacing: 4.0,
-                  children: [
-                    AppTag(
-                      text: 'Coffee',
-                      size: AppTagSize.small,
-                    ),
-                    AppTag(
-                      text: 'Coffee',
-                      size: AppTagSize.small,
-                    ),
-                    AppTag(
-                      text: 'Coffee',
-                      size: AppTagSize.small,
-                    ),
-                  ],
+                  children: user.hasInterests
+                      ? user.interests!.getRange(0, 3).map((userInterest) {
+                          return AppTag(
+                            text: userInterest.interest!.name,
+                          );
+                        }).toList()
+                      : [],
                 ),
               ),
               uiUtil.verticalSpacing.large,
               Row(
                 children: [
                   AppText(
-                    '${user.bio}',
+                    user.bio ?? 'No bio.',
                     style: uiUtil.textStyles.body.copyWith(
                       color: Colors.white,
                     ),

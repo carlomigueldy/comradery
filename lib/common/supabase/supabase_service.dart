@@ -1,10 +1,11 @@
+import 'package:comradery/app.logger.dart';
 import 'package:logger/logger.dart';
 import 'package:postgrest/postgrest.dart';
 
 import 'supabase_client.dart';
 
 abstract class SupabaseService {
-  Logger get log => Logger();
+  Logger get log => stackedLogger('SupabaseService table "$table"');
 
   String get table;
 

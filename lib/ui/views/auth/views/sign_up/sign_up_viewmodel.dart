@@ -1,5 +1,6 @@
 import 'package:comradery/app.dart';
 import 'package:comradery/app.locator.dart';
+import 'package:comradery/app.logger.dart';
 import 'package:comradery/auth/services/auth_service.dart';
 import 'package:comradery/common/services/app_snackbar_service.dart';
 import 'package:logger/logger.dart';
@@ -7,7 +8,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class SignUpViewModel extends BaseViewModel {
-  final log = Logger();
+  final log = stackedLogger('SignUpViewModel');
   final _authService = locator<AuthService>();
   final _snackbarService = locator<AppSnackbarService>();
   final _router = locator<NavigationService>();
@@ -16,6 +17,8 @@ class SignUpViewModel extends BaseViewModel {
     Map<String, dynamic> value,
   ) async {
     try {
+      log.v('value "$value"');
+
       setBusy(true);
       final user = await _authService.signUp(
         email: value['email'],
@@ -24,7 +27,7 @@ class SignUpViewModel extends BaseViewModel {
 
       if (user == null) {
         // TODO: Show error snackbar
-        _snackbarService.showError('The email already exists.');
+        _snackbarService.showError();
         return;
       }
 

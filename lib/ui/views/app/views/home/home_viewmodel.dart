@@ -1,4 +1,5 @@
 import 'package:comradery/app.dart';
+import 'package:comradery/app.logger.dart';
 import 'package:comradery/auth/services/auth_service.dart';
 import 'package:comradery/common/services/app_snackbar_service.dart';
 import 'package:comradery/common/supabase/supabase_client.dart';
@@ -15,7 +16,7 @@ import 'package:supabase/supabase.dart' as sb;
 import 'package:swipe_cards/swipe_cards.dart';
 
 class HomeViewModel extends BaseViewModel {
-  final log = Logger();
+  final log = stackedLogger('HomeViewModel');
   final _authService = locator<AuthService>();
   final _userService = locator<UserService>();
   final _matchingService = locator<MatchingService>();
@@ -69,13 +70,25 @@ class HomeViewModel extends BaseViewModel {
         .from(
       '${_matchingService.table}:created_by=eq.${_authService.user?.id}',
     )
-        .on(sb.SupabaseEventTypes.insert, (payload) {
+        .on(sb.SupabaseEventTypes.insert, (payload) async {
       log.v('payload?.newRecord "${payload.newRecord}"');
       final matching = Matching.fromJson(payload.newRecord);
 
-      // TODO: Like back logic need to implement
-      if (matching.targetUserId == _authService.user!.id! && matching.liked) {
-        _matchings.add(matching);
+      final response = await supabase
+          .from('matchings')
+          .select('id, created_by, liked')
+          .eq(
+            'created_by',
+            matching.targetUserId,
+          )
+          .eq('target_user_id', _authService.user!.id!)
+          .is_('liked', true)
+          .execute();
+
+      log.v('SupabaseEventTypes.insert | response "${response.toJson()}"');
+
+      if (response.error != null) {
+        return log.e(response.error?.message);
       }
 
       notifyListeners();
@@ -93,7 +106,10 @@ class HomeViewModel extends BaseViewModel {
     final response = await runBusyFuture<sb.PostgrestResponse>(
       supabase
           .from(_userService.table)
-          .select('*')
+          .select(
+            '*, interests: user_interests (user_id, interest_id, interest: interests (name) )',
+          )
+          .not('id', 'in', '${matchingsTargetUserIds.join(',')}')
           .neq('id', _authService.user!.id!)
           .is_('deleted_at', null)
           .execute(),
@@ -164,7 +180,7 @@ class HomeViewModel extends BaseViewModel {
       return _snackbarService.showError();
     }
 
-    _matchEngine.currentItem?.like();
+    // _matchEngine.currentItem?.like();
     notifyListeners();
   }
 
@@ -187,7 +203,7 @@ class HomeViewModel extends BaseViewModel {
       return _snackbarService.showError();
     }
 
-    _matchEngine.currentItem?.nope();
+    // _matchEngine.currentItem?.nope();
     notifyListeners();
   }
 

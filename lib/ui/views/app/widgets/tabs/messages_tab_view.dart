@@ -2,21 +2,22 @@ import 'package:comradery/common/utils/ui_util.dart';
 import 'package:comradery/conversation/models/conversation.dart';
 import 'package:comradery/ui/placeholders/placeholder_images.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
+import 'package:comradery/user/models/user.dart';
 import 'package:flutter/material.dart';
 
 class MessagesTabView extends StatelessWidget with UiUtilMixin {
   const MessagesTabView({
     Key? key,
     required this.conversations,
+    required this.authUser,
     this.onTap,
     this.onLongPress,
-    required this.authUserFullName,
   }) : super(key: key);
 
   final List<Conversation> conversations;
   final Function(Conversation)? onTap;
   final Function(Conversation)? onLongPress;
-  final String authUserFullName;
+  final User authUser;
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +36,17 @@ class MessagesTabView extends StatelessWidget with UiUtilMixin {
                 final conversation = conversations[index];
 
                 return _ConversationListTile(
+                  photoUrl: conversation.participants
+                      ?.map((e) => e.user)
+                      .toList()
+                      .firstWhere((element) => element!.id != authUser.id)
+                      ?.photoUrl,
                   title: conversation.name != null
                       ? conversation.name!
                       : conversation.participantNames
                           .replaceAll(',', '')
                           .replaceAll(
-                            authUserFullName,
+                            authUser.fullName,
                             '',
                           ),
                   conversation: conversation,
@@ -70,9 +76,11 @@ class _ConversationListTile extends StatefulWidget {
     this.onTap,
     this.onLongPress,
     this.title,
+    this.photoUrl,
   }) : super(key: key);
 
   final String? title;
+  final String? photoUrl;
   final Conversation conversation;
   final Function()? onTap;
   final Function()? onLongPress;
@@ -103,7 +111,7 @@ class _ConversationListTileState extends State<_ConversationListTile>
             uiUtil.horizontalSpacing.normal,
             CircleAvatar(
               backgroundColor: theme.primaryColor,
-              backgroundImage: NetworkImage(COMRADE_DOGE_IMG),
+              backgroundImage: NetworkImage(widget.photoUrl ?? PLACEHOLDER_IMG),
               radius: 24,
             ),
             uiUtil.horizontalSpacing.large,

@@ -79,7 +79,7 @@ class _AppViewLeftDrawerState extends State<AppViewLeftDrawer>
                     leading: CircleAvatar(
                       backgroundColor: theme.primaryColor,
                       backgroundImage: NetworkImage(
-                        widget.model.authUser?.photoUrl ?? COMRADE_DOGE_IMG,
+                        widget.model.authUser?.photoUrl ?? PLACEHOLDER_IMG,
                       ),
                     ),
                     title: AppText.body('${widget.model.userFullName}'),
@@ -152,14 +152,16 @@ class _AppViewLeftDrawerState extends State<AppViewLeftDrawer>
                 ),
                 MessagesTabView(
                   conversations: widget.model.conversations,
-                  authUserFullName: widget.model.userFullName ?? '',
+                  // authUserFullName: widget.model.userFullName ?? '',
+                  authUser: widget.model.authUser!,
                   onTap: (value) {
                     widget.model.toConversationDetailView(value.id!);
                   },
                 ),
                 MyTeamsTabView(
+                  teams: widget.model.myTeams,
                   onTap: (value) {
-                    widget.model.toTeamDetailView(value);
+                    widget.model.toTeamDetailView(value.id!);
                   },
                 ),
               ],

@@ -1,3 +1,4 @@
+import 'package:comradery/user/models/user_interest.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 
@@ -25,6 +26,11 @@ class User with _$User {
         String? lastName,
     String? bio,
     @JsonKey(
+      fromJson: User._interestsFromJson,
+      toJson: User._interestsToJson,
+    )
+        List<UserInterest>? interests,
+    @JsonKey(
       name: 'external_links_json',
     )
         Map<String, dynamic>? externalLinksJson,
@@ -44,6 +50,13 @@ class User with _$User {
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
+  static List<UserInterest>? _interestsFromJson(List<dynamic>? list) =>
+      list == null
+          ? []
+          : list.map((item) => UserInterest.fromJson(item)).toList();
+
+  static List<dynamic>? _interestsToJson(List<UserInterest>? list) =>
+      list == null ? [] : list.map((item) => item.toJson()).toList();
   String get formattedCreatedAt {
     return DateFormat('EEEE M/d/y').format(createdAt!);
   }
@@ -58,6 +71,8 @@ class User with _$User {
 
   String get fullName => '$firstName $lastName'.trim();
 
+  bool get hasInterests => interests != null && interests?.isNotEmpty == true;
+
   bool get hasPhoto => photoUrl != null && photoUrl!.isNotEmpty;
 
   Map<String, dynamic> toPayload() {
@@ -66,6 +81,7 @@ class User with _$User {
     json.remove('created_at');
     json.remove('updated_at');
     json.remove('deleted_at');
+    json.remove('interests');
     return json;
   }
 }

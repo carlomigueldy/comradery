@@ -30,6 +30,8 @@ class _$UserTearOff {
       @JsonKey(name: 'last_name')
           String? lastName,
       String? bio,
+      @JsonKey(fromJson: User._interestsFromJson, toJson: User._interestsToJson)
+          List<UserInterest>? interests,
       @JsonKey(name: 'external_links_json')
           Map<String, dynamic>? externalLinksJson,
       @JsonKey(name: 'created_at')
@@ -45,6 +47,7 @@ class _$UserTearOff {
       firstName: firstName,
       lastName: lastName,
       bio: bio,
+      interests: interests,
       externalLinksJson: externalLinksJson,
       createdAt: createdAt,
       updatedAt: updatedAt,
@@ -71,6 +74,8 @@ mixin _$User {
   @JsonKey(name: 'last_name')
   String? get lastName => throw _privateConstructorUsedError;
   String? get bio => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: User._interestsFromJson, toJson: User._interestsToJson)
+  List<UserInterest>? get interests => throw _privateConstructorUsedError;
   @JsonKey(name: 'external_links_json')
   Map<String, dynamic>? get externalLinksJson =>
       throw _privateConstructorUsedError;
@@ -100,6 +105,8 @@ abstract class $UserCopyWith<$Res> {
       @JsonKey(name: 'last_name')
           String? lastName,
       String? bio,
+      @JsonKey(fromJson: User._interestsFromJson, toJson: User._interestsToJson)
+          List<UserInterest>? interests,
       @JsonKey(name: 'external_links_json')
           Map<String, dynamic>? externalLinksJson,
       @JsonKey(name: 'created_at')
@@ -126,6 +133,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? bio = freezed,
+    Object? interests = freezed,
     Object? externalLinksJson = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -156,6 +164,10 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as String?,
+      interests: interests == freezed
+          ? _value.interests
+          : interests // ignore: cast_nullable_to_non_nullable
+              as List<UserInterest>?,
       externalLinksJson: externalLinksJson == freezed
           ? _value.externalLinksJson
           : externalLinksJson // ignore: cast_nullable_to_non_nullable
@@ -191,6 +203,8 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       @JsonKey(name: 'last_name')
           String? lastName,
       String? bio,
+      @JsonKey(fromJson: User._interestsFromJson, toJson: User._interestsToJson)
+          List<UserInterest>? interests,
       @JsonKey(name: 'external_links_json')
           Map<String, dynamic>? externalLinksJson,
       @JsonKey(name: 'created_at')
@@ -218,6 +232,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? bio = freezed,
+    Object? interests = freezed,
     Object? externalLinksJson = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -248,6 +263,10 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as String?,
+      interests: interests == freezed
+          ? _value.interests
+          : interests // ignore: cast_nullable_to_non_nullable
+              as List<UserInterest>?,
       externalLinksJson: externalLinksJson == freezed
           ? _value.externalLinksJson
           : externalLinksJson // ignore: cast_nullable_to_non_nullable
@@ -274,14 +293,23 @@ class _$_User extends _User {
   _$_User(
       {this.id,
       required this.email,
-      @JsonKey(name: 'photo_url') this.photoUrl,
-      @JsonKey(name: 'first_name') this.firstName,
-      @JsonKey(name: 'last_name') this.lastName,
+      @JsonKey(name: 'photo_url')
+          this.photoUrl,
+      @JsonKey(name: 'first_name')
+          this.firstName,
+      @JsonKey(name: 'last_name')
+          this.lastName,
       this.bio,
-      @JsonKey(name: 'external_links_json') this.externalLinksJson,
-      @JsonKey(name: 'created_at') this.createdAt,
-      @JsonKey(name: 'updated_at') this.updatedAt,
-      @JsonKey(name: 'deleted_at') this.deletedAt})
+      @JsonKey(fromJson: User._interestsFromJson, toJson: User._interestsToJson)
+          this.interests,
+      @JsonKey(name: 'external_links_json')
+          this.externalLinksJson,
+      @JsonKey(name: 'created_at')
+          this.createdAt,
+      @JsonKey(name: 'updated_at')
+          this.updatedAt,
+      @JsonKey(name: 'deleted_at')
+          this.deletedAt})
       : super._();
 
   factory _$_User.fromJson(Map<String, dynamic> json) =>
@@ -303,6 +331,9 @@ class _$_User extends _User {
   @override
   final String? bio;
   @override
+  @JsonKey(fromJson: User._interestsFromJson, toJson: User._interestsToJson)
+  final List<UserInterest>? interests;
+  @override
   @JsonKey(name: 'external_links_json')
   final Map<String, dynamic>? externalLinksJson;
   @override
@@ -317,7 +348,7 @@ class _$_User extends _User {
 
   @override
   String toString() {
-    return 'User(id: $id, email: $email, photoUrl: $photoUrl, firstName: $firstName, lastName: $lastName, bio: $bio, externalLinksJson: $externalLinksJson, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'User(id: $id, email: $email, photoUrl: $photoUrl, firstName: $firstName, lastName: $lastName, bio: $bio, interests: $interests, externalLinksJson: $externalLinksJson, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -339,6 +370,9 @@ class _$_User extends _User {
                     .equals(other.lastName, lastName)) &&
             (identical(other.bio, bio) ||
                 const DeepCollectionEquality().equals(other.bio, bio)) &&
+            (identical(other.interests, interests) ||
+                const DeepCollectionEquality()
+                    .equals(other.interests, interests)) &&
             (identical(other.externalLinksJson, externalLinksJson) ||
                 const DeepCollectionEquality()
                     .equals(other.externalLinksJson, externalLinksJson)) &&
@@ -362,6 +396,7 @@ class _$_User extends _User {
       const DeepCollectionEquality().hash(firstName) ^
       const DeepCollectionEquality().hash(lastName) ^
       const DeepCollectionEquality().hash(bio) ^
+      const DeepCollectionEquality().hash(interests) ^
       const DeepCollectionEquality().hash(externalLinksJson) ^
       const DeepCollectionEquality().hash(createdAt) ^
       const DeepCollectionEquality().hash(updatedAt) ^
@@ -389,6 +424,8 @@ abstract class _User extends User {
       @JsonKey(name: 'last_name')
           String? lastName,
       String? bio,
+      @JsonKey(fromJson: User._interestsFromJson, toJson: User._interestsToJson)
+          List<UserInterest>? interests,
       @JsonKey(name: 'external_links_json')
           Map<String, dynamic>? externalLinksJson,
       @JsonKey(name: 'created_at')
@@ -416,6 +453,9 @@ abstract class _User extends User {
   String? get lastName => throw _privateConstructorUsedError;
   @override
   String? get bio => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(fromJson: User._interestsFromJson, toJson: User._interestsToJson)
+  List<UserInterest>? get interests => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'external_links_json')
   Map<String, dynamic>? get externalLinksJson =>

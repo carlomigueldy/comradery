@@ -4,6 +4,7 @@ import 'package:comradery/common/supabase/supabase_client.dart';
 import 'package:comradery/conversation/models/conversation.dart';
 import 'package:comradery/matching/models/matching.dart';
 import 'package:comradery/matching/services/matching_service.dart';
+import 'package:comradery/team/models/team.dart';
 import 'package:comradery/user/models/user.dart';
 import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
@@ -43,11 +44,17 @@ class AppViewModel extends BaseViewModel {
   String get _fetchMyConversationsKey => '_fetchMyConversationsKey';
   bool get fetchMyConversationsBusy => busy(_fetchMyConversationsKey);
 
+  List<Team> _myTeams = [];
+  List<Team> get myTeams => _myTeams;
+  String get _fetchMyTeamsKey => '_fetchMyTeamsKey';
+  bool get fetchMyTeamsBusy => busy(_fetchMyTeamsKey);
+
   Future<void> init() async {
     await Future.wait([
       fetchWhoLikedMe(),
       fetchMyMatchings(),
       fetchMyConversations(),
+      fetchMyTeams(),
     ]);
 
     // INSERT `matchings`
@@ -67,26 +74,47 @@ class AppViewModel extends BaseViewModel {
       notifyListeners();
     }).subscribe();
 
-    // DELETE `matchings`
-    supabase
-        .from(
-      '${_matchingService.table}:created_by=eq.${_authService.user?.id}',
-    )
-        .on(sp.SupabaseEventTypes.delete, (payload) {
-      log.v(
-        'payload?.newRecord "${payload.newRecord}", payload?.oldRecord "${payload.oldRecord}"',
-      );
+    // // DELETE `matchings`
+    // supabase
+    //     .from(
+    //   '${_matchingService.table}:created_by=eq.${_authService.user?.id}',
+    // )
+    //     .on(sp.SupabaseEventTypes.delete, (payload) {
+    //   log.v(
+    //     'payload?.newRecord "${payload.newRecord}", payload?.oldRecord "${payload.oldRecord}"',
+    //   );
 
-      _matchings
-          .removeWhere((element) => element.id == payload.oldRecord['id']);
-      notifyListeners();
-    }).subscribe();
+    //   _matchings
+    //       .removeWhere((element) => element.id == payload.oldRecord['id']);
+    //   notifyListeners();
+    // }).subscribe();
 
     // log.i(
     //   'filteredMatchingsIds "$filteredMatchingsIds"\n'
     //   'targettedMatchingTargetUserIds "$targettedMatchingTargetUserIds"\n'
     //   'matchingsIds "$matchingsIds"\n',
     // );
+  }
+
+  Future<void> fetchMyTeams() async {
+    final response = await runBusyFuture<sp.PostgrestResponse>(
+      supabase
+          .from('teams')
+          .select()
+          .eq('created_by', _authService.user!.id!)
+          .execute(),
+      busyObject: _fetchMyTeamsKey,
+      throwException: true,
+    );
+    log.v('fetchMyTeams-response "${response.toJson()}"');
+
+    if (response.error != null) {
+      log.e(response.error?.message);
+      return;
+    }
+
+    _myTeams = (response.data as List).map((e) => Team.fromJson(e)).toList();
+    notifyListeners();
   }
 
   Future<void> fetchMyMatchings() async {
@@ -209,9 +237,9 @@ class AppViewModel extends BaseViewModel {
     );
   }
 
-  void toTeamDetailView(int value) {
+  void toTeamDetailView(String value) {
     _router.navigateTo(
-      Routes.teamDetailView(teamId: 'value$value'),
+      Routes.teamDetailView(teamId: value),
     );
   }
 }
