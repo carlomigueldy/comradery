@@ -1,5 +1,5 @@
-import 'package:comradery/app.dart';
 import 'package:comradery/common/utils/ui_util.dart';
+import 'package:comradery/ui/widgets/dumb_widgets/button/app_back_button.dart';
 import 'package:flutter/material.dart';
 
 class AppTopBar extends StatelessWidget
@@ -25,16 +25,7 @@ class AppTopBar extends StatelessWidget
     return AppBar(
       backgroundColor: backgroundColor ?? uiUtil.colors.backgroundColor,
       elevation: 0,
-      leading: leading ??
-          (Navigator.canPop(context)
-              ? IconButton(
-                  icon: Icon(
-                    Icons.keyboard_arrow_left_rounded,
-                    color: uiUtil.colors.black,
-                  ),
-                  onPressed: () => Navigator.pop(context),
-                )
-              : null),
+      leading: leading ?? (Navigator.canPop(context) ? AppBackButton() : null),
       centerTitle: true,
       title: Text(
         title,

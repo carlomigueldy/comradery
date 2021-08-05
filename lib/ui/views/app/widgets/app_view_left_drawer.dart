@@ -78,7 +78,9 @@ class _AppViewLeftDrawerState extends State<AppViewLeftDrawer>
                   ListTile(
                     leading: CircleAvatar(
                       backgroundColor: theme.primaryColor,
-                      backgroundImage: NetworkImage(COMRADE_DOGE_IMG),
+                      backgroundImage: NetworkImage(
+                        widget.model.authUser?.photoUrl ?? COMRADE_DOGE_IMG,
+                      ),
                     ),
                     title: AppText.body('${widget.model.userFullName}'),
                     subtitle: AppText.bodySmall(

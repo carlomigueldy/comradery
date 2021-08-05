@@ -11,7 +11,7 @@ class AuthService {
   final log = Logger();
   final _localStorageService = locator<LocalStorageService>();
 
-  User? _user = null;
+  User? _user;
   User? get user => _user;
   bool get hasUser => _user != null;
 

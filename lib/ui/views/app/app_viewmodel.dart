@@ -18,6 +18,7 @@ class AppViewModel extends BaseViewModel {
 
   String? get userFullName => _authService.user?.fullName;
   String get userEmail => _authService.user?.email ?? '-';
+  User? get authUser => _authService.user;
 
   List<Matching> _matchings = [];
   List<Matching> get matchings => _matchings;
@@ -197,19 +198,19 @@ class AppViewModel extends BaseViewModel {
   }
 
   void toConversationDetailView(String value) {
-    _router.replaceWith(
+    _router.navigateTo(
       Routes.conversationDetailView(conversationId: value),
     );
   }
 
   void toUserDetailView(String value) {
-    _router.replaceWith(
+    _router.navigateTo(
       Routes.userDetailView(userId: value),
     );
   }
 
   void toTeamDetailView(int value) {
-    _router.replaceWith(
+    _router.navigateTo(
       Routes.teamDetailView(teamId: 'value$value'),
     );
   }

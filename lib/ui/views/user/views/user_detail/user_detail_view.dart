@@ -1,6 +1,5 @@
 import 'package:comradery/common/utils/ui_util.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/app_bar/app_top_bar.dart';
-import 'package:comradery/ui/widgets/dumb_widgets/button/app_button.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:comradery/ui/widgets/feature/app_matching_card.dart';
 import 'package:flutter/material.dart';

@@ -26,31 +26,36 @@ class MessagesTabView extends StatelessWidget with UiUtilMixin {
       child: Column(
         children: [
           uiUtil.verticalSpacing.large,
-          ListView.separated(
-            shrinkWrap: true,
-            itemCount: conversations.length,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              final conversation = conversations[index];
+          if (conversations.isNotEmpty)
+            ListView.separated(
+              shrinkWrap: true,
+              itemCount: conversations.length,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final conversation = conversations[index];
 
-              return _ConversationListTile(
-                title: conversation.name != null
-                    ? conversation.name!
-                    : conversation.participantNames
-                        .replaceAll(',', '')
-                        .replaceAll(
-                          authUserFullName,
-                          '',
-                        ),
-                conversation: conversation,
-                onTap: () => onTap?.call(conversation),
-                onLongPress: () => onLongPress?.call(conversation),
-              );
-            },
-            separatorBuilder: (context, index) {
-              return uiUtil.verticalSpacing.large;
-            },
-          ),
+                return _ConversationListTile(
+                  title: conversation.name != null
+                      ? conversation.name!
+                      : conversation.participantNames
+                          .replaceAll(',', '')
+                          .replaceAll(
+                            authUserFullName,
+                            '',
+                          ),
+                  conversation: conversation,
+                  onTap: () => onTap?.call(conversation),
+                  onLongPress: () => onLongPress?.call(conversation),
+                );
+              },
+              separatorBuilder: (context, index) {
+                return uiUtil.verticalSpacing.large;
+              },
+            )
+          else
+            Container(
+              child: Text('No conversations yet.'),
+            ),
           uiUtil.verticalSpacing.huge,
         ],
       ),

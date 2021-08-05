@@ -97,54 +97,58 @@ class LandingView extends StatelessWidget with UiUtilMixin {
           body: container(desktopColumn),
         );
 
-        return SafeArea(
-          child: ScreenTypeLayout(
-            mobile: Scaffold(
-              key: _scaffoldKey,
-              drawer: Drawer(
-                child: Container(
-                  color: uiUtil.colors.backgroundColor,
-                  padding: uiUtil.edgeInsets.horizontalSymmetric25,
-                  child: Column(
-                    children: [
-                      uiUtil.verticalSpacing.large,
-                      appBanner,
-                      uiUtil.verticalSpacing.large,
-                      aboutUsButton,
-                      uiUtil.verticalSpacing.large,
-                      loginButton,
-                      uiUtil.verticalSpacing.large,
-                      createAccountButton,
-                      uiUtil.verticalSpacing.large,
-                    ],
+        return Container(
+          color: uiUtil.colors.backgroundColor,
+          child: SafeArea(
+            child: ScreenTypeLayout(
+              mobile: Scaffold(
+                key: _scaffoldKey,
+                drawer: Drawer(
+                  elevation: 0,
+                  child: Container(
+                    color: uiUtil.colors.backgroundColor,
+                    padding: uiUtil.edgeInsets.horizontalSymmetric25,
+                    child: Column(
+                      children: [
+                        uiUtil.verticalSpacing.large,
+                        appBanner,
+                        uiUtil.verticalSpacing.large,
+                        aboutUsButton,
+                        uiUtil.verticalSpacing.large,
+                        loginButton,
+                        uiUtil.verticalSpacing.large,
+                        createAccountButton,
+                        uiUtil.verticalSpacing.large,
+                      ],
+                    ),
+                  ),
+                ),
+                appBar: AppTopBar(
+                  leading: IconButton(
+                    icon: Icon(
+                      Icons.menu_rounded,
+                      color: theme.primaryColor,
+                    ),
+                    onPressed: () {
+                      _scaffoldKey.currentState?.openDrawer();
+                    },
+                  ),
+                  title: 'Comradery',
+                ),
+                body: container(
+                  Container(
+                    width: mediaQuery.size.width,
+                    height: mediaQuery.size.height,
+                    child: Column(
+                      children: [
+                        ...body,
+                      ],
+                    ),
                   ),
                 ),
               ),
-              appBar: AppTopBar(
-                leading: IconButton(
-                  icon: Icon(
-                    Icons.menu_rounded,
-                    color: theme.primaryColor,
-                  ),
-                  onPressed: () {
-                    _scaffoldKey.currentState?.openDrawer();
-                  },
-                ),
-                title: 'Comradery',
-              ),
-              body: container(
-                Container(
-                  width: mediaQuery.size.width,
-                  height: mediaQuery.size.height,
-                  child: Column(
-                    children: [
-                      ...body,
-                    ],
-                  ),
-                ),
-              ),
+              desktop: desktop,
             ),
-            desktop: desktop,
           ),
         );
       },
