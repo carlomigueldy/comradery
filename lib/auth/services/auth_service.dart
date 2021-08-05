@@ -67,8 +67,11 @@ class AuthService {
       log.e(response.error!.message);
       return null;
     }
+
     log.i(response.data);
+
     await _localStorageService.setItem('token', response.data!.accessToken);
+
     return await fetchUser(id: response.data!.user!.id);
   }
 
@@ -78,22 +81,30 @@ class AuthService {
     String? firstName,
     String? lastName,
   }) async {
-    final response = await supabase.auth.signUp(email, password);
+    try {
+      final response = await supabase.auth.signUp(email, password);
 
-    if (response.error != null) {
-      log.e(response.error!.message);
+      if (response.error != null) {
+        log.e(response.error!.message);
+        return null;
+      }
+
+      final user = response.data!.user!;
+      log.i(user.toJson());
+      await _createUser(
+        user,
+        firstName: firstName,
+        lastName: lastName,
+      );
+
+      await _localStorageService.setItem('token', response.data!.accessToken);
+
+      return await fetchUser(id: user.id);
+    } catch (e) {
+      log.e('error "$e"');
+
       return null;
     }
-
-    final user = response.data!.user!;
-    log.i(user.toJson());
-    await _createUser(
-      user,
-      firstName: firstName,
-      lastName: lastName,
-    );
-    await _localStorageService.setItem('token', response.data!.accessToken);
-    return await fetchUser(id: user.id);
   }
 
   Future<void> signOut() async {
@@ -110,12 +121,14 @@ class AuthService {
   }
 
   Future<User?> fetchUser({String? id}) async {
-    log.v('id "$id"');
+    await Future.delayed(Duration(seconds: 1));
+
+    log.v('id "$id", user "${user?.toJson()}"');
 
     final response = await supabase
         .from('users')
         .select()
-        .eq('id', id ?? user!.id!)
+        .eq('id', id ?? user?.id)
         .single()
         .execute();
 

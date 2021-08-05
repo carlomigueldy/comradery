@@ -28,7 +28,9 @@ class UploadTeamPhotoViewModel extends OnBoardingViewModel {
 
     final updateTeamResponse = await supabase
         .from('teams')
-        .update({'photo_url': '${supabase.storageUrl}${response.data}'})
+        .update({
+          'photo_url': '${supabase.storageUrl}/object/public/${response.data}'
+        })
         .eq('id', _createTeamViewModel.team!.id)
         .execute();
     log.v('updateTeamResponse "${updateTeamResponse.toJson()}"');

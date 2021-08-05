@@ -23,7 +23,9 @@ class UploadPhotoViewModel extends OnBoardingViewModel {
 
     final updateUserResponse = await supabase
         .from('users')
-        .update({'photo_url': '${supabase.storageUrl}${response.data}'})
+        .update({
+          'photo_url': '${supabase.storageUrl}/object/public/${response.data}'
+        })
         .eq('id', authService.user!.id!)
         .execute();
     log.v('updateUserResponse "${updateUserResponse.toJson()}"');

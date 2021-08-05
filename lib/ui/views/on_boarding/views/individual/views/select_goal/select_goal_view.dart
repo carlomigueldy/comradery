@@ -32,9 +32,7 @@ class _SelectGoalViewState extends State<SelectGoalView> with UiUtilMixin {
         final column = Column(
           children: [
             _GoalListTile(
-              title: AppText(
-                'I want to find a team with similar interests',
-              ),
+              title: 'I want to find a team with similar interests',
               groupValue: model.goal,
               onChanged: (Goal? value) {
                 if (value != null) model.onSelectGoal(value);
@@ -44,9 +42,7 @@ class _SelectGoalViewState extends State<SelectGoalView> with UiUtilMixin {
             ),
             uiUtil.verticalSpacing.large,
             _GoalListTile(
-              title: AppText(
-                'I want to find individuals with similar interests',
-              ),
+              title: 'I want to find individuals with similar interests',
               groupValue: model.goal,
               onChanged: (Goal? value) {
                 if (value != null) model.onSelectGoal(value);
@@ -119,7 +115,7 @@ class _GoalListTile<T> extends StatelessWidget with UiUtilMixin {
     this.selected = false,
   }) : super(key: key);
 
-  final Widget title;
+  final String title;
   final T value;
   final T? groupValue;
   final Function(T?)? onChanged;
@@ -136,11 +132,17 @@ class _GoalListTile<T> extends StatelessWidget with UiUtilMixin {
         borderRadius: uiUtil.borderRadius.large,
       ),
       child: RadioListTile<T>(
-        title: title,
+        title: AppText.body(
+          title,
+          style: uiUtil.textStyles.body.copyWith(
+            color: selected ? Colors.white : null,
+          ),
+        ),
         groupValue: groupValue,
         onChanged: onChanged,
         value: value,
         contentPadding: uiUtil.edgeInsets.all15,
+        activeColor: Colors.white,
       ),
     );
   }

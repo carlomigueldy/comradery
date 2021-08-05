@@ -57,6 +57,7 @@ class User with _$User {
 
   static List<dynamic>? _interestsToJson(List<UserInterest>? list) =>
       list == null ? [] : list.map((item) => item.toJson()).toList();
+
   String get formattedCreatedAt {
     return DateFormat('EEEE M/d/y').format(createdAt!);
   }
@@ -77,7 +78,7 @@ class User with _$User {
 
   Map<String, dynamic> toPayload() {
     final json = toJson();
-    json.remove('id');
+    // json.remove('id');
     json.remove('created_at');
     json.remove('updated_at');
     json.remove('deleted_at');

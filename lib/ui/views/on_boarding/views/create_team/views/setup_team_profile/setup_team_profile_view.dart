@@ -101,21 +101,27 @@ class _Form extends HookViewModelWidget<SetupTeamProfileViewModel>
           maxLines: 6,
           focusNode: descriptionFocusNode,
         ),
-        uiUtil.verticalSpacing.large,
-        Spacer(),
-        uiUtil.verticalSpacing.large,
-        AppButton(
-          label: 'Continue',
-          onPressed: onSubmit,
-          busy: model.isBusy,
-        ),
-        uiUtil.verticalSpacing.large,
+        uiUtil.verticalSpacing.huge,
       ],
     );
 
     return FormBuilder(
       key: formKey,
-      child: column,
+      child: Stack(
+        children: [
+          SingleChildScrollView(child: column),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 20,
+            child: AppButton(
+              label: 'Continue',
+              onPressed: onSubmit,
+              busy: model.isBusy,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
