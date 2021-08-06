@@ -14,7 +14,7 @@ class MatchingService extends SupabaseService {
     return await supabase
         .from(table)
         .select(
-          '*, created_by_user: users (id, first_name, last_name, email)',
+          '*, created_by_user: users (id, first_name, last_name, email, photo_url), target_user: users (id, first_name, last_name, email, photo_url)',
         )
         .eq('target_user_id', _authService.user!.id!)
         .neq('created_by', _authService.user!.id!)

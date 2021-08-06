@@ -7,6 +7,7 @@ import 'package:comradery/conversation/models/conversation_participant.dart';
 import 'package:comradery/conversation/services/conversation_message_service.dart';
 import 'package:comradery/conversation/services/conversation_service.dart';
 import 'package:comradery/user/models/user.dart' as user;
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:logger/logger.dart';
 import 'package:postgrest/postgrest.dart';
 import 'package:stacked/stacked.dart';
@@ -181,4 +182,8 @@ class ConversationDetailViewModel extends BaseViewModel {
     _inputMessage = '';
     notifyListeners();
   }
+
+  void inviteToTeam() {}
+
+  void requestToJoinTeam() {}
 }

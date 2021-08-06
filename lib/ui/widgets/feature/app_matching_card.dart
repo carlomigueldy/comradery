@@ -44,7 +44,7 @@ class AppMatchingCard extends StatelessWidget with UiUtilMixin {
             ),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.35), BlendMode.darken),
+                Colors.black.withOpacity(0.05), BlendMode.darken),
           ),
           boxShadow: [
             uiUtil.boxShadows.small,

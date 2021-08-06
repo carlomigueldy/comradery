@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:comradery/common/utils/ui_util.dart';
 import 'package:comradery/matching/models/matching.dart';
 import 'package:comradery/ui/placeholders/placeholder_images.dart';
@@ -39,46 +40,9 @@ class MatchesTabView extends StatelessWidget with UiUtilMixin {
                   children: List.generate(matchings.length, (index) {
                     final matching = matchings[index];
 
-                    return InkWell(
+                    return AppUserMatchingGridTile(
                       onTap: () => onTap?.call(matching),
-                      child: GridTile(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: theme.canvasColor,
-                            borderRadius: uiUtil.borderRadius.large,
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                matching.targetUser?.photoUrl ??
-                                    PLACEHOLDER_IMG,
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: uiUtil.edgeInsets.horizontalSymmetric10,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Row(
-                                  children: [
-                                    Flexible(
-                                      child: AppText(
-                                        '${matching.createdByUser?.fullName}',
-                                        style: uiUtil.textStyles.bodySmallBold
-                                            .copyWith(
-                                          color: Colors.white,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                uiUtil.verticalSpacing.normal,
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                      matching: matching,
                     );
                   }),
                 )
@@ -89,6 +53,66 @@ class MatchesTabView extends StatelessWidget with UiUtilMixin {
                 ),
           uiUtil.verticalSpacing.huge,
         ],
+      ),
+    );
+  }
+}
+
+class AppUserMatchingGridTile extends StatelessWidget with UiUtilMixin {
+  const AppUserMatchingGridTile({
+    Key? key,
+    this.onTap,
+    required this.matching,
+  }) : super(key: key);
+
+  final Function()? onTap;
+  final Matching matching;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return InkWell(
+      onTap: onTap,
+      child: GridTile(
+        child: Container(
+          decoration: BoxDecoration(
+            color: theme.primaryColor,
+            borderRadius: uiUtil.borderRadius.large,
+            image: DecorationImage(
+              image: NetworkImage(
+                matching.targetUser?.photoUrl ?? PLACEHOLDER_IMG,
+              ),
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.05),
+                BlendMode.darken,
+              ),
+            ),
+          ),
+          child: Padding(
+            padding: uiUtil.edgeInsets.horizontalSymmetric10,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Row(
+                  children: [
+                    Flexible(
+                      child: AppText(
+                        '${matching.createdByUser?.fullName}',
+                        style: uiUtil.textStyles.bodySmallBold.copyWith(
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+                uiUtil.verticalSpacing.normal,
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
