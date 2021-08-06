@@ -47,7 +47,10 @@ class MatchesTabView extends StatelessWidget with UiUtilMixin {
                             color: theme.canvasColor,
                             borderRadius: uiUtil.borderRadius.large,
                             image: DecorationImage(
-                              image: NetworkImage(PLACEHOLDER_IMG),
+                              image: NetworkImage(
+                                matching.targetUser?.photoUrl ??
+                                    PLACEHOLDER_IMG,
+                              ),
                               fit: BoxFit.cover,
                             ),
                           ),

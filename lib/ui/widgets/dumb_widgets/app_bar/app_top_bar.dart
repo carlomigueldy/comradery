@@ -11,11 +11,13 @@ class AppTopBar extends StatelessWidget
     this.backgroundColor,
     this.height = 60.0,
     this.leading,
+    this.action,
   }) : super(key: key);
 
   final String title;
   final Color? backgroundColor;
   final Widget? leading;
+  final Widget? action;
   final double height;
 
   @override
@@ -33,6 +35,7 @@ class AppTopBar extends StatelessWidget
           color: theme.primaryColor,
         ),
       ),
+      actions: [action ?? SizedBox.shrink()],
     );
   }
 

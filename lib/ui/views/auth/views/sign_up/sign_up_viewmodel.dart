@@ -21,7 +21,7 @@ class SignUpViewModel extends BaseViewModel {
 
       setBusy(true);
       final user = await _authService.signUp(
-        email: value['email'],
+        email: value['email'].trim(),
         password: value['password'],
       );
 

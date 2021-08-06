@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:comradery/common/utils/ui_util.dart';
 import 'package:comradery/ui/placeholders/placeholder_images.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
@@ -14,6 +15,7 @@ class AppMatchingCard extends StatelessWidget with UiUtilMixin {
     this.onTapLike,
     this.onTap,
     this.onLongPress,
+    this.showActionButtons = true,
   }) : super(key: key);
 
   final User user;
@@ -21,6 +23,7 @@ class AppMatchingCard extends StatelessWidget with UiUtilMixin {
   final Function()? onTapLike;
   final Function()? onTap;
   final Function()? onLongPress;
+  final bool showActionButtons;
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +36,15 @@ class AppMatchingCard extends StatelessWidget with UiUtilMixin {
         height: 575,
         width: 400,
         decoration: BoxDecoration(
-          color: theme.canvasColor,
+          color: theme.primaryColor,
           borderRadius: uiUtil.borderRadius.large,
           image: DecorationImage(
-            image: NetworkImage(user.photoUrl ?? PLACEHOLDER_IMG),
+            image: CachedNetworkImageProvider(
+              user.photoUrl ?? PLACEHOLDER_IMG,
+            ),
             fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.35), BlendMode.darken),
           ),
           boxShadow: [
             uiUtil.boxShadows.small,
@@ -79,42 +86,46 @@ class AppMatchingCard extends StatelessWidget with UiUtilMixin {
               uiUtil.verticalSpacing.large,
               Row(
                 children: [
-                  AppText(
-                    user.bio ?? 'No bio.',
-                    style: uiUtil.textStyles.body.copyWith(
-                      color: Colors.white,
+                  Flexible(
+                    child: AppText(
+                      user.bio ?? 'No bio.',
+                      style: uiUtil.textStyles.body.copyWith(
+                        color: Colors.white,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],
               ),
               uiUtil.verticalSpacing.veryLarge,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  InkWell(
-                    onTap: onTapNope,
-                    child: CircleAvatar(
-                      child: Icon(
-                        Icons.close,
-                        color: theme.canvasColor,
+              if (showActionButtons)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    InkWell(
+                      onTap: onTapNope,
+                      child: CircleAvatar(
+                        child: Icon(
+                          Icons.close,
+                          color: theme.canvasColor,
+                        ),
+                        radius: 32,
+                        backgroundColor: theme.primaryColor,
                       ),
-                      radius: 32,
-                      backgroundColor: theme.primaryColor,
                     ),
-                  ),
-                  InkWell(
-                    onTap: onTapLike,
-                    child: CircleAvatar(
-                      child: Icon(
-                        Icons.thumb_up_sharp,
-                        color: theme.canvasColor,
+                    InkWell(
+                      onTap: onTapLike,
+                      child: CircleAvatar(
+                        child: Icon(
+                          Icons.thumb_up_sharp,
+                          color: theme.canvasColor,
+                        ),
+                        radius: 32,
+                        backgroundColor: theme.primaryColor,
                       ),
-                      radius: 32,
-                      backgroundColor: theme.primaryColor,
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
               uiUtil.verticalSpacing.large,
             ],
           ),

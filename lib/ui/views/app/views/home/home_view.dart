@@ -57,20 +57,20 @@ class HomeView extends StatelessWidget with UiUtilMixin {
                 width: mediaQuery.size.width,
                 height: mediaQuery.size.height,
                 color: uiUtil.colors.backgroundColor,
-                child: Padding(
-                  padding: uiUtil.edgeInsets.horizontalSymmetric10,
-                  child: model.isBusy
-                      ? AppSpinner()
-                      : model.users.isNotEmpty
-                          ? _MatchLayout(
-                              model: model,
-                            )
-                          : Center(
-                              child: AppText(
-                                "Can't find anyone with similar interests as you at this moment.",
-                              ),
-                            ),
-                ),
+                padding: uiUtil.edgeInsets.horizontalSymmetric10,
+                child: model.isBusy
+                    ? AppSpinner()
+                    : model.users.isNotEmpty
+                        ? _MatchLayout(
+                            model: model,
+                          )
+                        : !model.isBusy && model.users.isEmpty
+                            ? Center(
+                                child: AppText(
+                                  "Can't find anyone with similar interests as you at this moment.",
+                                ),
+                              )
+                            : Container(),
               ),
             ),
           ),

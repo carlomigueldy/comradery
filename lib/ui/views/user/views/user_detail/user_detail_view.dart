@@ -36,6 +36,36 @@ class UserDetailView extends StatelessWidget with UiUtilMixin {
             title: model.fetchUserBusy
                 ? 'Loading...'
                 : (model.user?.fullName ?? '...'),
+            action: PopupMenuButton(
+              padding: uiUtil.edgeInsets.horizontalSymmetric25,
+              shape: RoundedRectangleBorder(
+                borderRadius: uiUtil.borderRadius.large,
+              ),
+              child: Padding(
+                padding: uiUtil.edgeInsets.horizontalSymmetric25,
+                child: Icon(
+                  Icons.more_horiz_rounded,
+                  color: uiUtil.colors.black,
+                ),
+              ),
+              onSelected: (value) {},
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem(
+                    value: 'start_conversation',
+                    child: Text('Start Conversation'),
+                  ),
+                  PopupMenuItem(
+                    value: 'invite_to_team',
+                    child: Text('Invite to Team'),
+                  ),
+                  PopupMenuItem(
+                    value: 'request_to_join_team',
+                    child: Text('Request to Join Team'),
+                  ),
+                ];
+              },
+            ),
           ),
           body: Container(
             width: mediaQuery.size.width,
@@ -50,6 +80,7 @@ class UserDetailView extends StatelessWidget with UiUtilMixin {
                     children: [
                       AppMatchingCard(
                         user: model.user!,
+                        showActionButtons: false,
                       ),
                     ],
                   ),

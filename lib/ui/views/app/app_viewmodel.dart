@@ -1,4 +1,5 @@
 import 'package:comradery/app.dart';
+import 'package:comradery/app.logger.dart';
 import 'package:comradery/auth/services/auth_service.dart';
 import 'package:comradery/common/supabase/supabase_client.dart';
 import 'package:comradery/conversation/models/conversation.dart';
@@ -12,7 +13,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:supabase/supabase.dart' as sp;
 
 class AppViewModel extends BaseViewModel {
-  final log = Logger();
+  final log = stackedLogger('AppViewModel');
   final _authService = locator<AuthService>();
   final _matchingService = locator<MatchingService>();
   final _router = locator<NavigationService>();
@@ -49,6 +50,12 @@ class AppViewModel extends BaseViewModel {
   String get _fetchMyTeamsKey => '_fetchMyTeamsKey';
   bool get fetchMyTeamsBusy => busy(_fetchMyTeamsKey);
 
+  Matching? _recentMatching;
+  Matching? get recentMatching => _recentMatching;
+
+  Matching? _targetMatching;
+  Matching? get targetMatching => _targetMatching;
+
   Future<void> init() async {
     await Future.wait([
       fetchWhoLikedMe(),
@@ -62,38 +69,41 @@ class AppViewModel extends BaseViewModel {
         .from(
       '${_matchingService.table}:created_by=eq.${_authService.user?.id}',
     )
-        .on(sp.SupabaseEventTypes.insert, (payload) {
-      log.v('payload?.newRecord "${payload.newRecord}"');
-      // final matching = Matching.fromJson(payload.newRecord);
+        .on(sp.SupabaseEventTypes.insert, (payload) async {
+      final matching = Matching.fromJson(payload.newRecord);
+      _recentMatching = matching;
+      log.v('_recentMatching "${_recentMatching?.toJson()}"');
 
-      // // TODO: Like back logic need to implement
-      // if (matching.targetUserId == _authService.user!.id! && matching.liked) {
-      //   _matchings.add(matching);
+      // try {
+      //   log.v('Fetching...');
+      //   final response = await supabase
+      //       .from('matchings')
+      //       .select('*, target_user: users (id, first_name, email)')
+      //       .eq(
+      //         'created_by',
+      //         matching.targetUserId,
+      //       )
+      //       .eq('target_user_id', _authService.user!.id!)
+      //       .is_('liked', true)
+      //       .single()
+      //       .execute();
+      //   log.v('response "${response.toJson()}"');
+
+      //   log.v('SupabaseEventTypes.insert | response "${response.toJson()}"');
+
+      //   if (response.error != null) {
+      //     return log.e(response.error?.message);
+      //   }
+
+      //   _targetMatching = Matching.fromJson(response.data);
+
+      //   log.v('_targetMatching "${_targetMatching?.toJson()}"');
+
+      //   // notifyListeners();
+      // } catch (e) {
+      //   log.e('error "$e"');
       // }
-
-      notifyListeners();
     }).subscribe();
-
-    // // DELETE `matchings`
-    // supabase
-    //     .from(
-    //   '${_matchingService.table}:created_by=eq.${_authService.user?.id}',
-    // )
-    //     .on(sp.SupabaseEventTypes.delete, (payload) {
-    //   log.v(
-    //     'payload?.newRecord "${payload.newRecord}", payload?.oldRecord "${payload.oldRecord}"',
-    //   );
-
-    //   _matchings
-    //       .removeWhere((element) => element.id == payload.oldRecord['id']);
-    //   notifyListeners();
-    // }).subscribe();
-
-    // log.i(
-    //   'filteredMatchingsIds "$filteredMatchingsIds"\n'
-    //   'targettedMatchingTargetUserIds "$targettedMatchingTargetUserIds"\n'
-    //   'matchingsIds "$matchingsIds"\n',
-    // );
   }
 
   Future<void> fetchMyTeams() async {
@@ -223,6 +233,8 @@ class AppViewModel extends BaseViewModel {
   void logout() {
     _authService.signOut();
     _router.replaceWith(Routes.signInView);
+
+    dispose();
   }
 
   void toConversationDetailView(String value) {
@@ -241,5 +253,11 @@ class AppViewModel extends BaseViewModel {
     _router.navigateTo(
       Routes.teamDetailView(teamId: value),
     );
+  }
+
+  void addMatching(Matching matching) {
+    log.v('New matching "${matching.toJson()}"');
+    // _matchings.add(matching);
+    fetchMyMatchings();
   }
 }

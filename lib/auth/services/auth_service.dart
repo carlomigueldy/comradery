@@ -127,7 +127,9 @@ class AuthService {
 
     final response = await supabase
         .from('users')
-        .select()
+        .select(
+          '*, interests: user_interests (user_id, interest_id, interest: interests (name) )',
+        )
         .eq('id', id ?? user?.id)
         .single()
         .execute();
