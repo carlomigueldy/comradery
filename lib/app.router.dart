@@ -12,6 +12,7 @@ import 'package:stacked/stacked.dart';
 
 import 'ui/views/about/about_view.dart';
 import 'ui/views/app/views/home/home_view.dart';
+import 'ui/views/app/views/notifications/notifications_view.dart';
 import 'ui/views/auth/views/forgot_password/forgot_password_view.dart';
 import 'ui/views/auth/views/reset_password/reset_password_view.dart';
 import 'ui/views/auth/views/sign_in/sign_in_view.dart';
@@ -34,6 +35,7 @@ class Routes {
   static const String landingView = '/landing';
   static const String aboutView = '/about';
   static const String homeView = '/home';
+  static const String notificationsView = '/notifications';
   static const String _teamDetailView = '/teams/:teamId';
   static String teamDetailView({@required dynamic teamId}) => '/teams/$teamId';
   static const String _welcomeToTeamView = '/teams/:teamId/welcome';
@@ -60,6 +62,7 @@ class Routes {
     landingView,
     aboutView,
     homeView,
+    notificationsView,
     _teamDetailView,
     _welcomeToTeamView,
     _conversationDetailView,
@@ -85,6 +88,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.landingView, page: LandingView),
     RouteDef(Routes.aboutView, page: AboutView),
     RouteDef(Routes.homeView, page: HomeView),
+    RouteDef(Routes.notificationsView, page: NotificationsView),
     RouteDef(Routes._teamDetailView, page: TeamDetailView),
     RouteDef(Routes._welcomeToTeamView, page: WelcomeToTeamView),
     RouteDef(Routes._conversationDetailView, page: ConversationDetailView),
@@ -140,6 +144,12 @@ class StackedRouter extends RouterBase {
       );
       return CupertinoPageRoute<dynamic>(
         builder: (context) => HomeView(key: args.key),
+        settings: data,
+      );
+    },
+    NotificationsView: (data) {
+      return CupertinoPageRoute<dynamic>(
+        builder: (context) => const NotificationsView(),
         settings: data,
       );
     },

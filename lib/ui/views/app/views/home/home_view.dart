@@ -52,6 +52,16 @@ class HomeView extends StatelessWidget with UiUtilMixin {
                   },
                 ),
                 title: 'Comradery',
+                action: Padding(
+                  padding: uiUtil.edgeInsets.horizontalSymmetric5,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.notifications,
+                      color: theme.primaryColor,
+                    ),
+                    onPressed: () => model.toNotificationsView(),
+                  ),
+                ),
               ),
               body: Container(
                 width: mediaQuery.size.width,
@@ -112,7 +122,7 @@ class _MatchLayout extends StatelessWidget with UiUtilMixin {
             return AppMatchingCard(
               user: user,
               onTap: () {
-                model.toUserDetailView(user);
+                // model.toUserDetailView(user);
               },
               onTapNope: () {
                 model.matchEngine.currentItem?.nope();

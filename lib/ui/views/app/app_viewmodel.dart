@@ -7,7 +7,6 @@ import 'package:comradery/matching/models/matching.dart';
 import 'package:comradery/matching/services/matching_service.dart';
 import 'package:comradery/team/models/team.dart';
 import 'package:comradery/user/models/user.dart';
-import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:supabase/supabase.dart' as sp;
@@ -65,53 +64,59 @@ class AppViewModel extends BaseViewModel {
     ]);
 
     // INSERT `matchings`
-    supabase
-        .from(
-      '${_matchingService.table}:created_by=eq.${_authService.user?.id}',
-    )
-        .on(sp.SupabaseEventTypes.insert, (payload) async {
-      final matching = Matching.fromJson(payload.newRecord);
-      _recentMatching = matching;
-      log.v('_recentMatching "${_recentMatching?.toJson()}"');
+    // supabase
+    //     .from(
+    //   '${_matchingService.table}:created_by=eq.${_authService.user?.id}',
+    // )
+    //     .on(sp.SupabaseEventTypes.insert, (payload) async {
+    //   final matching = Matching.fromJson(payload.newRecord);
+    //   _recentMatching = matching;
+    //   log.v('_recentMatching "${_recentMatching?.toJson()}"');
 
-      // try {
-      //   log.v('Fetching...');
-      //   final response = await supabase
-      //       .from('matchings')
-      //       .select('*, target_user: users (id, first_name, email)')
-      //       .eq(
-      //         'created_by',
-      //         matching.targetUserId,
-      //       )
-      //       .eq('target_user_id', _authService.user!.id!)
-      //       .is_('liked', true)
-      //       .single()
-      //       .execute();
-      //   log.v('response "${response.toJson()}"');
+    //   // try {
+    //   //   log.v('Fetching...');
+    //   //   final response = await supabase
+    //   //       .from('matchings')
+    //   //       .select('*, target_user: users (id, first_name, email)')
+    //   //       .eq(
+    //   //         'created_by',
+    //   //         matching.targetUserId,
+    //   //       )
+    //   //       .eq('target_user_id', _authService.user!.id!)
+    //   //       .is_('liked', true)
+    //   //       .single()
+    //   //       .execute();
+    //   //   log.v('response "${response.toJson()}"');
 
-      //   log.v('SupabaseEventTypes.insert | response "${response.toJson()}"');
+    //   //   log.v('SupabaseEventTypes.insert | response "${response.toJson()}"');
 
-      //   if (response.error != null) {
-      //     return log.e(response.error?.message);
-      //   }
+    //   //   if (response.error != null) {
+    //   //     return log.e(response.error?.message);
+    //   //   }
 
-      //   _targetMatching = Matching.fromJson(response.data);
+    //   //   _targetMatching = Matching.fromJson(response.data);
 
-      //   log.v('_targetMatching "${_targetMatching?.toJson()}"');
+    //   //   log.v('_targetMatching "${_targetMatching?.toJson()}"');
 
-      //   // notifyListeners();
-      // } catch (e) {
-      //   log.e('error "$e"');
-      // }
-    }).subscribe();
+    //   //   // notifyListeners();
+    //   // } catch (e) {
+    //   //   log.e('error "$e"');
+    //   // }
+    // }).subscribe();
   }
 
   Future<void> fetchMyTeams() async {
     final response = await runBusyFuture<sp.PostgrestResponse>(
       supabase
           .from('teams')
-          .select()
+          .select('*, team_members (user_id, team_id)')
           .eq('created_by', _authService.user!.id!)
+          .is_('team_members.deleted_at', null)
+          .in_(
+            'team_members.user_id',
+            [_authService.user!.id!],
+          )
+          .is_('deleted_at', null)
           .execute(),
       busyObject: _fetchMyTeamsKey,
       throwException: true,

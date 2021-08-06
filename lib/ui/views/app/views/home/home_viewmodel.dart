@@ -280,4 +280,8 @@ class HomeViewModel extends BaseViewModel {
       Routes.userDetailView(userId: user.id!),
     );
   }
+
+  void toNotificationsView() {
+    _router.navigateTo(Routes.notificationsView);
+  }
 }

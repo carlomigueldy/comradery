@@ -8,8 +8,8 @@ import 'package:comradery/conversation/services/conversation_message_service.dar
 import 'package:comradery/conversation/services/conversation_service.dart';
 import 'package:comradery/team/models/team_request.dart';
 import 'package:comradery/team/services/team_request_service.dart';
+import 'package:comradery/ui/views/app/app_viewmodel.dart';
 import 'package:comradery/user/models/user.dart' as user;
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:logger/logger.dart';
 import 'package:postgrest/postgrest.dart';
 import 'package:stacked/stacked.dart';
@@ -22,6 +22,7 @@ class ConversationDetailViewModel extends BaseViewModel {
   final _conversationService = locator<ConversationService>();
   final _messageService = locator<ConversationMessageService>();
   final _teamRequestService = locator<TeamRequestService>();
+  final _appViewModel = locator<AppViewModel>();
 
   ConversationDetailViewModel({
     required this.conversationId,
@@ -197,7 +198,7 @@ class ConversationDetailViewModel extends BaseViewModel {
     _teamRequestService.create(
       TeamRequest(
         userId: _otherUser!.id!,
-        teamId: 'teamId',
+        teamId: _appViewModel.myTeams.first.id!,
         type: TeamRequestType.invite,
         createdBy: _authService.user!.id!,
       ).toPayload(),
