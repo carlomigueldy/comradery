@@ -11,6 +11,10 @@ Living in a pack allows the members to build a camaraderie that creates a lifelo
 - Auth: Supabase Auth
 - Storage: Supabase Storage
 
+# Inspiration
+
+TBD
+
 # Demos
 
 ### Creating a Caramaderie
