@@ -15,6 +15,11 @@ Living in a pack allows the members to build a camaraderie that creates a lifelo
 
 TBD
 
+## Contributors
+
+- @carlomigueldy Software Engineer
+- @haniniboo UI/UX Designer
+
 ## Demos
 
 ### Creating a Caramaderie
