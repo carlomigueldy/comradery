@@ -13,7 +13,8 @@ Living in a pack allows the members to build a camaraderie that creates a lifelo
 
 ## Inspiration
 
-TBD
+Inspired by Tinder app, a geosocial networking and online dating app that allow users to search a friend through swiping like or dislike the users's posted profile, that shows
+their name, bio, and personal interest.
 
 ## Contributors
 
@@ -26,8 +27,4 @@ TBD
 
 https://user-images.githubusercontent.com/45052332/128507366-90ac4f16-bef3-48ca-8cba-b6729843fee4.mp4
 
-### Inviting to Team
-
-https://user-images.githubusercontent.com/45052332/128512916-b46147af-7c57-428e-a7d7-37d71ae0d0b8.mp4
-
-
+### 
