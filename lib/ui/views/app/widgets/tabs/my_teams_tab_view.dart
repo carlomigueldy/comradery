@@ -46,7 +46,7 @@ class MyTeamsTabView extends StatelessWidget with UiUtilMixin {
                       },
                     ),
                     uiUtil.verticalSpacing.large,
-                    _CreateTeamTile(onTap: onTapCreateTeam),
+                    // _CreateTeamTile(onTap: onTapCreateTeam),
                   ],
                 )
               : Column(

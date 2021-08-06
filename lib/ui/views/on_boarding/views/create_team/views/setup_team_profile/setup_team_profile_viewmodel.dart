@@ -1,7 +1,9 @@
 import 'package:comradery/app.dart';
 import 'package:comradery/app.logger.dart';
 import 'package:comradery/auth/services/auth_service.dart';
+import 'package:comradery/common/supabase/supabase_client.dart';
 import 'package:comradery/team/models/team.dart';
+import 'package:comradery/team/models/team_member.dart';
 import 'package:comradery/team/services/team_service.dart';
 import 'package:comradery/ui/views/on_boarding/common/on_boarding_viewmodel.dart';
 import 'package:comradery/ui/views/on_boarding/views/create_team/common/create_team_viewmodel.dart';
@@ -38,7 +40,24 @@ class SetupTeamProfileViewModel extends OnBoardingViewModel {
         return log.e(response.error?.message);
       }
 
-      _createTeamViewModel.team = Team.fromJson(response.data.first);
+      final team = Team.fromJson(response.data.first);
+      _createTeamViewModel.team = team;
+
+      // create team members
+      final createTeamMemberResponse = await supabase
+          .from('team_members')
+          .insert(
+            TeamMember(
+              userId: _authService.user!.id!,
+              teamId: team.id!,
+            ).toPayload(),
+          )
+          .execute();
+      log.v('createTeamMemberResponse "${createTeamMemberResponse.toJson()}"');
+
+      if (createTeamMemberResponse.error != null) {
+        log.e(createTeamMemberResponse.error?.message);
+      }
 
       _router.navigateTo(
         Routes.uploadTeamPhotoView,

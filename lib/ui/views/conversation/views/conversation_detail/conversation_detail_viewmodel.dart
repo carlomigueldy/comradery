@@ -6,6 +6,8 @@ import 'package:comradery/conversation/models/conversation_message.dart';
 import 'package:comradery/conversation/models/conversation_participant.dart';
 import 'package:comradery/conversation/services/conversation_message_service.dart';
 import 'package:comradery/conversation/services/conversation_service.dart';
+import 'package:comradery/team/models/team_request.dart';
+import 'package:comradery/team/services/team_request_service.dart';
 import 'package:comradery/user/models/user.dart' as user;
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:logger/logger.dart';
@@ -19,6 +21,7 @@ class ConversationDetailViewModel extends BaseViewModel {
 
   final _conversationService = locator<ConversationService>();
   final _messageService = locator<ConversationMessageService>();
+  final _teamRequestService = locator<TeamRequestService>();
 
   ConversationDetailViewModel({
     required this.conversationId,
@@ -55,6 +58,11 @@ class ConversationDetailViewModel extends BaseViewModel {
   List<user.User> get participants => _participants;
   String get _fetchParticipantsKey => '_fetchParticipantsKey';
   bool get fetchParticipantsBusy => busy(_fetchParticipantsKey);
+
+  user.User? get _otherUser => participants
+      .where((element) => element.id != _authService.user!.id!)
+      .toList()
+      .first;
 
   String get authUserId => _authService.user!.id!;
   String get authUserFullName => _authService.user!.fullName;
@@ -183,7 +191,19 @@ class ConversationDetailViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void inviteToTeam() {}
+  void inviteToTeam() {
+    log.v('Invited to team');
+    _teamRequestService.create(
+      TeamRequest(
+        userId: _otherUser!.id!,
+        teamId: 'teamId',
+        type: TeamRequestType.invite,
+        createdBy: _authService.user!.id!,
+      ).toPayload(),
+    );
+  }
 
-  void requestToJoinTeam() {}
+  void requestToJoinTeam() {
+    log.v('Requested to join team');
+  }
 }

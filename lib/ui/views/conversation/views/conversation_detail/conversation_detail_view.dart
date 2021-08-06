@@ -206,10 +206,12 @@ class _TextField extends HookViewModelWidget<ConversationDetailViewModel> {
       controller: messageController,
       onChanged: model.onInputMessageChange,
       onEditingComplete: () => sendMessage(),
-      suffixIcon: IconButton(
-        icon: Icon(Icons.send_rounded),
-        onPressed: () => sendMessage(),
-      ),
+      suffixIcon: model.sendMessageBusy
+          ? AppSpinner()
+          : IconButton(
+              icon: Icon(Icons.send_rounded),
+              onPressed: () => sendMessage(),
+            ),
     );
   }
 }

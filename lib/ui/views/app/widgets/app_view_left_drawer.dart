@@ -119,18 +119,27 @@ class _AppViewLeftDrawerState extends State<AppViewLeftDrawer>
                     indicatorColor: theme.primaryColor,
                     tabs: [
                       Tab(
-                        child: AppText.bodySmall(
+                        child: AppText.bodySmallBold(
                           'Matches',
+                          style: uiUtil.textStyles.bodySmallBold.copyWith(
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                       Tab(
-                        child: AppText.bodySmall(
+                        child: AppText.bodySmallBold(
                           'Messages',
+                          style: uiUtil.textStyles.bodySmallBold.copyWith(
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                       Tab(
-                        child: AppText.bodySmall(
+                        child: AppText.bodySmallBold(
                           'My Teams',
+                          style: uiUtil.textStyles.bodySmallBold.copyWith(
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                     ],
