@@ -65,9 +65,18 @@ class HomeView extends StatelessWidget with UiUtilMixin {
                             model: model,
                           )
                         : !model.isBusy && model.users.isEmpty
-                            ? Center(
-                                child: AppText(
-                                  "Can't find anyone with similar interests as you at this moment.",
+                            ? Padding(
+                                padding:
+                                    uiUtil.edgeInsets.horizontalSymmetric15,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    AppText(
+                                      "Can't find anyone with similar interests as you at this moment.",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
                                 ),
                               )
                             : Container(),
@@ -113,7 +122,9 @@ class _MatchLayout extends StatelessWidget with UiUtilMixin {
               },
             );
           },
-          onStackFinished: () {},
+          onStackFinished: () {
+            model.init();
+          },
         ),
         uiUtil.verticalSpacing.large,
         // Container(

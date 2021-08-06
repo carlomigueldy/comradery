@@ -51,8 +51,8 @@ class MyTeamsTabView extends StatelessWidget with UiUtilMixin {
                 )
               : Column(
                   children: [
-                    Text('No teams yet.'),
-                    uiUtil.verticalSpacing.large,
+                    // Text('No teams yet.'),
+                    // uiUtil.verticalSpacing.large,
                     _CreateTeamTile(onTap: onTapCreateTeam),
                   ],
                 ),

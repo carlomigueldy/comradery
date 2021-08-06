@@ -74,35 +74,35 @@ class AppViewModel extends BaseViewModel {
       _recentMatching = matching;
       log.v('_recentMatching "${_recentMatching?.toJson()}"');
 
-      // try {
-      //   log.v('Fetching...');
-      //   final response = await supabase
-      //       .from('matchings')
-      //       .select('*, target_user: users (id, first_name, email)')
-      //       .eq(
-      //         'created_by',
-      //         matching.targetUserId,
-      //       )
-      //       .eq('target_user_id', _authService.user!.id!)
-      //       .is_('liked', true)
-      //       .single()
-      //       .execute();
-      //   log.v('response "${response.toJson()}"');
+      try {
+        log.v('Fetching...');
+        final response = await supabase
+            .from('matchings')
+            .select('*, target_user: users (id, first_name, email)')
+            .eq(
+              'created_by',
+              matching.targetUserId,
+            )
+            .eq('target_user_id', _authService.user!.id!)
+            .is_('liked', true)
+            .single()
+            .execute();
+        log.v('response "${response.toJson()}"');
 
-      //   log.v('SupabaseEventTypes.insert | response "${response.toJson()}"');
+        log.v('SupabaseEventTypes.insert | response "${response.toJson()}"');
 
-      //   if (response.error != null) {
-      //     return log.e(response.error?.message);
-      //   }
+        if (response.error != null) {
+          return log.e(response.error?.message);
+        }
 
-      //   _targetMatching = Matching.fromJson(response.data);
+        _targetMatching = Matching.fromJson(response.data);
 
-      //   log.v('_targetMatching "${_targetMatching?.toJson()}"');
+        log.v('_targetMatching "${_targetMatching?.toJson()}"');
 
-      //   // notifyListeners();
-      // } catch (e) {
-      //   log.e('error "$e"');
-      // }
+        // notifyListeners();
+      } catch (e) {
+        log.e('error "$e"');
+      }
     }).subscribe();
   }
 
