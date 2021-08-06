@@ -46,11 +46,11 @@ class AppRouterId {
     CupertinoRoute(
       page: StartupView,
       initial: true,
-      path: '/init',
+      path: '/',
     ),
     CupertinoRoute(
       page: LandingView,
-      path: '/',
+      path: '/landing',
     ),
     CupertinoRoute(
       page: AboutView,
