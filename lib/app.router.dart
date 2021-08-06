@@ -214,13 +214,22 @@ class StackedRouter extends RouterBase {
         orElse: () => SetupTeamProfileViewArguments(),
       );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => SetupTeamProfileView(key: args.key),
+        builder: (context) => SetupTeamProfileView(
+          key: args.key,
+          onBoarding: args.onBoarding,
+        ),
         settings: data,
       );
     },
     UploadTeamPhotoView: (data) {
+      var args = data.getArgs<UploadTeamPhotoViewArguments>(
+        orElse: () => UploadTeamPhotoViewArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const UploadTeamPhotoView(),
+        builder: (context) => UploadTeamPhotoView(
+          key: args.key,
+          onBoarding: args.onBoarding,
+        ),
         settings: data,
       );
     },
@@ -297,7 +306,15 @@ class UserDetailViewArguments {
 /// SetupTeamProfileView arguments holder class
 class SetupTeamProfileViewArguments {
   final Key? key;
-  SetupTeamProfileViewArguments({this.key});
+  final bool onBoarding;
+  SetupTeamProfileViewArguments({this.key, this.onBoarding = true});
+}
+
+/// UploadTeamPhotoView arguments holder class
+class UploadTeamPhotoViewArguments {
+  final Key? key;
+  final bool onBoarding;
+  UploadTeamPhotoViewArguments({this.key, this.onBoarding = true});
 }
 
 /// SetupUserProfileView arguments holder class

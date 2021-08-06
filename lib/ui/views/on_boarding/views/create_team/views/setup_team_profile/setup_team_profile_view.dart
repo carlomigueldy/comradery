@@ -15,14 +15,17 @@ class SetupTeamProfileView extends StatelessWidget with UiUtilMixin {
 
   SetupTeamProfileView({
     Key? key,
+    this.onBoarding = true,
   }) : super(key: key);
+
+  final bool onBoarding;
 
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
 
     return ViewModelBuilder<SetupTeamProfileViewModel>.reactive(
-      viewModelBuilder: () => SetupTeamProfileViewModel(),
+      viewModelBuilder: () => SetupTeamProfileViewModel(onBoarding: onBoarding),
       builder: (
         BuildContext context,
         SetupTeamProfileViewModel model,

@@ -8,12 +8,16 @@ import 'package:stacked/stacked.dart';
 import 'upload_team_photo_viewmodel.dart';
 
 class UploadTeamPhotoView extends StatelessWidget with UiUtilMixin {
-  const UploadTeamPhotoView({Key? key}) : super(key: key);
+  const UploadTeamPhotoView({
+    Key? key,
+    this.onBoarding = true,
+  }) : super(key: key);
+  final bool onBoarding;
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<UploadTeamPhotoViewModel>.reactive(
-      viewModelBuilder: () => UploadTeamPhotoViewModel(),
+      viewModelBuilder: () => UploadTeamPhotoViewModel(onBoarding: onBoarding),
       builder: (
         BuildContext context,
         UploadTeamPhotoViewModel model,

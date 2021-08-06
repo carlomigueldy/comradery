@@ -1,18 +1,17 @@
 import 'package:comradery/app.dart';
-import 'package:comradery/auth/services/auth_service.dart';
+import 'package:comradery/app.logger.dart';
 import 'package:comradery/common/services/app_snackbar_service.dart';
 import 'package:comradery/conversation/models/conversation.dart';
 import 'package:comradery/conversation/services/conversation_service.dart';
 import 'package:comradery/ui/views/app/app_viewmodel.dart';
 import 'package:comradery/user/models/user.dart';
 import 'package:comradery/user/services/user_service.dart';
-import 'package:logger/logger.dart';
 import 'package:postgrest/postgrest.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class UserDetailViewModel extends BaseViewModel {
-  final log = Logger();
+  final log = stackedLogger('UserDetailViewModel');
   final _appViewModel = locator<AppViewModel>();
   final _userService = locator<UserService>();
   final _conversationService = locator<ConversationService>();
@@ -68,9 +67,8 @@ class UserDetailViewModel extends BaseViewModel {
 
     if (conversation != null) {
       // navigate to conversation view
-      return _router.replaceWith(
+      return _router.navigateTo(
         Routes.conversationDetailView(conversationId: conversation.id),
-        id: AppRouterId.appView,
       );
     }
 
@@ -95,10 +93,17 @@ class UserDetailViewModel extends BaseViewModel {
     final conversation = Conversation.fromJson(response.data.first);
 
     // navigate to conversation view
-    return _router.replaceWith(
+    return _router.navigateTo(
       Routes.conversationDetailView(conversationId: conversation.id!),
-      id: AppRouterId.appView,
     );
+  }
+
+  void requestToJoinTeam() {
+    log.v('Requested');
+  }
+
+  void inviteToTeam() {
+    log.v('Invited');
   }
 
   // Future<String?> existingConversation() async {

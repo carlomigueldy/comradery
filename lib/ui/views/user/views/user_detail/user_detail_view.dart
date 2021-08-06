@@ -48,7 +48,21 @@ class UserDetailView extends StatelessWidget with UiUtilMixin {
                   color: uiUtil.colors.black,
                 ),
               ),
-              onSelected: (value) {},
+              onSelected: (value) async {
+                switch (value) {
+                  case 'start_conversation':
+                    return model.startConversation();
+
+                  case 'invite_to_team':
+                    return model.inviteToTeam();
+
+                  case 'request_to_join_team':
+                    return model.requestToJoinTeam();
+
+                  default:
+                    return;
+                }
+              },
               itemBuilder: (context) {
                 return [
                   PopupMenuItem(

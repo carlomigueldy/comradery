@@ -160,6 +160,7 @@ class _AppViewLeftDrawerState extends State<AppViewLeftDrawer>
                 ),
                 MyTeamsTabView(
                   teams: widget.model.myTeams,
+                  onTapCreateTeam: () => widget.model.createTeam(),
                   onTap: (value) {
                     widget.model.toTeamDetailView(value.id!);
                   },

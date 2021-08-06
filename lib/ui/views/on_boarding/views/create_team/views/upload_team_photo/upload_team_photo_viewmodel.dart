@@ -6,6 +6,12 @@ import 'package:comradery/ui/views/on_boarding/views/create_team/common/create_t
 class UploadTeamPhotoViewModel extends OnBoardingViewModel {
   final _createTeamViewModel = locator<CreateTeamViewModel>();
 
+  UploadTeamPhotoViewModel({
+    required this.onBoarding,
+  });
+
+  final bool onBoarding;
+
   Future<void> uploadPhoto() async {
     if (_createTeamViewModel.team == null) {
       return;
@@ -41,6 +47,10 @@ class UploadTeamPhotoViewModel extends OnBoardingViewModel {
       await uploadPhoto();
     }
 
-    router.navigateTo(Routes.setupUserProfileView);
+    if (!onBoarding) {
+      return router.replaceWith(Routes.homeView);
+    }
+
+    return router.navigateTo(Routes.setupUserProfileView);
   }
 }

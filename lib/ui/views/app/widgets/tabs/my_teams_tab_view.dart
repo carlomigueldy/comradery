@@ -9,10 +9,12 @@ class MyTeamsTabView extends StatelessWidget with UiUtilMixin {
     Key? key,
     required this.teams,
     this.onTap,
+    this.onTapCreateTeam,
   }) : super(key: key);
 
   final List<Team> teams;
   final Function(Team)? onTap;
+  final Function()? onTapCreateTeam;
 
   @override
   Widget build(BuildContext context) {
@@ -31,35 +33,91 @@ class MyTeamsTabView extends StatelessWidget with UiUtilMixin {
                   itemBuilder: (context, index) {
                     final team = teams[index];
 
-                    return InkWell(
+                    return AppTeamCard(
                       onTap: () => onTap?.call(team),
-                      child: Container(
-                        height: 175,
-                        decoration: BoxDecoration(
-                          color: theme.canvasColor,
-                          borderRadius: uiUtil.borderRadius.large,
-                          image: DecorationImage(
-                            image: NetworkImage(PLACEHOLDER_IMG),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        child: Center(
-                            child: AppText.bodyBold(
-                          team.name,
-                          style: uiUtil.textStyles.bodyBold.copyWith(
-                            color: Colors.white,
-                          ),
-                        )),
-                      ),
+                      team: team,
                     );
                   },
                   separatorBuilder: (context, index) {
                     return uiUtil.verticalSpacing.large;
                   },
                 )
-              : Text('No teams yet.'),
+              : Column(
+                  children: [
+                    Text('No teams yet.'),
+                    uiUtil.verticalSpacing.large,
+                    InkWell(
+                      onTap: onTapCreateTeam,
+                      child: Container(
+                        height: 125,
+                        decoration: BoxDecoration(
+                          color: Colors.green.withOpacity(0.2),
+                          borderRadius: uiUtil.borderRadius.large,
+                          border: Border.all(
+                            color: Colors.green,
+                            width: 2.0,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.add_rounded,
+                              color: Colors.green,
+                            ),
+                            uiUtil.horizontalSpacing.normal,
+                            AppText.bodyBold(
+                              'Create Team',
+                              style: uiUtil.textStyles.bodyBold.copyWith(
+                                color: Colors.green,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
           uiUtil.verticalSpacing.huge,
         ],
+      ),
+    );
+  }
+}
+
+class AppTeamCard extends StatelessWidget with UiUtilMixin {
+  const AppTeamCard({
+    Key? key,
+    required this.team,
+    this.onTap,
+  }) : super(key: key);
+
+  final Function()? onTap;
+  final Team team;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 175,
+        decoration: BoxDecoration(
+          color: theme.canvasColor,
+          borderRadius: uiUtil.borderRadius.large,
+          image: DecorationImage(
+            image: NetworkImage(PLACEHOLDER_IMG),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+            child: AppText.bodyBold(
+          team.name,
+          style: uiUtil.textStyles.bodyBold.copyWith(
+            color: Colors.white,
+          ),
+        )),
       ),
     );
   }

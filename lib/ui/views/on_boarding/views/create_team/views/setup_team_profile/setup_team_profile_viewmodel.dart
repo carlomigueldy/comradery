@@ -14,6 +14,12 @@ class SetupTeamProfileViewModel extends OnBoardingViewModel {
   final _authService = locator<AuthService>();
   final _router = locator<NavigationService>();
 
+  SetupTeamProfileViewModel({
+    required this.onBoarding,
+  });
+
+  final bool onBoarding;
+
   Future<void> createTeam(Map<String, dynamic> value) async {
     log.v('value "$value"');
 
@@ -34,7 +40,12 @@ class SetupTeamProfileViewModel extends OnBoardingViewModel {
 
       _createTeamViewModel.team = Team.fromJson(response.data.first);
 
-      _router.navigateTo(Routes.uploadTeamPhotoView);
+      _router.navigateTo(
+        Routes.uploadTeamPhotoView,
+        arguments: UploadTeamPhotoViewArguments(
+          onBoarding: onBoarding,
+        ),
+      );
     } catch (e) {
       log.e('error "$e"');
     } finally {

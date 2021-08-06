@@ -260,4 +260,13 @@ class AppViewModel extends BaseViewModel {
     // _matchings.add(matching);
     fetchMyMatchings();
   }
+
+  void createTeam() {
+    _router.navigateTo(
+      Routes.setupTeamProfileView,
+      arguments: SetupTeamProfileViewArguments(
+        onBoarding: false,
+      ),
+    );
+  }
 }
