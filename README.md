@@ -6,10 +6,10 @@ Living in a pack allows the members to build a camaraderie that creates a lifelo
 
 # Stack
 
-Backend: PostgreSQL + Supabase
-Frontend: Flutter
-Auth: Supabase Auth
-Storage: Supabase Storage
+- Backend: PostgreSQL + Supabase
+- Frontend: Flutter
+- Auth: Supabase Auth
+- Storage: Supabase Storage
 
 # Demos
 
