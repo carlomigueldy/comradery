@@ -153,19 +153,28 @@ class _ChatLayout extends StatelessWidget with UiUtilMixin {
               final message = model.messages[index];
               final isMe = message.createdBy == model.authUserId;
 
+              final children = [
+                // CircleAvatar(),
+                // uiUtil.horizontalSpacing.normal,
+                // uiUtil.horizontalSpacing.normal,
+                Container(
+                  padding: uiUtil.edgeInsets.all10,
+                  decoration: BoxDecoration(
+                    color: isMe
+                        ? theme.primaryColor.withOpacity(0.1)
+                        : uiUtil.colors.veryLightGrey,
+                    borderRadius: uiUtil.borderRadius.large,
+                  ),
+                  child: Text(message.content),
+                ),
+              ];
+
               return Row(
                 mainAxisAlignment:
                     isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
                 children: [
-                  Container(
-                    padding: uiUtil.edgeInsets.all10,
-                    decoration: BoxDecoration(
-                      color: isMe
-                          ? theme.primaryColor.withOpacity(0.1)
-                          : uiUtil.colors.veryLightGrey,
-                      borderRadius: uiUtil.borderRadius.large,
-                    ),
-                    child: Text(message.content),
+                  Row(
+                    children: isMe ? children.reversed.toList() : children,
                   ),
                 ],
               );
@@ -192,6 +201,8 @@ class _TextField extends HookViewModelWidget<ConversationDetailViewModel> {
     BuildContext context,
     ConversationDetailViewModel model,
   ) {
+    final theme = Theme.of(context);
+
     final messageController = useTextEditingController();
 
     void sendMessage() {
@@ -207,9 +218,15 @@ class _TextField extends HookViewModelWidget<ConversationDetailViewModel> {
       onChanged: model.onInputMessageChange,
       onEditingComplete: () => sendMessage(),
       suffixIcon: model.sendMessageBusy
-          ? AppSpinner()
+          ? Container(
+              padding: const EdgeInsets.all(15),
+              child: AppSpinner(centered: false),
+            )
           : IconButton(
-              icon: Icon(Icons.send_rounded),
+              icon: Icon(
+                Icons.send_rounded,
+                color: theme.primaryColor,
+              ),
               onPressed: () => sendMessage(),
             ),
     );

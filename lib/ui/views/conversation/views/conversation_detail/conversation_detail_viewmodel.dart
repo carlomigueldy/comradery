@@ -63,6 +63,7 @@ class ConversationDetailViewModel extends BaseViewModel {
       .where((element) => element.id != _authService.user!.id!)
       .toList()
       .first;
+  String get otherUserFullName => _otherUser?.fullName ?? '-';
 
   String get authUserId => _authService.user!.id!;
   String get authUserFullName => _authService.user!.fullName;

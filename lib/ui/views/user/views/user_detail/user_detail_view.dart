@@ -69,14 +69,14 @@ class UserDetailView extends StatelessWidget with UiUtilMixin {
                     value: 'start_conversation',
                     child: Text('Start Conversation'),
                   ),
-                  PopupMenuItem(
-                    value: 'invite_to_team',
-                    child: Text('Invite to Team'),
-                  ),
-                  PopupMenuItem(
-                    value: 'request_to_join_team',
-                    child: Text('Request to Join Team'),
-                  ),
+                  // PopupMenuItem(
+                  //   value: 'invite_to_team',
+                  //   child: Text('Invite to Team'),
+                  // ),
+                  // PopupMenuItem(
+                  //   value: 'request_to_join_team',
+                  //   child: Text('Request to Join Team'),
+                  // ),
                 ];
               },
             ),
