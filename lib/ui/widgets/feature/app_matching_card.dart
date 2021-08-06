@@ -75,7 +75,7 @@ class AppMatchingCard extends StatelessWidget with UiUtilMixin {
                   spacing: 8.0,
                   runSpacing: 4.0,
                   children: user.hasInterests
-                      ? user.interests!.getRange(0, 3).map((userInterest) {
+                      ? user.interests!.getRange(0, 2).map((userInterest) {
                           return AppTag(
                             text: userInterest.interest!.name,
                           );

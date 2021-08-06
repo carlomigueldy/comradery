@@ -74,35 +74,35 @@ class AppViewModel extends BaseViewModel {
       _recentMatching = matching;
       log.v('_recentMatching "${_recentMatching?.toJson()}"');
 
-      try {
-        log.v('Fetching...');
-        final response = await supabase
-            .from('matchings')
-            .select('*, target_user: users (id, first_name, email)')
-            .eq(
-              'created_by',
-              matching.targetUserId,
-            )
-            .eq('target_user_id', _authService.user!.id!)
-            .is_('liked', true)
-            .single()
-            .execute();
-        log.v('response "${response.toJson()}"');
+      // try {
+      //   log.v('Fetching...');
+      //   final response = await supabase
+      //       .from('matchings')
+      //       .select('*, target_user: users (id, first_name, email)')
+      //       .eq(
+      //         'created_by',
+      //         matching.targetUserId,
+      //       )
+      //       .eq('target_user_id', _authService.user!.id!)
+      //       .is_('liked', true)
+      //       .single()
+      //       .execute();
+      //   log.v('response "${response.toJson()}"');
 
-        log.v('SupabaseEventTypes.insert | response "${response.toJson()}"');
+      //   log.v('SupabaseEventTypes.insert | response "${response.toJson()}"');
 
-        if (response.error != null) {
-          return log.e(response.error?.message);
-        }
+      //   if (response.error != null) {
+      //     return log.e(response.error?.message);
+      //   }
 
-        _targetMatching = Matching.fromJson(response.data);
+      //   _targetMatching = Matching.fromJson(response.data);
 
-        log.v('_targetMatching "${_targetMatching?.toJson()}"');
+      //   log.v('_targetMatching "${_targetMatching?.toJson()}"');
 
-        // notifyListeners();
-      } catch (e) {
-        log.e('error "$e"');
-      }
+      //   // notifyListeners();
+      // } catch (e) {
+      //   log.e('error "$e"');
+      // }
     }).subscribe();
   }
 
@@ -133,7 +133,7 @@ class AppViewModel extends BaseViewModel {
       busyObject: _fetchMyMatchingsKey,
       throwException: true,
     );
-    log.v('fetchMyMatchings-response "${response.toJson()}"');
+    // log.v('fetchMyMatchings-response "${response.toJson()}"');
 
     if (response.error != null) {
       log.e(response.error?.message);
@@ -151,7 +151,7 @@ class AppViewModel extends BaseViewModel {
       busyObject: _fetchWhoLikedMeKey,
       throwException: true,
     );
-    log.v('fetchWhoLikedMe-response "${response.toJson()}"');
+    // log.v('fetchWhoLikedMe-response "${response.toJson()}"');
 
     if (response.error != null) {
       log.e(response.error?.message);
@@ -170,14 +170,14 @@ class AppViewModel extends BaseViewModel {
         .eq('user_id', _authService.user!.id!)
         .is_('deleted_at', null)
         .execute();
-    log.v('cpResponse "${cpResponse.toJson()}"');
+    // log.v('cpResponse "${cpResponse.toJson()}"');
     if (cpResponse.error != null) {
       return log.e('cpResponse.error?.message "${cpResponse.error?.message}"');
     }
     final conversationIds = (cpResponse.data as List<dynamic>)
         .map((e) => e['conversation_id'])
         .toList();
-    log.v('cpResponse.conversationIds "$conversationIds"');
+    // log.v('cpResponse.conversationIds "$conversationIds"');
 
     if (conversationIds.isEmpty) {
       return;
@@ -199,7 +199,7 @@ class AppViewModel extends BaseViewModel {
       busyObject: _fetchMyConversationsKey,
       throwException: true,
     );
-    log.v('fetchMyConversations-response "${response.toJson()}"');
+    // log.v('fetchMyConversations-response "${response.toJson()}"');
     // log.i(response.toJson());
 
     if (response.error != null) {

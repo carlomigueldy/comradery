@@ -10,6 +10,7 @@ import 'package:comradery/ui/views/conversation/views/conversation_detail/conver
 import 'package:comradery/user/models/user.dart';
 import 'package:comradery/user/services/user_service.dart';
 import 'package:logger/logger.dart';
+import 'package:postgrest/postgrest.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:supabase/supabase.dart' as sb;
@@ -116,6 +117,12 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> fetchUsers() async {
+    final interests = _authService.user!.interests!
+        .map((interest) => interest.interestId)
+        .toList();
+
+    log.v('fetchUsers_interests "$interests"');
+
     final response = await runBusyFuture<sb.PostgrestResponse>(
       supabase
           .from(_userService.table)
@@ -123,13 +130,18 @@ class HomeViewModel extends BaseViewModel {
             '*, interests: user_interests (user_id, interest_id, interest: interests (name) )',
           )
           .not('id', 'in', '(${matchingsTargetUserIds.join(',')})')
-          .neq('id', _authService.user!.id!)
+          .in_(
+            'interests.interest_id',
+            interests,
+          )
           .is_('deleted_at', null)
-          .execute(),
+          .neq('id', _authService.user!.id!)
+          .execute(count: CountOption.exact),
       busyObject: _fetchUsersKey,
       throwException: true,
     );
-    log.v('response "${response.toJson()}"');
+    log.v(response.count);
+    // log.v('response "${response.toJson()}"');
 
     if (response.error != null) {
       log.e(response.error?.message);
@@ -153,6 +165,10 @@ class HomeViewModel extends BaseViewModel {
     }).toList();
     _matchEngine = MatchEngine(swipeItems: swipeItems);
 
+    log.v(
+      '_users.length "${_users.length}, _swipeItems.length "${_swipeItems.length}""',
+    );
+
     notifyListeners();
   }
 
@@ -162,7 +178,7 @@ class HomeViewModel extends BaseViewModel {
       busyObject: _fetchMyMatchingsKey,
       throwException: true,
     );
-    log.v('response "${response.toJson()}"');
+    // log.v('response "${response.toJson()}"');
 
     if (response.error != null) {
       log.e(response.error?.message);
