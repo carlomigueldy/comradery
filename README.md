@@ -17,8 +17,8 @@ TBD
 
 ## Contributors
 
-- @carlomigueldy Software Engineer
-- @haniniboo UI/UX Designer
+- [carlomigueldy](https://github.com/carlomigueldy) Software Engineer
+- [haniniboo](https://github.com/haniniboo) UI/UX Designer
 
 ## Demos
 
