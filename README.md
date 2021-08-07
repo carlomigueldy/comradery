@@ -4,6 +4,10 @@ Comradery is an online platform that connects a lone wolf to its pack that share
 
 Living in a pack allows the members to build a camaraderie that creates a lifelong bond and nurture each other as individuals, which is the foundation for cooperative living. Wolves succeed by cooperating, and struggle when they are alone, same goes with humans.
 
+## Status
+
+- Not finished / completed
+
 ## Stack
 
 - Backend: PostgreSQL + Supabase
