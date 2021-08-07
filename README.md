@@ -6,7 +6,7 @@ Living in a pack allows the members to build a camaraderie that creates a lifelo
 
 ## Status
 
-- Not finished / completed
+Not finished / completed
 
 ## Stack
 
