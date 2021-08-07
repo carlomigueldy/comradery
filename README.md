@@ -8,6 +8,8 @@ Living in a pack allows the members to build a camaraderie that creates a lifelo
 
 Not finished / completed
 
+Originally it was going to be using Flutter Web but encountered many issues during development so had to drop it and just proceed with mobile version
+
 ## Stack
 
 - Backend: PostgreSQL + Supabase
