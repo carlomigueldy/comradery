@@ -39,10 +39,10 @@ class NotificationsViewModel extends BaseViewModel {
             'in',
             '(${_appViewModel.myTeams.map((e) => e.id).toList().join(',')})',
           )
-          .eq(
-            'created_by',
-            _authService.user!.id!,
-          )
+          // .eq(
+          //   'created_by',
+          //   _authService.user!.id!,
+          // )
           .execute(),
       busyObject: _fetchTeamRequestsKey,
       throwException: true,

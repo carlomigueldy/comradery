@@ -35,12 +35,20 @@ class MessagesTabView extends StatelessWidget with UiUtilMixin {
               itemBuilder: (context, index) {
                 final conversation = conversations[index];
 
-                return _ConversationListTile(
-                  photoUrl: conversation.participants
+                var photoUrl;
+
+                try {
+                  photoUrl = conversation.participants
                       ?.map((e) => e.user)
                       .toList()
                       .firstWhere((element) => element!.id != authUser.id)
-                      ?.photoUrl,
+                      ?.photoUrl;
+                } catch (e) {
+                  //
+                }
+
+                return _ConversationListTile(
+                  photoUrl: photoUrl,
                   title: conversation.name != null
                       ? conversation.name!
                       : conversation.participantNames
