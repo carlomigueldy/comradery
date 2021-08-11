@@ -39,7 +39,7 @@ class ThemeService with ReactiveServiceMixin, UiUtilMixin {
   ThemeData light() => ThemeData(
         brightness: Brightness.light,
         primaryColor: kcPrimary,
-        scaffoldBackgroundColor: uiUtil.colors.white,
+        scaffoldBackgroundColor: uiUtil.colors.backgroundColor,
         fontFamily: fontFamily,
         cardTheme: _cardTheme.copyWith(
           color: uiUtil.colors.veryLightGrey,
@@ -57,7 +57,7 @@ class ThemeService with ReactiveServiceMixin, UiUtilMixin {
         cardTheme: _cardTheme.copyWith(
           color: Colors.grey[900],
         ),
-        scaffoldBackgroundColor: Colors.black,
+        scaffoldBackgroundColor: uiUtil.colors.black,
         appBarTheme: AppBarTheme(
           backgroundColor: uiUtil.colors.darkGrey,
         ),

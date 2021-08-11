@@ -25,7 +25,7 @@ class AppTopBar extends StatelessWidget
     final theme = Theme.of(context);
 
     return AppBar(
-      backgroundColor: backgroundColor ?? uiUtil.colors.backgroundColor,
+      backgroundColor: backgroundColor ?? theme.scaffoldBackgroundColor,
       elevation: 0,
       leading: leading ?? (Navigator.canPop(context) ? AppBackButton() : null),
       centerTitle: true,

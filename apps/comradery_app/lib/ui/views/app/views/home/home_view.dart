@@ -1,17 +1,15 @@
-import 'package:comradery/app.dart';
 import 'package:comradery/common/utils/ui_util.dart';
-import 'package:comradery/ui/views/app/app_viewmodel.dart';
+import 'package:comradery/ui/views/app/views/home/tabs/main_tab/main_tab_view.dart';
 import 'package:comradery/ui/views/app/widgets/app_view_left_drawer.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/app_bar/app_top_bar.dart';
-import 'package:comradery/ui/widgets/dumb_widgets/button/app_button.dart';
-import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
-import 'package:comradery/ui/widgets/dumb_widgets/spinner/app_spinner.dart';
-import 'package:comradery/ui/widgets/feature/app_matching_card.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:swipe_cards/swipe_cards.dart';
 
 import 'home_viewmodel.dart';
+import 'tabs/conversations_tab/conversations_tab_view.dart';
+import 'tabs/my_matches_tab/my_matches_tab_view.dart';
+import 'tabs/my_teams_tab/my_teams_tab_view.dart';
+import 'tabs/profile/profile_tab_view.dart';
 
 class HomeView extends StatelessWidget with UiUtilMixin {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -22,21 +20,20 @@ class HomeView extends StatelessWidget with UiUtilMixin {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final mediaQuery = MediaQuery.of(context);
+
     return ViewModelBuilder<HomeViewModel>.reactive(
-      onModelReady: (model) => model.init(),
       viewModelBuilder: () => HomeViewModel(),
       builder: (
         BuildContext context,
         HomeViewModel model,
         Widget? child,
       ) {
-        final theme = Theme.of(context);
-        final mediaQuery = MediaQuery.of(context);
-
         final leftDrawer = AppViewLeftDrawer(model: model.appViewModel);
 
         return Container(
-          color: uiUtil.colors.backgroundColor,
+          color: theme.scaffoldBackgroundColor,
           child: SafeArea(
             child: Scaffold(
               key: _scaffoldKey,
@@ -63,33 +60,42 @@ class HomeView extends StatelessWidget with UiUtilMixin {
                   ),
                 ),
               ),
-              body: Container(
-                width: mediaQuery.size.width,
-                height: mediaQuery.size.height,
-                color: uiUtil.colors.backgroundColor,
-                padding: uiUtil.edgeInsets.horizontalSymmetric10,
-                child: model.isBusy
-                    ? AppSpinner()
-                    : model.users.isNotEmpty
-                        ? _MatchLayout(
-                            model: model,
-                          )
-                        : !model.isBusy && model.users.isEmpty
-                            ? Padding(
-                                padding:
-                                    uiUtil.edgeInsets.horizontalSymmetric15,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    AppText(
-                                      "Can't find anyone with similar interests as you at this moment.",
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : Container(),
+              body: viewByIndex(model.currentIndex),
+              bottomNavigationBar: Theme(
+                data: theme.copyWith(
+                  canvasColor: theme.scaffoldBackgroundColor,
+                ),
+                child: BottomNavigationBar(
+                  onTap: model.setIndex,
+                  backgroundColor: theme.scaffoldBackgroundColor,
+                  currentIndex: model.currentIndex,
+                  fixedColor: theme.primaryColor,
+                  unselectedItemColor: uiUtil.colors.black,
+                  showUnselectedLabels: false,
+                  showSelectedLabels: false,
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home),
+                      label: 'Home',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.h_mobiledata_outlined),
+                      label: 'Conversations',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.h_mobiledata_outlined),
+                      label: 'My Matches',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.h_mobiledata_outlined),
+                      label: 'My Teams',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.h_mobiledata_outlined),
+                      label: 'Profile',
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -97,78 +103,26 @@ class HomeView extends StatelessWidget with UiUtilMixin {
       },
     );
   }
-}
 
-class _MatchLayout extends StatelessWidget with UiUtilMixin {
-  const _MatchLayout({
-    Key? key,
-    required this.model,
-  }) : super(key: key);
+  Widget viewByIndex(int index) {
+    switch (index) {
+      case 0:
+        return MainTabView();
 
-  final HomeViewModel model;
+      case 1:
+        return ConversationsTabView();
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        if (model.likeUserBusy || model.nopeUserBusy) AppSpinner(),
-        SwipeCards(
-          matchEngine: model.matchEngine,
-          itemBuilder: (context, index) {
-            final user = model.users[index];
+      case 2:
+        return MyMatchesTabView();
 
-            return AppMatchingCard(
-              user: user,
-              onTap: () {
-                // model.toUserDetailView(user);
-              },
-              onTapNope: () {
-                model.matchEngine.currentItem?.nope();
-              },
-              onTapLike: () {
-                model.matchEngine.currentItem?.like();
-              },
-            );
-          },
-          onStackFinished: () {
-            model.init();
-          },
-        ),
-        uiUtil.verticalSpacing.large,
-        // Container(
-        //   // width: mediaQuery.size.width * 0.3,
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //     children: [
-        //       AppButton.text(
-        //         label: 'Nope',
-        //         onPressed: () {
-        //           model.matchEngine.currentItem?.nope();
-        //         },
-        //       ),
-        //       // TODO: To remove
-        //       AppButton.text(
-        //         label: 'Chat',
-        //         onPressed: () {
-        //           model.toConversationView();
-        //         },
-        //       ),
-        //       AppButton.text(
-        //         label: 'Open Profile',
-        //         onPressed: () => model.viewUserProfile(),
-        //       ),
-        //       AppButton.text(
-        //         label: 'Like',
-        //         onPressed: () {
-        //           model.matchEngine.currentItem?.like();
-        //         },
-        //       ),
-        //     ],
-        //   ),
-        // ),
-      ],
-    );
+      case 3:
+        return MyTeamsTabView();
+
+      case 4:
+        return ProfileTabView();
+
+      default:
+        return MainTabView();
+    }
   }
 }

@@ -20,6 +20,7 @@ class MatchingService extends SupabaseService {
         .neq('created_by', _authService.user!.id!)
         .is_('liked', true)
         .is_('deleted_at', null)
+        .limit(5)
         .execute();
   }
 

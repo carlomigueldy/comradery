@@ -161,7 +161,7 @@ class AuthService {
         .insert(
           User(
             id: user.id,
-            email: user.email,
+            email: user.email!,
             firstName: firstName,
             lastName: lastName,
           ).toPayload(),
