@@ -1,5 +1,6 @@
 import 'package:comradery/common/utils/ui_util.dart';
-import 'package:comradery/ui/views/app/widgets/tabs/matches_tab_view.dart';
+import 'package:comradery/ui/views/app/widgets/tabs/matches_tab_view_layout_builder.dart';
+import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -13,7 +14,7 @@ class MyMatchesTabView extends StatelessWidget with UiUtilMixin {
     final theme = Theme.of(context);
 
     return ViewModelBuilder<MyMatchesTabViewModel>.reactive(
-      onModelReady: (model) => model.init(),
+      // onModelReady: (model) => model.appViewModel.fetchMyMatchings(),
       viewModelBuilder: () => MyMatchesTabViewModel(),
       builder: (
         BuildContext context,
@@ -23,12 +24,33 @@ class MyMatchesTabView extends StatelessWidget with UiUtilMixin {
         return Container(
           padding: uiUtil.edgeInsets.horizontalSymmetric25,
           // color: uiUtil.colors.backgroundColor,
-          child: MatchesTabViewLayoutBuilder(
-            matchings: model.filteredMatchings,
-            onTap: (value) {
-              model.toUserDetailView(value.createdBy);
-            },
-          ),
+          child: model.isBusy
+              ? AppSpinner()
+              : Container(
+                  child: Column(
+                    children: [
+                      uiUtil.verticalSpacing.large,
+                      Row(
+                        children: [
+                          Text(
+                            'My Matches',
+                            style: uiUtil.textStyles.heading3.copyWith(
+                              color: theme.primaryColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      uiUtil.verticalSpacing.large,
+                      MatchesTabViewLayoutBuilder(
+                        matchings: model.appViewModel.filteredMatchings,
+                        onTap: (value) {
+                          model.appViewModel.toUserDetailView(value.createdBy);
+                        },
+                      ),
+                      uiUtil.verticalSpacing.huge,
+                    ],
+                  ),
+                ),
         );
       },
     );

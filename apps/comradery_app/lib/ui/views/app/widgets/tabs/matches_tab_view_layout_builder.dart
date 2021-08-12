@@ -23,8 +23,9 @@ class MatchesTabViewLayoutBuilder extends StatelessWidget with UiUtilMixin {
     const itemWidth = 1250 / 2;
 
     return ListView(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
       children: [
-        uiUtil.verticalSpacing.large,
         matchings.isNotEmpty
             ? GridView.count(
                 childAspectRatio: (itemWidth / itemHeight),
@@ -49,7 +50,6 @@ class MatchesTabViewLayoutBuilder extends StatelessWidget with UiUtilMixin {
                   'No matchings yet.',
                 ),
               ),
-        uiUtil.verticalSpacing.huge,
       ],
     );
   }

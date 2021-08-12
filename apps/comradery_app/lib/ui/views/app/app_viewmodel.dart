@@ -21,6 +21,24 @@ class AppViewModel extends BaseViewModel {
   String get userEmail => _authService.user?.email ?? '-';
   User? get authUser => _authService.user;
 
+  List<Matching> _matchings = [];
+  List<Matching> get matchings => _matchings;
+  List<String> get matchingsIds => _matchings.map((e) => e.id!).toList();
+  List<Matching> get filteredMatchings => _matchings.where((element) {
+        return targettedMatchingTargetUserIds.contains(element.createdBy);
+      }).toList();
+  List<String> get filteredMatchingsIds =>
+      filteredMatchings.map((e) => e.id!).toList();
+  String get _fetchMyMatchingsKey => '_fetchMyMatchingsKey';
+  bool get fetchMyMatchingsBusy => busy(_fetchMyMatchingsKey);
+
+  List<Matching> _targettedMatchings = [];
+  List<Matching> get targettedMatchings => _targettedMatchings;
+  List<String> get targettedMatchingTargetUserIds =>
+      targettedMatchings.map((e) => e.targetUserId).toList();
+  String get _fetchWhoLikedMeKey => '_fetchWhoLikedMeKey';
+  bool get fetchWhoLikedMeBusy => busy(_fetchWhoLikedMeKey);
+
   List<Conversation> _conversations = [];
   List<Conversation> get conversations => _conversations;
   String get _fetchMyConversationsKey => '_fetchMyConversationsKey';
@@ -39,11 +57,52 @@ class AppViewModel extends BaseViewModel {
 
   Future<void> init() async {
     await Future.wait([
-      // fetchWhoLikedMe(),
-      // fetchMyMatchings(),
+      fetchWhoLikedMe(),
+      fetchMyMatchings(),
       fetchMyConversations(),
       fetchMyTeams(),
     ]);
+
+    // INSERT `matchings`
+    // supabase
+    //     .from(
+    //   '${_matchingService.table}:created_by=eq.${_authService.user?.id}',
+    // )
+    //     .on(sp.SupabaseEventTypes.insert, (payload) async {
+    //   final matching = Matching.fromJson(payload.newRecord);
+    //   _recentMatching = matching;
+    //   log.v('_recentMatching "${_recentMatching?.toJson()}"');
+
+    //   // try {
+    //   //   log.v('Fetching...');
+    //   //   final response = await supabase
+    //   //       .from('matchings')
+    //   //       .select('*, target_user: users (id, first_name, email)')
+    //   //       .eq(
+    //   //         'created_by',
+    //   //         matching.targetUserId,
+    //   //       )
+    //   //       .eq('target_user_id', _authService.user!.id!)
+    //   //       .is_('liked', true)
+    //   //       .single()
+    //   //       .execute();
+    //   //   log.v('response "${response.toJson()}"');
+
+    //   //   log.v('SupabaseEventTypes.insert | response "${response.toJson()}"');
+
+    //   //   if (response.error != null) {
+    //   //     return log.e(response.error?.message);
+    //   //   }
+
+    //   //   _targetMatching = Matching.fromJson(response.data);
+
+    //   //   log.v('_targetMatching "${_targetMatching?.toJson()}"');
+
+    //   //   // notifyListeners();
+    //   // } catch (e) {
+    //   //   log.e('error "$e"');
+    //   // }
+    // }).subscribe();
   }
 
   Future<void> fetchMyTeams() async {
@@ -70,6 +129,42 @@ class AppViewModel extends BaseViewModel {
     }
 
     _myTeams = (response.data as List).map((e) => Team.fromJson(e)).toList();
+    notifyListeners();
+  }
+
+  Future<void> fetchMyMatchings() async {
+    final response = await runBusyFuture<sp.PostgrestResponse>(
+      _matchingService.fetchMyMatchings(),
+      busyObject: _fetchMyMatchingsKey,
+      throwException: true,
+    );
+    // log.v('fetchMyMatchings-response "${response.toJson()}"');
+
+    if (response.error != null) {
+      log.e(response.error?.message);
+      return;
+    }
+
+    _matchings =
+        (response.data as List).map((e) => Matching.fromJson(e)).toList();
+    notifyListeners();
+  }
+
+  Future<void> fetchWhoLikedMe() async {
+    final response = await runBusyFuture<sp.PostgrestResponse>(
+      _matchingService.fetchWhoLikedMe(),
+      busyObject: _fetchWhoLikedMeKey,
+      throwException: true,
+    );
+    // log.v('fetchWhoLikedMe-response "${response.toJson()}"');
+
+    if (response.error != null) {
+      log.e(response.error?.message);
+      return;
+    }
+
+    _targettedMatchings =
+        (response.data as List).map((e) => Matching.fromJson(e)).toList();
     notifyListeners();
   }
 
@@ -165,11 +260,11 @@ class AppViewModel extends BaseViewModel {
     );
   }
 
-  // void addMatching(Matching matching) {
-  //   log.v('New matching "${matching.toJson()}"');
-  //   // _matchings.add(matching);
-  //   fetchMyMatchings();
-  // }
+  void addMatching(Matching matching) {
+    log.v('New matching "${matching.toJson()}"');
+    // _matchings.add(matching);
+    fetchMyMatchings();
+  }
 
   void createTeam() {
     _router.navigateTo(

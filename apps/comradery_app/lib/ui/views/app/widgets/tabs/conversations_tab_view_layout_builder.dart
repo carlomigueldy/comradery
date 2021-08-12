@@ -5,8 +5,9 @@ import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:comradery/user/models/user.dart';
 import 'package:flutter/material.dart';
 
-class MessagesTabView extends StatelessWidget with UiUtilMixin {
-  const MessagesTabView({
+class ConversationsTabViewLayoutBuilder extends StatelessWidget
+    with UiUtilMixin {
+  const ConversationsTabViewLayoutBuilder({
     Key? key,
     required this.conversations,
     required this.authUser,
@@ -23,57 +24,48 @@ class MessagesTabView extends StatelessWidget with UiUtilMixin {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          uiUtil.verticalSpacing.large,
-          if (conversations.isNotEmpty)
-            ListView.separated(
-              shrinkWrap: true,
-              itemCount: conversations.length,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final conversation = conversations[index];
+    return conversations.isNotEmpty
+        ? ListView.separated(
+            shrinkWrap: true,
+            itemCount: conversations.length,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final conversation = conversations[index];
 
-                var photoUrl;
+              var photoUrl;
 
-                try {
-                  photoUrl = conversation.participants
-                      ?.map((e) => e.user)
-                      .toList()
-                      .firstWhere((element) => element!.id != authUser.id)
-                      ?.photoUrl;
-                } catch (e) {
-                  //
-                }
+              try {
+                photoUrl = conversation.participants
+                    ?.map((e) => e.user)
+                    .toList()
+                    .firstWhere((element) => element!.id != authUser.id)
+                    ?.photoUrl;
+              } catch (e) {
+                //
+              }
 
-                return _ConversationListTile(
-                  photoUrl: photoUrl,
-                  title: conversation.name != null
-                      ? conversation.name!
-                      : conversation.participantNames
-                          .replaceAll(',', '')
-                          .replaceAll(
-                            authUser.fullName,
-                            '',
-                          ),
-                  conversation: conversation,
-                  onTap: () => onTap?.call(conversation),
-                  onLongPress: () => onLongPress?.call(conversation),
-                );
-              },
-              separatorBuilder: (context, index) {
-                return uiUtil.verticalSpacing.large;
-              },
-            )
-          else
-            Container(
-              child: Text('No conversations yet.'),
-            ),
-          uiUtil.verticalSpacing.huge,
-        ],
-      ),
-    );
+              return _ConversationListTile(
+                photoUrl: photoUrl,
+                title: conversation.name != null
+                    ? conversation.name!
+                    : conversation.participantNames
+                        .replaceAll(',', '')
+                        .replaceAll(
+                          authUser.fullName,
+                          '',
+                        ),
+                conversation: conversation,
+                onTap: () => onTap?.call(conversation),
+                onLongPress: () => onLongPress?.call(conversation),
+              );
+            },
+            separatorBuilder: (context, index) {
+              return uiUtil.verticalSpacing.large;
+            },
+          )
+        : Container(
+            child: Text('No conversations yet.'),
+          );
   }
 }
 
@@ -109,7 +101,6 @@ class _ConversationListTileState extends State<_ConversationListTile>
       onTap: widget.onTap,
       onLongPress: widget.onLongPress,
       child: Container(
-        padding: uiUtil.edgeInsets.horizontalSymmetric25,
         decoration: BoxDecoration(
           // color: Colors.white,
           borderRadius: uiUtil.borderRadius.large,

@@ -38,28 +38,28 @@ class HomeView extends StatelessWidget with UiUtilMixin {
             child: Scaffold(
               key: _scaffoldKey,
               drawer: leftDrawer,
-              appBar: AppTopBar(
-                leading: IconButton(
-                  icon: Icon(
-                    Icons.menu_rounded,
-                    color: theme.primaryColor,
-                  ),
-                  onPressed: () {
-                    _scaffoldKey.currentState?.openDrawer();
-                  },
-                ),
-                title: 'Comradery',
-                action: Padding(
-                  padding: uiUtil.edgeInsets.horizontalSymmetric5,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.notifications,
-                      color: theme.primaryColor,
-                    ),
-                    onPressed: () => model.toNotificationsView(),
-                  ),
-                ),
-              ),
+              // appBar: AppTopBar(
+              //   leading: IconButton(
+              //     icon: Icon(
+              //       Icons.menu_rounded,
+              //       color: theme.primaryColor,
+              //     ),
+              //     onPressed: () {
+              //       _scaffoldKey.currentState?.openDrawer();
+              //     },
+              //   ),
+              //   title: 'Comradery',
+              //   action: Padding(
+              //     padding: uiUtil.edgeInsets.horizontalSymmetric5,
+              //     child: IconButton(
+              //       icon: Icon(
+              //         Icons.notifications,
+              //         color: theme.primaryColor,
+              //       ),
+              //       onPressed: () => model.toNotificationsView(),
+              //     ),
+              //   ),
+              // ),
               body: viewByIndex(model.currentIndex),
               bottomNavigationBar: Theme(
                 data: theme.copyWith(
@@ -79,19 +79,19 @@ class HomeView extends StatelessWidget with UiUtilMixin {
                       label: 'Home',
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.h_mobiledata_outlined),
+                      icon: Icon(Icons.message_rounded),
                       label: 'Conversations',
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.h_mobiledata_outlined),
+                      icon: Icon(Icons.military_tech),
                       label: 'My Matches',
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.h_mobiledata_outlined),
+                      icon: Icon(Icons.dangerous),
                       label: 'My Teams',
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.h_mobiledata_outlined),
+                      icon: Icon(Icons.account_circle_rounded),
                       label: 'Profile',
                     ),
                   ],

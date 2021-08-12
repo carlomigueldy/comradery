@@ -5,9 +5,9 @@ import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:flutter/material.dart';
 
 import '../app_viewmodel.dart';
-import 'tabs/matches_tab_view.dart';
-import 'tabs/messages_tab_view.dart';
-import 'tabs/my_teams_tab_view.dart';
+import 'tabs/matches_tab_view_layout_builder.dart';
+import 'tabs/conversations_tab_view_layout_builder.dart';
+import 'tabs/my_teams_tab_view_layout_builder.dart';
 
 class AppViewLeftDrawer extends StatefulWidget {
   const AppViewLeftDrawer({
@@ -153,22 +153,20 @@ class _AppViewLeftDrawerState extends State<AppViewLeftDrawer>
             child: TabBarView(
               controller: tabController,
               children: [
-                Container(),
-                // MatchesTabViewLayoutBuilder(
-                //   matchings: widget.model.filteredMatchings,
-                //   onTap: (value) {
-                //     widget.model.toUserDetailView(value.createdBy);
-                //   },
-                // ),
-                MessagesTabView(
+                MatchesTabViewLayoutBuilder(
+                  matchings: widget.model.filteredMatchings,
+                  onTap: (value) {
+                    widget.model.toUserDetailView(value.createdBy);
+                  },
+                ),
+                ConversationsTabViewLayoutBuilder(
                   conversations: widget.model.conversations,
-                  // authUserFullName: widget.model.userFullName ?? '',
                   authUser: widget.model.authUser!,
                   onTap: (value) {
                     widget.model.toConversationDetailView(value.id!);
                   },
                 ),
-                MyTeamsTabView(
+                MyTeamsTabViewLayoutBuilder(
                   teams: widget.model.myTeams,
                   onTapCreateTeam: () => widget.model.createTeam(),
                   onTap: (value) {

@@ -63,16 +63,19 @@ class UserDetailViewModel extends BaseViewModel {
   }
 
   Future<void> startConversation() async {
-    final conversation = _appViewModel.findConversationFromUser(user!);
+    throw UnimplementedError(
+      'Will need to implement a Stored Procedure Function',
+    );
+    // final conversation = _appViewModel.findConversationFromUser(user!);
 
-    if (conversation != null) {
-      // navigate to conversation view
-      return _router.navigateTo(
-        Routes.conversationDetailView(conversationId: conversation.id),
-      );
-    }
+    // if (conversation != null) {
+    //   // navigate to conversation view
+    //   return _router.navigateTo(
+    //     Routes.conversationDetailView(conversationId: conversation.id),
+    //   );
+    // }
 
-    return await _createConversation();
+    // return await _createConversation();
   }
 
   Future<void> _createConversation() async {

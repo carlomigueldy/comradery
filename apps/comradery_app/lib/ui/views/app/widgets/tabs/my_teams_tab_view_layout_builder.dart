@@ -5,8 +5,8 @@ import 'package:comradery/ui/placeholders/placeholder_images.dart';
 import 'package:comradery/ui/widgets/dumb_widgets/dumb_widgets.dart';
 import 'package:flutter/material.dart';
 
-class MyTeamsTabView extends StatelessWidget with UiUtilMixin {
-  const MyTeamsTabView({
+class MyTeamsTabViewLayoutBuilder extends StatelessWidget with UiUtilMixin {
+  const MyTeamsTabViewLayoutBuilder({
     Key? key,
     required this.teams,
     this.onTap,
@@ -21,45 +21,28 @@ class MyTeamsTabView extends StatelessWidget with UiUtilMixin {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return SingleChildScrollView(
-      padding: uiUtil.edgeInsets.horizontalSymmetric25,
-      child: Column(
-        children: [
-          uiUtil.verticalSpacing.large,
-          teams.isNotEmpty
-              ? Column(
-                  children: [
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: teams.length,
-                      itemBuilder: (context, index) {
-                        final team = teams[index];
+    return teams.isNotEmpty
+        ? ListView.separated(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: teams.length,
+            itemBuilder: (context, index) {
+              final team = teams[index];
 
-                        return AppTeamCard(
-                          onTap: () => onTap?.call(team),
-                          team: team,
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return uiUtil.verticalSpacing.large;
-                      },
-                    ),
-                    uiUtil.verticalSpacing.large,
-                    // _CreateTeamTile(onTap: onTapCreateTeam),
-                  ],
-                )
-              : Column(
-                  children: [
-                    // Text('No teams yet.'),
-                    // uiUtil.verticalSpacing.large,
-                    _CreateTeamTile(onTap: onTapCreateTeam),
-                  ],
-                ),
-          uiUtil.verticalSpacing.huge,
-        ],
-      ),
-    );
+              return AppTeamCard(
+                onTap: () => onTap?.call(team),
+                team: team,
+              );
+            },
+            separatorBuilder: (context, index) {
+              return uiUtil.verticalSpacing.large;
+            },
+          )
+        : Column(
+            children: [
+              _CreateTeamTile(onTap: onTapCreateTeam),
+            ],
+          );
   }
 }
 
