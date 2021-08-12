@@ -40,6 +40,9 @@ class MyTeamsTabView extends StatelessWidget with UiUtilMixin {
                     uiUtil.verticalSpacing.large,
                     MyTeamsTabViewLayoutBuilder(
                       teams: model.appViewModel.myTeams,
+                      onTap: (value) {
+                        model.appViewModel.toTeamDetailView(value.id!);
+                      },
                     ),
                     uiUtil.verticalSpacing.huge,
                   ],

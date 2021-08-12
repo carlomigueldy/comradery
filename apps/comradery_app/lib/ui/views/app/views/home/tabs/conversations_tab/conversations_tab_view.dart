@@ -43,6 +43,10 @@ class ConversationsTabView extends StatelessWidget with UiUtilMixin {
                       ConversationsTabViewLayoutBuilder(
                         conversations: model.appViewModel.conversations,
                         authUser: model.appViewModel.authUser!,
+                        onTap: (value) {
+                          model.appViewModel
+                              .toConversationDetailView(value.id!);
+                        },
                       ),
                       uiUtil.verticalSpacing.huge,
                     ],
